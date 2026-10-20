@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng nhập - SPORT.COURT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --blue: #1769e0;
+      --blue-dark: #0f4fb3;
+      --blue-soft: #eaf2ff;
+      --orange: #f26b1d;
+      --ink: #10244a;
+      --muted: #6b7a99;
+      --line: #dfe7f5;
+      --red: #d93025;
+      --green: #1a9a54;
+      --bg: #f6f9ff
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+      color: var(--ink);
+      font-size: 14px;
+      background: #fff
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      background: none;
+      color: inherit
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600
+    }
+
+    a:hover {
+      text-decoration: underline
+    }
+
+    [hidden] {
+      display: none !important
+    }
+
+    .container {
+      max-width: 1024px;
+      margin: 0 auto;
+      padding: 0 20px
+    }
+
+    /* LOGIN */
+    .auth {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+      background: #f6f9ff
+    }
+
+    .auth-side {
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      padding: 36px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #1550c0 0%, #1f6fe5 55%, #2a9a8a 100%)
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--blue);
+      letter-spacing: .5px;
+      text-decoration: none;
+      white-space: nowrap
+    }
+
+    .logo svg {
+      width: 44px;
+      height: 30px
+    }
+
+    .auth-side .logo {
+      font-size: 24px;
+      color: #fff
+    }
+
+    .side-text {
+      position: relative;
+      z-index: 2;
+      max-width: 420px
+    }
+
+    .side-text small {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      opacity: .9
+    }
+
+    .side-text h2 {
+      font-size: 32px;
+      line-height: 1.25;
+      font-weight: 800;
+      margin: 10px 0 22px
+    }
+
+    .side-text ul {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      font-size: 14px;
+      opacity: .96
+    }
+
+    .deco {
+      position: absolute;
+      right: -30px;
+      bottom: -10px;
+      width: 70%;
+      opacity: .9
+    }
+
+    .auth-main {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px
+    }
+
+    .back {
+      position: absolute;
+      top: 22px;
+      left: 28px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500
+    }
+
+    .auth-box {
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(16, 36, 74, .08);
+      padding: 26px 30px 30px
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--blue-soft);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 22px
+    }
+
+    .tab {
+      padding: 9px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #4a5c82
+    }
+
+    .tab.on {
+      background: #fff;
+      color: var(--blue);
+      box-shadow: 0 2px 6px rgba(16, 36, 74, .1)
+    }
+
+    .form h1 {
+      font-size: 22px;
+      font-weight: 800
+    }
+
+    .sub {
+      color: var(--muted);
+      margin: 4px 0 20px;
+      font-size: 13px
+    }
+
+    .field {
+      margin-bottom: 14px
+    }
+
+    .field label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 6px
+    }
+
+    .input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 42px;
+      border: 1px solid #cfdcf3;
+      border-radius: 9px;
+      padding: 0 12px;
+      background: #fff;
+      transition: .15s
+    }
+
+    .input:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(23, 105, 224, .12)
+    }
+
+    .input input {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      border: none;
+      outline: none;
+      font: inherit;
+      font-size: 13.5px;
+      color: var(--ink);
+      background: none
+    }
+
+    .input input::placeholder {
+      color: #9aa8c4
+    }
+
+    .ico {
+      font-size: 14px;
+      opacity: .75
+    }
+
+    .eye {
+      font-size: 15px;
+      opacity: .6;
+      padding: 2px 4px
+    }
+
+    .field.bad .input {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(217, 48, 37, .1)
+    }
+
+    .err {
+      display: none;
+      font-style: normal;
+      color: var(--red);
+      font-size: 12px;
+      margin-top: 5px
+    }
+
+    .field.bad .err,
+    .err.show {
+      display: block
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 4px 0 16px;
+      font-size: 12.5px
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      color: #33476f
+    }
+
+    .check input {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--blue)
+    }
+
+    .agree {
+      font-size: 12.5px;
+      align-items: flex-start;
+      line-height: 1.5
+    }
+
+    .agree input {
+      margin-top: 2px
+    }
+
+    #agreeErr {
+      margin: 4px 0 8px
+    }
+
+    .form-msg {
+      display: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 12px
+    }
+
+    .form-msg.show {
+      display: block
+    }
+
+    .form-msg.error {
+      background: #fdecea;
+      color: var(--red)
+    }
+
+    .form-msg.ok {
+      background: #e6f6ec;
+      color: var(--green)
+    }
+
+    .btn-primary {
+      width: 100%;
+      height: 44px;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 9px;
+      margin-top: 4px;
+      transition: .15s
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-dark)
+    }
+
+    .btn-primary:disabled {
+      opacity: .6;
+      cursor: wait
+    }
+
+    .or {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 14px;
+      color: var(--muted);
+      font-size: 12px
+    }
+
+    .or:before,
+    .or:after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line)
+    }
+
+    .socials {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
+    }
+
+    .soc {
+      height: 40px;
+      border: 1px solid #cfdcf3;
+      border-radius: 9px;
+      font-weight: 600;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #fff
+    }
+
+    .soc:hover {
+      border-color: var(--blue);
+      background: var(--blue-soft)
+    }
+
+    .soc b {
+      font-size: 15px
+    }
+
+    .switch {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .demo {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 11.5px;
+      color: var(--muted);
+      background: var(--blue-soft);
+      border-radius: 8px;
+      padding: 8px
+    }
+
+    .demo b {
+      color: var(--ink)
+    }
+
+    /* HOME HEADER / FILTERS */
+    header {
+      background: #fff
+    }
+
+    .header-in {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      height: 66px
+    }
+
+    .search {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--blue-soft);
+      border: 1px solid #cfe0fb;
+      border-radius: 999px;
+      padding: 0 16px;
+      height: 36px
+    }
+
+    .search input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      background: none;
+      outline: none;
+      font: inherit;
+      font-size: 13px;
+      color: var(--ink)
+    }
+
+    .search input::placeholder {
+      color: #8a9bbd
+    }
+
+    .head-right {
+      display: flex;
+      align-items: center;
+      gap: 18px
+    }
+
+    .login-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--ink);
+      padding-right: 18px;
+      border-right: 1px solid var(--line)
+    }
+
+    .login-info button {
+      color: var(--blue);
+      font-weight: 600;
+      font-size: 12px
+    }
+
+    .cart {
+      position: relative;
+      font-size: 22px
+    }
+
+    .cart b {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background: var(--orange);
+      color: #fff;
+      font-size: 10px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center
+    }
+
+    .filterbar {
+      background: #edf3ff;
+      border-top: 1px solid #e3ecfb;
+      border-bottom: 1px solid #e3ecfb;
+      position: relative;
+      z-index: 20
+    }
+
+    .filter-in {
+      display: grid;
+      grid-template-columns: 150px repeat(4, 1fr) 100px;
+      gap: 14px;
+      padding: 12px 20px;
+      max-width: 1024px;
+      margin: 0 auto
+    }
+
+    .btn-book {
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      border-radius: 8px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px
+    }
+
+    .btn-book:hover {
+      background: var(--blue-dark)
+    }
+
+    .dd {
+      position: relative
+    }
+
+    .dd-btn {
+      width: 100%;
+      height: 40px;
+      background: #fff;
+      border: 1px solid #cfdcf3;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      font-size: 13px;
+      color: #33476f;
+      text-align: left
+    }
+
+    .dd-btn .lbl {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .dd-btn .arrow {
+      transition: transform .2s;
+      font-size: 10px
+    }
+
+    .dd.open .dd-btn {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(23, 105, 224, .12)
+    }
+
+    .dd.open .arrow {
+      transform: rotate(180deg)
+    }
+
+    .dd.active .dd-btn {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 600
+    }
+
+    .dd-panel {
+      display: none;
+      position: absolute;
+      top: 46px;
+      left: 0;
+      min-width: 100%;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 12px 30px rgba(16, 36, 74, .15);
+      padding: 6px;
+      z-index: 30
+    }
+
+    .dd.open .dd-panel {
+      display: block
+    }
+
+    .dd-panel.wide {
+      min-width: 260px;
+      padding: 14px
+    }
+
+    .opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 9px 12px;
+      border-radius: 7px;
+      font-size: 13px;
+      white-space: nowrap
+    }
+
+    .opt:hover {
+      background: var(--blue-soft)
+    }
+
+    .opt.sel {
+      background: var(--blue);
+      color: #fff;
+      font-weight: 600
+    }
+
+    .field select {
+      width: 100%;
+      height: 38px;
+      border: 1px solid #cfdcf3;
+      border-radius: 8px;
+      padding: 0 10px;
+      font: inherit;
+      font-size: 13px;
+      color: var(--ink);
+      background: #fff;
+      outline: none
+    }
+
+    .field select:focus {
+      border-color: var(--blue)
+    }
+
+    .field select:disabled {
+      background: #f1f4fa;
+      color: #9aa8c4
+    }
+
+    .btn-reset {
+      height: 40px;
+      border: 1px solid #cfdcf3;
+      background: #fff;
+      border-radius: 8px;
+      color: #33476f;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px
+    }
+
+    .btn-reset:hover {
+      border-color: var(--orange);
+      color: var(--orange)
+    }
+
+    /* BANNERS / COURT CARDS */
+    .banners {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px
+    }
+
+    .banner {
+      position: relative;
+      height: 150px;
+      border-radius: 10px;
+      overflow: hidden;
+      color: #fff;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center
+    }
+
+    .banner.b1 {
+      background: linear-gradient(110deg, #1550c0 0%, #1f6fe5 55%, #2a8ae8 100%)
+    }
+
+    .banner.b2 {
+      background: linear-gradient(110deg, #1a59c6 0%, #1d7adf 50%, #2f9a58 100%)
+    }
+
+    .banner small {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .3px;
+      opacity: .9
+    }
+
+    .banner h3 {
+      font-size: 22px;
+      font-weight: 800;
+      margin: 6px 0 4px;
+      letter-spacing: .3px
+    }
+
+    .banner p {
+      font-size: 13px;
+      opacity: .95
+    }
+
+    .banner .cta {
+      margin-top: 12px;
+      align-self: flex-start;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 7px 16px;
+      border-radius: 5px
+    }
+
+    .banner .deco {
+      position: absolute;
+      right: -10px;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      opacity: .95;
+      pointer-events: none
+    }
+
+    .page-title {
+      margin: 26px 0 16px
+    }
+
+    .page-title h1 {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: .3px
+    }
+
+    .page-title p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-top: 2px
+    }
+
+    .result-info {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px
+    }
+
+    .result-info b {
+      color: var(--blue)
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 2px;
+      box-shadow: 0 2px 8px rgba(16, 36, 74, .05);
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(16, 36, 74, .12)
+    }
+
+    .thumb {
+      position: relative;
+      height: 130px;
+      border-radius: 8px 8px 0 0;
+      overflow: hidden
+    }
+
+    .thumb svg {
+      width: 100%;
+      height: 100%;
+      display: block
+    }
+
+    .tag {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #fff;
+      border-radius: 6px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .card-body {
+      padding: 12px 14px 14px
+    }
+
+    .card h3 {
+      font-size: 15px;
+      font-weight: 700
+    }
+
+    .loc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 12px;
+      color: #51617f;
+      gap: 6px
+    }
+
+    .loc-row .addr {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      min-width: 0
+    }
+
+    .loc-row .addr span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .rate {
+      white-space: nowrap;
+      color: #51617f
+    }
+
+    .rate i {
+      color: #f5a524;
+      font-style: normal
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #51617f;
+      gap: 6px
+    }
+
+    .meta b {
+      color: var(--blue);
+      font-weight: 700
+    }
+
+    .slots {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 10px
+    }
+
+    .slot {
+      background: var(--orange);
+      color: #fff;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 6px 0;
+      border-radius: 4px
+    }
+
+    .slot:hover {
+      filter: brightness(1.1)
+    }
+
+    .btn-main {
+      width: 100%;
+      margin-top: 12px;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12.5px;
+      height: 34px;
+      border-radius: 5px
+    }
+
+    .btn-main:hover {
+      background: var(--blue-dark)
+    }
+
+    .empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      background: var(--bg);
+      border-radius: 12px
+    }
+
+    .empty .big {
+      font-size: 42px;
+      margin-bottom: 8px
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 26px 0 30px
+    }
+
+    .pg {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+      display: grid;
+      place-items: center
+    }
+
+    .pg:hover:not(:disabled) {
+      border-color: var(--blue);
+      color: var(--blue)
+    }
+
+    .pg.on {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      width: 30px;
+      height: 30px
+    }
+
+    .pg:disabled {
+      opacity: .4;
+      cursor: not-allowed
+    }
+
+    footer {
+      background: #f3f7ff;
+      border-top: 1px solid #e3ecfb;
+      padding-top: 14px;
+      margin-top: 20px
+    }
+
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.2fr 1.2fr;
+      gap: 20px;
+      align-items: center
+    }
+
+    .foot-info div {
+      margin-top: 8px;
+      font-size: 13px
+    }
+
+    .foot-info .hot {
+      font-weight: 700;
+      color: var(--blue);
+      font-size: 14px
+    }
+
+    .socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px
+    }
+
+    .socials span {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700
+    }
+
+    .map {
+      height: 94px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: linear-gradient(90deg, transparent 48%, #fff 48%, #fff 52%, transparent 52%), linear-gradient(0deg, transparent 45%, #fff 45%, #fff 50%, transparent 50%), #e5eddc;
+      position: relative;
+      overflow: hidden
+    }
+
+    .map .pin {
+      position: absolute;
+      left: 42%;
+      top: 30%;
+      font-size: 22px
+    }
+
+    .map .map-label {
+      position: absolute;
+      left: 30%;
+      top: 6px;
+      background: #fff;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 9px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .15)
+    }
+
+    .nation {
+      background: #e6efff;
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start
+    }
+
+    .nation h4 {
+      font-size: 12px
+    }
+
+    .nation p {
+      font-size: 10.5px;
+      color: #51617f;
+      margin-top: 4px
+    }
+
+    .nation button {
+      margin-top: 8px;
+      border: 1px solid var(--blue);
+      color: var(--blue);
+      background: #fff;
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 11px;
+      font-weight: 600
+    }
+
+    .copy {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #dbe5f6;
+      margin-top: 14px;
+      padding: 10px 0;
+      font-size: 10.5px;
+      color: var(--muted);
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    .copy div span {
+      margin-left: 14px
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: var(--ink);
+      color: #fff;
+      padding: 11px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .3s;
+      z-index: 99;
+      max-width: 90%;
+      text-align: center
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0)
+    }
+
+    @media(max-width:900px) {
+      .filter-in {
+        grid-template-columns: repeat(3, minmax(0, 1fr))
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .foot-grid {
+        grid-template-columns: 1fr
+      }
+
+      .auth-side {
+        padding: 28px
+      }
+
+      .side-text h2 {
+        font-size: 27px
+      }
+    }
+
+    @media(max-width:620px) {
+      .auth {
+        grid-template-columns: 1fr
+      }
+
+      .auth-side {
+        padding: 18px 22px;
+        min-height: 86px
+      }
+
+      .side-text,
+      .auth-side .deco {
+        display: none
+      }
+
+      .auth-main {
+        padding: 38px 16px 24px
+      }
+
+      .back {
+        top: 12px;
+        left: 18px
+      }
+
+      .auth-box {
+        padding: 22px 18px
+      }
+
+      .header-in {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 0;
+        gap: 10px
+      }
+
+      .search {
+        order: 3;
+        flex-basis: 100%
+      }
+
+      .filter-in {
+        grid-template-columns: 1fr 1fr;
+        padding: 10px
+      }
+
+      .grid,
+      .banners {
+        grid-template-columns: 1fr
+      }
+
+      .page-title h1 {
+        font-size: 25px
+      }
+
+      .banner h3 {
+        font-size: 19px
+      }
+
+      .head-right {
+        margin-left: auto
+      }
+
+      .login-info {
+        padding-right: 8px
+      }
+
+      .slots {
+        gap: 5px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- MÀN HÌNH ĐĂNG NHẬP: được hiển thị đầu tiên -->
+  <section id="loginPage">
+    <div class="auth">
+      <aside class="auth-side">
+        <a class="logo" href="#" aria-label="SPORT.COURT">
+          <svg viewBox="0 0 44 30" aria-hidden="true">
+            <path d="M14 2h28l-5 8H9z" fill="#fff" />
+            <path d="M8 12h28l-5 7H3z" fill="#f26b1d" />
+            <path d="M4 21h24l-4 7H0z" fill="#fff" />
+          </svg>SPORT.COURT
+        </a>
+        <div class="side-text"><small>THỂ THAO KẾT NỐI CỘNG ĐỒNG</small>
+          <h2>Đặt sân nhanh chóng,<br>chơi thể thao thả ga</h2>
+          <ul>
+            <li>✔ Hơn 100+ sân tại Hà Nội, TP.HCM và nhiều tỉnh thành</li>
+            <li>✔ Xem lịch trống và đặt sân chỉ trong vài giây</li>
+            <li>✔ Bóng đá, bóng chuyền, cầu lông, pickleball</li>
+          </ul>
+        </div>
+        <svg class="deco" viewBox="0 0 200 150" aria-hidden="true">
+          <ellipse cx="110" cy="70" rx="62" ry="58" fill="#0d1b3a" opacity=".55" transform="rotate(-25 110 70)" />
+          <circle cx="170" cy="105" r="24" fill="#f4e04a" />
+          <g fill="#caa800">
+            <circle cx="162" cy="98" r="3" />
+            <circle cx="175" cy="96" r="3" />
+            <circle cx="168" cy="110" r="3" />
+            <circle cx="180" cy="108" r="3" />
+          </g>
+        </svg>
+      </aside>
+      <main class="auth-main">
+        <a class="back" href="#" data-action="show-login">‹ Về trang chủ</a>
+        <div class="auth-box">
+          <div class="tabs"><button class="tab on" data-tab="login">Đăng nhập</button><button class="tab"
+              data-tab="register">Đăng ký</button></div>
+          <form id="formLogin" class="form" novalidate>
+            <h1>Chào mừng trở lại 👋</h1>
+            <p class="sub">Đăng nhập để đặt sân và quản lý lịch của bạn.</p>
+            <div class="field"><label for="lgId">Email hoặc số điện thoại</label>
+              <div class="input"><span class="ico">👤</span><input id="lgId" type="text"
+                  placeholder="Nhập email hoặc số điện thoại" autocomplete="username"></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="lgPw">Mật khẩu</label>
+              <div class="input"><span class="ico">🔒</span><input id="lgPw" type="password" placeholder="Nhập mật khẩu"
+                  autocomplete="current-password"><button type="button" class="eye" data-eye="lgPw"
+                  aria-label="Hiện mật khẩu">👁</button></div><em class="err"></em>
+            </div>
+            <div class="row"><label class="check"><input type="checkbox" id="remember"> Ghi nhớ đăng nhập</label><a
+                href="#" id="forgot">Quên mật khẩu?</a></div>
+            <div class="form-msg" id="msgLogin"></div><button class="btn-primary" type="submit">Đăng nhập</button>
+            <div class="or"><span>hoặc tiếp tục với</span></div>
+            <div class="socials"><button type="button" class="soc" data-soc="Google"><b style="color:#ea4335">G</b>
+                Google</button><button type="button" class="soc" data-soc="Facebook"><b style="color:#1877f2">f</b>
+                Facebook</button></div>
+            <p class="switch">Chưa có tài khoản? <a href="#" data-go="register">Đăng ký ngay</a></p>
+            <p class="demo">Tài khoản demo: <b>demo@sportcourt.vn</b> / <b>123456</b></p>
+          </form>
+          <form id="formRegister" class="form" novalidate hidden>
+            <h1>Tạo tài khoản mới</h1>
+            <p class="sub">Chỉ mất 1 phút để bắt đầu đặt sân.</p>
+            <div class="field"><label for="rgName">Họ và tên</label>
+              <div class="input"><span class="ico">🙂</span><input id="rgName" type="text" placeholder="Nguyễn Văn A"
+                  autocomplete="name"></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="rgId">Email hoặc số điện thoại</label>
+              <div class="input"><span class="ico">✉️</span><input id="rgId" type="text"
+                  placeholder="Nhập email hoặc số điện thoại" autocomplete="username"></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="rgPw">Mật khẩu</label>
+              <div class="input"><span class="ico">🔒</span><input id="rgPw" type="password"
+                  placeholder="Tối thiểu 6 ký tự" autocomplete="new-password"><button type="button" class="eye"
+                  data-eye="rgPw" aria-label="Hiện mật khẩu">👁</button></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="rgPw2">Nhập lại mật khẩu</label>
+              <div class="input"><span class="ico">🔒</span><input id="rgPw2" type="password"
+                  placeholder="Nhập lại mật khẩu" autocomplete="new-password"><button type="button" class="eye"
+                  data-eye="rgPw2" aria-label="Hiện mật khẩu">👁</button></div><em class="err"></em>
+            </div>
+            <label class="check agree"><input type="checkbox" id="agree"> <span>Tôi đồng ý với <a href="#"
+                  data-info="Điều khoản sử dụng">Điều khoản sử dụng</a> và <a href="#"
+                  data-info="Chính sách bảo mật">Chính sách bảo mật</a></span></label><em class="err"
+              id="agreeErr"></em>
+            <div class="form-msg" id="msgRegister"></div><button class="btn-primary" type="submit">Đăng ký</button>
+            <p class="switch">Đã có tài khoản? <a href="#" data-go="login">Đăng nhập</a></p>
+          </form>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- TRANG CHỦ: chỉ hiện sau khi đăng nhập thành công -->
+  <section id="homePage" hidden>
+    <header>
+      <div class="container header-in">
+        <a class="logo" href="#" data-action="top"><svg viewBox="0 0 44 30" aria-hidden="true">
+            <path d="M14 2h28l-5 8H9z" fill="#1769e0" />
+            <path d="M8 12h28l-5 7H3z" fill="#f26b1d" />
+            <path d="M4 21h24l-4 7H0z" fill="#1769e0" />
+          </svg>SPORT.COURT</a>
+        <div class="search">🔍<input id="q" type="text" placeholder="Tìm sân, khu vực, môn thể thao..."></div>
+        <div class="head-right">
+          <div class="login-info" id="loginInfo">👤<div><span id="userName">Tài khoản</span><br><button type="button"
+                id="logoutBtn">Đăng xuất</button></div>
+          </div>
+          <div class="cart" title="Giỏ đặt sân">🛒<b id="cartCount">0</b></div>
+        </div>
+      </div>
+    </header>
+    <div class="filterbar">
+      <div class="filter-in">
+        <button class="btn-book" id="bookNow">📅 Đặt sân ngay</button>
+        <div class="dd" id="dd-area"><button class="dd-btn"><span>📍</span><span class="lbl">Khu vực</span><span
+              class="arrow">▼</span></button>
+          <div class="dd-panel wide">
+            <div class="field"><label for="selProvince">Tỉnh / Thành phố</label><select id="selProvince">
+                <option value="">Tất cả tỉnh/thành</option>
+              </select></div>
+            <div class="field"><label for="selWard">Xã / Phường</label><select id="selWard" disabled>
+                <option value="">Chọn tỉnh trước</option>
+              </select></div>
+          </div>
+        </div>
+        <div class="dd" id="dd-type"><button class="dd-btn"><span>⚽</span><span class="lbl">Danh mục sân</span><span
+              class="arrow">▼</span></button>
+          <div class="dd-panel"></div>
+        </div>
+        <div class="dd" id="dd-rating"><button class="dd-btn"><span>⭐</span><span class="lbl">Đánh giá</span><span
+              class="arrow">▼</span></button>
+          <div class="dd-panel"></div>
+        </div>
+        <div class="dd" id="dd-price"><button class="dd-btn"><span>🏷️</span><span class="lbl">Mức giá</span><span
+              class="arrow">▼</span></button>
+          <div class="dd-panel"></div>
+        </div>
+        <button class="btn-reset" id="reset">✕ Xóa lọc</button>
+      </div>
+    </div>
+    <main class="container">
+      <div class="banners">
+        <div class="banner b1"><small>THỂ THAO KẾT NỐI CỘNG ĐỒNG</small>
+          <h3>ĐẶT SÂN PICKLEBALL</h3>
+          <p>Nhanh chóng - Tiện lợi - An toàn</p><button class="cta" data-cat="pickleball">Đặt ngay ➜</button><svg
+            class="deco" viewBox="0 0 200 150" aria-hidden="true">
+            <ellipse cx="110" cy="70" rx="62" ry="58" fill="#0d1b3a" transform="rotate(-25 110 70)" />
+            <rect x="38" y="108" width="38" height="14" rx="6" fill="#0d1b3a" transform="rotate(-25 57 115)" />
+            <circle cx="170" cy="105" r="24" fill="#f4e04a" />
+            <g fill="#caa800">
+              <circle cx="162" cy="98" r="3" />
+              <circle cx="175" cy="96" r="3" />
+              <circle cx="168" cy="110" r="3" />
+              <circle cx="180" cy="108" r="3" />
+            </g>
+          </svg>
+        </div>
+        <div class="banner b2"><small>SÂN BÓNG ĐÁ CHẤT LƯỢNG CAO</small>
+          <h3>THOẢ SỨC VẬN ĐỘNG</h3>
+          <p>Cùng bạn trên mọi sân cỏ</p><button class="cta" data-cat="bongda">Xem ngay ➜</button><svg class="deco"
+            viewBox="0 0 200 150" aria-hidden="true">
+            <rect x="20" y="20" width="170" height="100" fill="none" stroke="#fff" stroke-width="3" opacity=".6" />
+            <circle cx="150" cy="95" r="30" fill="#fff" />
+            <path d="M150 80l12 9-4 14h-16l-4-14z" fill="#222" />
+          </svg>
+        </div>
+      </div>
+      <div class="page-title">
+        <h1>DANH SÁCH SÂN</h1>
+        <p>Tìm sân phù hợp và đặt lịch nhanh chóng</p>
+      </div>
+      <div class="result-info" id="info"></div>
+      <div class="grid" id="grid"></div>
+      <div class="pagination" id="pagination"></div>
+    </main>
+    <footer>
+      <div class="container">
+        <div class="foot-grid">
+          <div class="foot-info"><a class="logo" href="#" data-action="top" style="font-size:18px">SPORT.COURT</a>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Đặt sân thể thao - Kết nối đam mê</div>
+            <div>📞 Hotline: <span class="hot">0377 338 8006</span></div>
+            <div>✉️ Email: khodt@sportc.vn</div>
+            <div class="socials"><span style="background:#1877f2">f</span><span style="background:#1769e0">Z</span><span
+                style="background:#e02424">▶</span></div>
+          </div>
+          <div class="map">
+            <div class="map-label"><b>SPORT.COURT</b><br>Hà Nội, Việt Nam</div>
+            <div class="pin">📍</div>
+          </div>
+          <div class="nation">
+            <div style="font-size:26px">📍</div>
+            <div>
+              <h4>Hệ thống sân toàn quốc</h4>
+              <p>Hơn 100+ sân tại Hà Nội, TP.HCM và các tỉnh thành khác.</p><button type="button" id="mapBtn">Xem bản đồ
+                ›</button>
+            </div>
+          </div>
+        </div>
+        <div class="copy"><span>© 2025 SPORT.COURT. All rights reserved.</span>
+          <div><span>Điều khoản sử dụng</span><span>Chính sách bảo mật</span><span>Hỗ trợ</span></div>
+        </div>
+      </div>
+    </footer>
+  </section>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /* ============ DÙNG CHUNG ============ */
+    const $ = s => document.querySelector(s);
+    const USERS_KEY = 'sc_users';
+    const SESSION_KEY = 'sc_user';
+    function safeGet(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
+    function safeSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { toast('Trình duyệt không cho phép lưu dữ liệu.'); } }
+    function getUsers() {
+      let users = safeGet(USERS_KEY);
+      if (!Array.isArray(users)) users = [];
+      if (!users.some(u => u.id === 'demo@sportcourt.vn')) users.push({ name: 'Khách demo', id: 'demo@sportcourt.vn', pw: '123456' });
+      return users;
+    }
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const PHONE_RE = /^(0|\+84)\d{9}$/;
+    const normId = v => v.trim().toLowerCase().replace(/\s+/g, '');
+    const validId = v => EMAIL_RE.test(v) || PHONE_RE.test(v);
+    let toastTimer;
+    function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400); }
+    function setError(input, msg) { const f = input.closest('.field'); if (!f) return; f.classList.toggle('bad', !!msg); const e = f.querySelector('.err'); if (e) e.textContent = msg || ''; }
+    function showMsg(el, type, text) { el.className = 'form-msg show ' + type; el.textContent = text; }
+    function clearMsg(el) { el.className = 'form-msg'; el.textContent = ''; }
+    function go(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.tab === tab));
+      $('#formLogin').hidden = tab !== 'login'; $('#formRegister').hidden = tab !== 'register';
+      document.title = (tab === 'login' ? 'Đăng nhập' : 'Đăng ký') + ' - SPORT.COURT';
+    }
+    function showLogin() {
+      $('#homePage').hidden = true; $('#loginPage').hidden = false; go('login'); window.scrollTo(0, 0);
+    }
+    function finishLogin(user, remember) {
+      safeSet(SESSION_KEY, { name: user.name, id: user.id, remember: !!remember });
+      $('#userName').textContent = user.name;
+      $('#loginPage').hidden = true; $('#homePage').hidden = false;
+      document.title = 'SPORT.COURT - Đặt sân thể thao';
+      window.scrollTo(0, 0); toast('Đăng nhập thành công! Chào mừng ' + user.name + '.');
+    }
+
+    /* ============ ĐĂNG NHẬP / ĐĂNG KÝ ============ */
+    document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => go(t.dataset.tab)));
+    document.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); go(a.dataset.go); }));
+    document.querySelectorAll('.eye').forEach(b => b.addEventListener('click', () => { const i = document.getElementById(b.dataset.eye); i.type = i.type === 'password' ? 'text' : 'password'; b.style.opacity = i.type === 'text' ? '1' : ''; }));
+    document.querySelectorAll('#loginPage .input input').forEach(i => i.addEventListener('input', () => { setError(i, ''); clearMsg($('#msgLogin')); clearMsg($('#msgRegister')); }));
+    $('#formLogin').addEventListener('submit', e => {
+      e.preventDefault();
+      const idEl = $('#lgId'), pwEl = $('#lgPw'), msg = $('#msgLogin'), id = normId(idEl.value), pw = pwEl.value;
+      let ok = true;
+      if (!id) { setError(idEl, 'Vui lòng nhập email hoặc số điện thoại'); ok = false; } else if (!validId(id)) { setError(idEl, 'Email hoặc số điện thoại không hợp lệ'); ok = false; } else setError(idEl, '');
+      if (!pw) { setError(pwEl, 'Vui lòng nhập mật khẩu'); ok = false; } else if (pw.length < 6) { setError(pwEl, 'Mật khẩu tối thiểu 6 ký tự'); ok = false; } else setError(pwEl, '');
+      if (!ok) return;
+      const btn = e.currentTarget.querySelector('.btn-primary'); btn.disabled = true; btn.textContent = 'Đang đăng nhập...';
+      setTimeout(() => {
+        const user = getUsers().find(u => u.id === id && u.pw === pw);
+        btn.disabled = false; btn.textContent = 'Đăng nhập';
+        if (!user) { showMsg(msg, 'error', 'Tài khoản hoặc mật khẩu không chính xác.'); return; }
+        finishLogin(user, $('#remember').checked);
+      }, 350);
+    });
+    $('#forgot').addEventListener('click', e => { e.preventDefault(); toast('Chức năng khôi phục mật khẩu sẽ được cập nhật sau.'); });
+    document.querySelectorAll('.soc').forEach(b => b.addEventListener('click', () => toast('Đăng nhập bằng ' + b.dataset.soc + ' sẽ được cập nhật sau.')));
+    $('#formRegister').addEventListener('submit', e => {
+      e.preventDefault();
+      const nameEl = $('#rgName'), idEl = $('#rgId'), pwEl = $('#rgPw'), pw2El = $('#rgPw2'), msg = $('#msgRegister'), agreeErr = $('#agreeErr');
+      const name = nameEl.value.trim(), id = normId(idEl.value), pw = pwEl.value, pw2 = pw2El.value; let ok = true;
+      if (name.length < 2) { setError(nameEl, 'Vui lòng nhập họ và tên'); ok = false; } else setError(nameEl, '');
+      if (!id) { setError(idEl, 'Vui lòng nhập email hoặc số điện thoại'); ok = false; } else if (!validId(id)) { setError(idEl, 'Email hoặc số điện thoại không hợp lệ'); ok = false; } else setError(idEl, '');
+      if (pw.length < 6) { setError(pwEl, 'Mật khẩu tối thiểu 6 ký tự'); ok = false; } else setError(pwEl, '');
+      if (!pw2) { setError(pw2El, 'Vui lòng nhập lại mật khẩu'); ok = false; } else if (pw2 !== pw) { setError(pw2El, 'Mật khẩu nhập lại không khớp'); ok = false; } else setError(pw2El, '');
+      if (!$('#agree').checked) { agreeErr.textContent = 'Bạn cần đồng ý với điều khoản để tiếp tục'; agreeErr.classList.add('show'); ok = false; } else { agreeErr.textContent = ''; agreeErr.classList.remove('show'); }
+      if (!ok) return;
+      const users = getUsers();
+      if (users.some(u => u.id === id)) { showMsg(msg, 'error', 'Email hoặc số điện thoại này đã được đăng ký.'); return; }
+      users.push({ name, id, pw });
+      safeSet(USERS_KEY, users.filter(u => u.id !== 'demo@sportcourt.vn'));
+      showMsg(msg, 'ok', 'Đăng ký thành công! Đang đăng nhập...');
+      setTimeout(() => finishLogin({ name, id }, true), 500);
+    });
+    $('#agree').addEventListener('change', () => { $('#agreeErr').classList.remove('show'); });
+    document.querySelectorAll('[data-info]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); toast(a.dataset.info + ' sẽ được cập nhật.'); }));
+    $('#logoutBtn').addEventListener('click', () => { safeSet(SESSION_KEY, null); showLogin(); toast('Bạn đã đăng xuất.'); });
+    document.querySelectorAll('[data-action="show-login"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); showLogin(); }));
+    document.querySelectorAll('[data-action="top"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+    /* Không tự mở trang chủ khi tải lại: luôn bắt đầu ở login. */
+    $('#loginPage').hidden = false; $('#homePage').hidden = true;
+
+    /* ============ DỮ LIỆU SÂN ============ */
+    const TYPES = { bongda: { label: 'Bóng đá' }, bongchuyen: { label: 'Bóng chuyền' }, caulong: { label: 'Cầu lông' }, pickleball: { label: 'Pickleball' } };
+    const LOCATIONS = {
+      'Hà Nội': ['Phường Mỹ Đình', 'Phường Cầu Giấy', 'Phường Hoàng Mai', 'Phường Hà Đông', 'Phường Thanh Xuân', 'Phường Long Biên'],
+      'TP. Hồ Chí Minh': ['Phường Tân Bình', 'Phường Thủ Đức', 'Phường Gò Vấp', 'Phường Tân Phú'],
+      'Đà Nẵng': ['Phường Hải Châu', 'Phường Thanh Khê', 'Phường Sơn Trà']
+    };
+    const SLOT_POOL = ['14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00'];
+    const RAW = [
+      ['Sân PICKLEBALL FLC', 'pickleball', 'FLC, Nam Từ Liêm, Hà Nội', 'Hà Nội', 'Phường Mỹ Đình', 4.8, 124, 6, 70000],
+      ['Sân cầu lông Panda', 'caulong', 'Panda, Cầu Giấy, Hà Nội', 'Hà Nội', 'Phường Cầu Giấy', 4.6, 98, 8, 60000],
+      ['Sân bóng đá Gamuda', 'bongda', 'Gamuda, Hoàng Mai, Hà Nội', 'Hà Nội', 'Phường Hoàng Mai', 4.7, 156, 5, 350000],
+      ['Sân PICKLEBALL FLC 2', 'pickleball', 'FLC, Nam Từ Liêm, Hà Nội', 'Hà Nội', 'Phường Mỹ Đình', 4.5, 87, 6, 70000],
+      ['Sân cầu lông FLC', 'caulong', 'FLC, Nam Từ Liêm, Hà Nội', 'Hà Nội', 'Phường Mỹ Đình', 4.6, 102, 10, 60000],
+      ['Sân bóng đá Mậu', 'bongda', 'Mậu Lương, Hà Đông, Hà Nội', 'Hà Nội', 'Phường Hà Đông', 4.4, 76, 7, 300000],
+      ['Sân PICKLEBALL FLC 3', 'pickleball', 'FLC, Nam Từ Liêm, Hà Nội', 'Hà Nội', 'Phường Mỹ Đình', 4.7, 93, 6, 70000],
+      ['Sân cầu lông Lin Sport', 'caulong', 'Linh Đàm, Hoàng Mai, Hà Nội', 'Hà Nội', 'Phường Hoàng Mai', 4.5, 68, 6, 60000],
+      ['Sân cầu lông Gamuda', 'caulong', 'Gamuda, Hoàng Mai, Hà Nội', 'Hà Nội', 'Phường Hoàng Mai', 4.6, 91, 8, 60000],
+      ['Sân bóng chuyền Thanh Xuân', 'bongchuyen', 'Nguyễn Trãi, Thanh Xuân, Hà Nội', 'Hà Nội', 'Phường Thanh Xuân', 4.3, 54, 4, 150000],
+      ['Sân bóng chuyền Long Biên', 'bongchuyen', 'Ngọc Lâm, Long Biên, Hà Nội', 'Hà Nội', 'Phường Long Biên', 3.8, 41, 3, 120000],
+      ['Sân bóng đá Hàng Đẫy', 'bongda', 'Đặng Tiến Đông, Hà Nội', 'Hà Nội', 'Phường Cầu Giấy', 4.2, 210, 2, 1500000],
+      ['Sân bóng đá Mỹ Đình Arena', 'bongda', 'Mỹ Đình, Nam Từ Liêm, Hà Nội', 'Hà Nội', 'Phường Mỹ Đình', 4.9, 320, 1, 2400000],
+      ['Sân bóng đá Thống Nhất', 'bongda', 'Thống Nhất, Hải Châu, Đà Nẵng', 'Đà Nẵng', 'Phường Hải Châu', 4.1, 133, 1, 3200000],
+      ['Sân PICKLEBALL Tân Bình', 'pickleball', 'Cộng Hòa, Tân Bình, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Tân Bình', 4.4, 72, 5, 90000],
+      ['Sân PICKLEBALL Thủ Đức', 'pickleball', 'Võ Văn Ngân, Thủ Đức, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Thủ Đức', 4.6, 65, 4, 95000],
+      ['Sân cầu lông Gò Vấp', 'caulong', 'Quang Trung, Gò Vấp, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Gò Vấp', 3.5, 59, 6, 70000],
+      ['Sân cầu lông Tân Phú', 'caulong', 'Tân Phú, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Tân Phú', 2.8, 33, 4, 55000],
+      ['Sân bóng đá Thủ Đức', 'bongda', 'Linh Trung, Thủ Đức, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Thủ Đức', 4.5, 188, 6, 400000],
+      ['Sân bóng chuyền Tân Bình', 'bongchuyen', 'Hoàng Văn Thụ, Tân Bình, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Tân Bình', 4.0, 47, 3, 130000],
+      ['Sân bóng chuyền Sơn Trà', 'bongchuyen', 'Sơn Trà, Đà Nẵng', 'Đà Nẵng', 'Phường Sơn Trà', 4.6, 52, 4, 140000],
+      ['Sân PICKLEBALL Hải Châu', 'pickleball', 'Nguyễn Văn Linh, Hải Châu, Đà Nẵng', 'Đà Nẵng', 'Phường Hải Châu', 4.3, 38, 4, 80000],
+      ['Sân cầu lông Thanh Khê', 'caulong', 'Điện Biên Phủ, Thanh Khê, Đà Nẵng', 'Đà Nẵng', 'Phường Thanh Khê', 3.9, 44, 5, 55000],
+      ['Sân bóng đá Sơn Trà', 'bongda', 'Sơn Trà, Đà Nẵng', 'Đà Nẵng', 'Phường Sơn Trà', 3.6, 81, 4, 320000],
+      ['Sân bóng đá Cầu Giấy VIP', 'bongda', 'Trần Thái Tông, Cầu Giấy, Hà Nội', 'Hà Nội', 'Phường Cầu Giấy', 4.8, 265, 2, 2700000],
+      ['Sân bóng đá Hà Đông Arena', 'bongda', 'Quang Trung, Hà Đông, Hà Nội', 'Hà Nội', 'Phường Hà Đông', 4.6, 172, 1, 3500000],
+      ['Sân PICKLEBALL Thanh Xuân', 'pickleball', 'Khuất Duy Tiến, Thanh Xuân, Hà Nội', 'Hà Nội', 'Phường Thanh Xuân', 3.7, 29, 3, 75000]
+    ];
+    const COURTS = RAW.map((r, i) => ({ id: i, name: r[0], type: r[1], addr: r[2], province: r[3], ward: r[4], rating: r[5], reviews: r[6], count: r[7], price: r[8], slots: [0, 3, 6, 9].map(k => SLOT_POOL[(i * 2 + k) % SLOT_POOL.length]).sort() }));
+    const OPTIONS = {
+      type: [{ v: 'bongda', t: 'Sân bóng đá' }, { v: 'bongchuyen', t: 'Sân bóng chuyền' }, { v: 'caulong', t: 'Sân cầu lông' }, { v: 'pickleball', t: 'Sân pickleball' }],
+      rating: [{ v: '1-3', t: 'Từ 1 sao đến 3 sao' }, { v: '3-4', t: 'Từ 3 sao đến 4 sao' }, { v: '4-5', t: 'Từ 4 sao đến 5 sao' }],
+      price: [{ v: 'lt1', t: 'Dưới 1 triệu' }, { v: '1-2', t: 'Từ 1 đến 2 triệu' }, { v: '2-3', t: 'Từ 2 đến 3 triệu' }, { v: 'gt3', t: 'Trên 3 triệu' }]
+    };
+    const DEFAULT_LABEL = { type: 'Danh mục sân', rating: 'Đánh giá', price: 'Mức giá', area: 'Khu vực' };
+    const state = { type: '', rating: '', price: '', province: '', ward: '', q: '', page: 1 };
+    const PER_PAGE = 9;
+    const fmt = n => n.toLocaleString('vi-VN') + 'đ/giờ';
+    const noAccent = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').toLowerCase();
+    function matchRating(c) { switch (state.rating) { case '1-3': return c.rating >= 1 && c.rating < 3; case '3-4': return c.rating >= 3 && c.rating < 4; case '4-5': return c.rating >= 4; }return true; }
+    function matchPrice(c) { switch (state.price) { case 'lt1': return c.price < 1e6; case '1-2': return c.price >= 1e6 && c.price < 2e6; case '2-3': return c.price >= 2e6 && c.price <= 3e6; case 'gt3': return c.price > 3e6; }return true; }
+    function filtered() { const q = noAccent(state.q.trim()); return COURTS.filter(c => (!state.type || c.type === state.type) && (!state.province || c.province === state.province) && (!state.ward || c.ward === state.ward) && matchRating(c) && matchPrice(c) && (!q || noAccent(c.name + ' ' + c.addr + ' ' + TYPES[c.type].label).includes(q))); }
+    function art(type, id) {
+      const p = 'stroke="#fff" stroke-width="2" fill="none" opacity=".9"';
+      const sky = `<defs><linearGradient id="s${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ec7ee"/><stop offset="1" stop-color="#dbe9f6"/></linearGradient></defs>`;
+      if (type === 'bongda') return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice">${sky}<rect width="300" height="130" fill="url(#s${id})"/><g fill="#2f6b3a" opacity=".5"><rect x="20" y="30" width="14" height="30"/><rect x="40" y="22" width="12" height="38"/><rect x="230" y="26" width="16" height="34"/><rect x="255" y="34" width="12" height="26"/></g><rect y="55" width="300" height="75" fill="#3aa845"/><g fill="#339b3e"><rect y="62" width="300" height="9"/><rect y="80" width="300" height="9"/><rect y="98" width="300" height="9"/><rect y="116" width="300" height="9"/></g><rect x="20" y="64" width="260" height="60" ${p}/><line x1="150" y1="64" x2="150" y2="124" ${p}/><circle cx="150" cy="94" r="14" ${p}/><rect x="20" y="80" width="26" height="28" ${p}/><rect x="254" y="80" width="26" height="28" ${p}/></svg>`;
+      if (type === 'caulong') return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice"><rect width="300" height="130" fill="#d9e8e4"/><rect y="0" width="300" height="42" fill="#2a6b56"/><g stroke="#b9d6cb" stroke-width="2"><line x1="0" y1="14" x2="300" y2="14"/><line x1="0" y1="28" x2="300" y2="28"/></g><rect y="42" width="300" height="88" fill="#17a87c"/><polygon points="40,125 260,125 225,58 75,58" ${p}/><line x1="150" y1="58" x2="150" y2="125" ${p}/><line x1="58" y1="92" x2="242" y2="92" ${p}/><line x1="62" y1="62" x2="238" y2="62" stroke="#fff" stroke-width="3"/><g fill="#1d2b4f"><circle cx="110" cy="80" r="5"/><rect x="106" y="86" width="9" height="16" rx="3"/><circle cx="195" cy="104" r="5"/><rect x="191" y="110" width="9" height="16" rx="3"/></g></svg>`;
+      if (type === 'pickleball') return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice"><rect width="300" height="130" fill="#cfe0f3"/><g fill="#7da8c8" opacity=".6"><rect x="0" y="10" width="300" height="30"/></g><g fill="#2f6b3a" opacity=".5"><circle cx="40" cy="30" r="16"/><circle cx="260" cy="26" r="18"/></g><rect y="42" width="300" height="88" fill="#2a63d6"/><rect x="30" y="52" width="240" height="72" ${p}/><line x1="150" y1="52" x2="150" y2="124" stroke="#fff" stroke-width="3"/><line x1="90" y1="52" x2="90" y2="124" ${p}/><line x1="210" y1="52" x2="210" y2="124" ${p}/><line x1="90" y1="88" x2="210" y2="88" ${p}/><g fill="#1d2b4f"><circle cx="100" cy="82" r="5"/><rect x="96" y="88" width="9" height="16" rx="3"/><circle cx="205" cy="94" r="5"/><rect x="201" y="100" width="9" height="16" rx="3"/></g></svg>`;
+      return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice"><rect width="300" height="130" fill="#e8ecf4"/><rect width="300" height="40" fill="#6f7f9f"/><g stroke="#9aa8c4" stroke-width="2"><line x1="0" y1="13" x2="300" y2="13"/><line x1="0" y1="26" x2="300" y2="26"/></g><rect y="40" width="300" height="90" fill="#e8923a"/><rect x="35" y="55" width="230" height="68" ${p}/><line x1="150" y1="55" x2="150" y2="123" stroke="#fff" stroke-width="3"/><line x1="105" y1="55" x2="105" y2="123" ${p}/><line x1="195" y1="55" x2="195" y2="123" ${p}/><circle cx="150" cy="86" r="9" fill="#fff"/><path d="M142 86h16M150 78v16" stroke="#e8923a" stroke-width="1.5"/></svg>`;
+    }
+    function render() {
+      const list = filtered(), pages = Math.max(1, Math.ceil(list.length / PER_PAGE)); if (state.page > pages) state.page = pages;
+      const items = list.slice((state.page - 1) * PER_PAGE, state.page * PER_PAGE);
+      $('#info').innerHTML = `Tìm thấy <b>${list.length}</b> sân phù hợp`;
+      $('#grid').innerHTML = items.length ? items.map(c => `<article class="card"><div class="thumb">${art(c.type, c.id)}<span class="tag">${c.type === 'bongda' ? '⚽' : c.type === 'bongchuyen' ? '🏐' : c.type === 'caulong' ? '🏸' : '🏓'} ${TYPES[c.type].label}</span></div><div class="card-body"><h3>${c.name}</h3><div class="loc-row"><div class="addr">📍<span>${c.addr}</span></div><div class="rate"><i>★</i> ${c.rating.toFixed(1)} (${c.reviews})</div></div><div class="meta"><span>🗂️ ${c.count} sân</span><b>🕒 ${fmt(c.price)}</b></div><div class="slots">${c.slots.map(s => `<button class="slot" data-name="${c.name}" data-time="${s}">${s}</button>`).join('')}</div><button class="btn-main" data-name="${c.name}">Đặt ngay / Xem lịch ➜</button></div></article>`).join('') : `<div class="empty"><div class="big">🔍</div><b>Không tìm thấy sân phù hợp</b><p style="margin-top:6px">Hãy thử thay đổi hoặc xóa bớt bộ lọc.</p></div>`;
+      let pg = `<button class="pg" data-p="${state.page - 1}" ${state.page === 1 ? 'disabled' : ''}>‹</button>`; for (let i = 1; i <= pages; i++)pg += `<button class="pg ${i === state.page ? 'on' : ''}" data-p="${i}">${i}</button>`; pg += `<button class="pg" data-p="${state.page + 1}" ${state.page === pages ? 'disabled' : ''}>›</button>`; $('#pagination').innerHTML = list.length ? pg : '';
+    }
+    function closeAll() { document.querySelectorAll('.dd.open').forEach(d => d.classList.remove('open')); }
+    function buildDropdown(key) {
+      const dd = $('#dd-' + key), panel = dd.querySelector('.dd-panel');
+      panel.innerHTML = `<button class="opt" data-v="">Tất cả</button>` + OPTIONS[key].map(o => `<button class="opt" data-v="${o.v}">${o.t}</button>`).join('');
+      panel.addEventListener('click', e => { const b = e.target.closest('.opt'); if (!b) return; state[key] = b.dataset.v; state.page = 1; syncDropdown(key); closeAll(); render(); });
+    }
+    function syncDropdown(key) { const dd = $('#dd-' + key), cur = OPTIONS[key].find(o => o.v === state[key]); dd.querySelector('.lbl').textContent = cur ? cur.t : DEFAULT_LABEL[key]; dd.classList.toggle('active', !!cur); dd.querySelectorAll('.opt').forEach(o => o.classList.toggle('sel', o.dataset.v === state[key] && state[key] !== '')); }
+    document.querySelectorAll('.dd-btn').forEach(btn => btn.addEventListener('click', e => { e.stopPropagation(); const dd = btn.parentElement, was = dd.classList.contains('open'); closeAll(); if (!was) dd.classList.add('open'); }));
+    document.addEventListener('click', e => { if (!e.target.closest('.dd')) closeAll(); });
+    ['type', 'rating', 'price'].forEach(k => { buildDropdown(k); syncDropdown(k); });
+    const selP = $('#selProvince'), selW = $('#selWard');
+    Object.keys(LOCATIONS).forEach(p => selP.add(new Option(p, p)));
+    function syncArea() { const parts = [state.ward, state.province].filter(Boolean); $('#dd-area .lbl').textContent = parts.length ? parts.join(', ') : DEFAULT_LABEL.area; $('#dd-area').classList.toggle('active', parts.length > 0); }
+    selP.addEventListener('change', () => { state.province = selP.value; state.ward = ''; state.page = 1; selW.innerHTML = ''; if (state.province) { selW.disabled = false; selW.add(new Option('Tất cả xã/phường', '')); LOCATIONS[state.province].forEach(w => selW.add(new Option(w, w))); } else { selW.disabled = true; selW.add(new Option('Chọn tỉnh trước', '')); } syncArea(); render(); });
+    selW.addEventListener('change', () => { state.ward = selW.value; state.page = 1; syncArea(); render(); if (state.ward) closeAll(); });
+    $('#q').addEventListener('input', e => { state.q = e.target.value; state.page = 1; render(); });
+    $('#reset').addEventListener('click', () => { Object.assign(state, { type: '', rating: '', price: '', province: '', ward: '', q: '', page: 1 }); $('#q').value = ''; selP.value = ''; selP.dispatchEvent(new Event('change'));['type', 'rating', 'price'].forEach(syncDropdown); render(); });
+    document.querySelectorAll('.banner .cta').forEach(b => b.addEventListener('click', () => { state.type = b.dataset.cat; state.page = 1; syncDropdown('type'); render(); $('.page-title').scrollIntoView({ behavior: 'smooth' }); }));
+    $('#bookNow').addEventListener('click', () => $('.page-title').scrollIntoView({ behavior: 'smooth' }));
+    $('#pagination').addEventListener('click', e => { const b = e.target.closest('.pg'); if (!b || b.disabled) return; state.page = +b.dataset.p; render(); $('.page-title').scrollIntoView({ behavior: 'smooth' }); });
+    let cartCount = 0;
+    $('#grid').addEventListener('click', e => {
+      const s = e.target.closest('.slot'); if (s) { cartCount++; $('#cartCount').textContent = cartCount; toast(`Đã chọn khung giờ ${s.dataset.time} - ${s.dataset.name}`); return; }
+      const b = e.target.closest('.btn-main'); if (b) toast(`Mở lịch đặt sân: ${b.dataset.name} (bản demo)`);
+    });
+    $('#mapBtn').addEventListener('click', () => toast('Bản đồ hệ thống sân sẽ được cập nhật.'));
+    render();
+  </script>
+</body>
+
+</html>
