@@ -1,0 +1,1673 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPORT.COURT - Quản trị</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+html {
+  overflow-y: auto;
+}
+
+.internal,
+.alert,
+.note,
+.box {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+:root{
+  --primary:#1f6feb; --primary-d:#0b5ed7; --primary-l:#e8f0fe; --primary-bar:#a9c8fb;
+  --bg:#f2f5fa; --card:#fff; --text:#1b2a4a; --muted:#7b8aa6; --border:#e3e8f1;
+  --green:#1a8f3c; --green-bg:#effbe9; --green-bd:#b7e89c;
+  --red:#d92d20; --red-bg:#fff1f0; --red-bd:#f5b5b0;
+  --amber:#b7791f; --amber-bg:#fff6e0; --amber-bd:#f3d58a;
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.45}
+button{font-family:inherit;cursor:pointer}
+svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ===== Layout ===== */
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;background:#fff;border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;flex:none}
+.brand{padding:16px 18px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);margin:0 0 14px}
+.brand .logo{width:32px;height:32px;background:#d9d9d9;border-radius:3px;flex:none}
+.brand b{display:block;color:var(--primary);font-size:18px;font-weight:700;letter-spacing:.2px;font-style:italic}
+.brand .logo-mark{width:30px;height:24px;stroke:none;fill:none}
+.w-wrap{max-width:620px;display:flex;flex-direction:column;gap:14px}
+.w-balance{background:var(--primary-l);border:1px solid #d3e2fc;border-radius:10px;padding:18px 20px}
+.w-balance small{display:block;font-size:11px;color:#55637f;margin-bottom:8px}
+.w-balance b{font-size:28px;color:var(--primary-d);font-weight:700}
+.w-form{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px}
+.w-form .fld{margin-bottom:16px}
+.w-form .fld label{font-size:11px}
+.w-form .fld input{font-size:12px;padding:11px 12px;background:#f1f4f9}
+.w-form .fld input.bad{border-color:var(--red);background:#fff}
+.w-form .err{display:block;color:var(--red);font-size:10px;margin-top:4px;min-height:0}
+.w-form .hint{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:5px}
+.w-form .hint a{color:var(--primary-d);font-weight:600;text-decoration:none;cursor:pointer}
+.w-form #wName{text-transform:uppercase}
+.w-ok{background:var(--green-bg);border:1px solid var(--green-bd);color:var(--green);border-radius:8px;padding:12px 14px;font-size:11.5px;font-weight:500}
+.brand small{display:block;font-size:7px;color:var(--text);font-weight:500}
+.nav{padding:0 12px;display:flex;flex-direction:column;gap:6px}
+.nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:7px;color:var(--text);text-decoration:none;font-size:12px;font-weight:500}
+.nav a:hover{background:#f4f7fc}
+.nav a.active{background:var(--primary-l);color:var(--primary-d)}
+.nav hr{border:0;border-top:1px solid var(--border);margin:6px 0}
+.nav a.sub{justify-content:center;color:#55637f}
+.nav a.sub.active{background:var(--primary-l);color:var(--primary-d);width:max-content;margin:0 auto;border-radius:20px;padding:5px 14px}
+.side-spacer{flex:1}
+.support{margin:12px;background:var(--primary-l);border:1px solid #d3e2fc;border-radius:10px;padding:14px}
+.support svg{color:var(--primary);margin-bottom:6px}
+.support svg.bot{width:22px;height:22px}
+.chart .empty{position:absolute;left:34px;right:0;top:0;bottom:22px;display:grid;place-items:center;color:var(--muted);font-size:11px;pointer-events:none}
+.support b{display:block;font-size:11px;margin-bottom:6px}
+.support p{font-size:9px;color:var(--muted);margin-bottom:8px}
+.support a{font-size:10px;font-weight:600;color:var(--primary-d);text-decoration:none;display:inline-flex;gap:4px;align-items:center}
+.support a svg{width:10px;height:10px;margin:0}
+.user{border-top:1px solid var(--border);padding:12px 14px;display:flex;align-items:center;gap:8px}
+.avatar{width:20px;height:20px;border-radius:50%;background:#102a5c;color:#fff;font-size:9px;font-weight:600;display:grid;place-items:center;flex:none}
+.user div{flex:1;line-height:1.2}
+.user b{font-size:10px;display:block}
+.user small{font-size:8px;color:var(--muted)}
+.user button{background:none;border:0;color:var(--muted)}
+
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{height:46px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:0 24px;position:sticky;top:0;z-index:5}
+.search{display:flex;align-items:center;gap:8px;background:#eef2f8;border-radius:8px;padding:7px 12px;width:290px;color:var(--muted)}
+.search svg{width:13px;height:13px}
+.search input{border:0;background:transparent;outline:0;font:inherit;font-size:11px;width:100%;color:var(--text)}
+.topbar .link{font-size:10px;color:#55637f;display:flex;gap:4px;align-items:center;text-decoration:none}
+.topbar .link svg{width:10px;height:10px}
+.topbar .bell{color:#55637f;position:relative}
+.topbar .bell i{position:absolute;top:-2px;right:-1px;width:6px;height:6px;background:var(--red);border-radius:50%}
+.content{padding:20px 18px 30px;flex:1}
+.view{display:none}.view.active{display:block}
+h1.title{font-size:22px;font-weight:700;margin-bottom:2px}
+.subtitle{color:var(--muted);font-size:11px;margin-bottom:18px}
+
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--radius)}
+.stack{display:flex;flex-direction:column;gap:14px}
+
+/* ===== Buttons / pills ===== */
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:#fff;border-radius:7px;padding:7px 13px;font-size:11px;font-weight:600;color:var(--text)}
+.btn:hover{background:#f6f8fc}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn.primary:hover{background:var(--primary-d)}
+.btn svg{width:13px;height:13px}
+.pill{display:inline-block;padding:2px 9px;border-radius:5px;font-size:10px;font-weight:600;border:1px solid;white-space:nowrap}
+.pill.green{color:var(--green);background:var(--green-bg);border-color:var(--green-bd)}
+.pill.red{color:var(--red);background:var(--red-bg);border-color:var(--red-bd)}
+.pill.amber{color:var(--amber);background:var(--amber-bg);border-color:var(--amber-bd)}
+.pill.gray{color:#444;background:#f3f4f6;border-color:#d1d5db}
+.pill.blue{color:var(--primary-d);background:var(--primary-l);border-color:#cfe0fc}
+.t-green{color:var(--green);font-weight:600}.t-red{color:var(--red);font-weight:600}.t-amber{color:var(--amber);font-weight:600}
+
+/* ===== Home ===== */
+.profile{padding:18px 20px 22px;margin-bottom:14px}
+.profile h3,.report h3{font-size:14px;font-weight:700}
+.profile .sub{font-size:11px;color:var(--muted);margin-bottom:18px}
+.profile-body{display:flex;align-items:center;gap:0}
+.p-ava{display:flex;align-items:center;gap:14px;padding-right:48px;border-right:1px solid var(--border)}
+.p-ava .big{width:54px;height:54px;border-radius:50%;background:#102a5c;color:#fff;display:grid;place-items:center;font-size:22px;font-weight:600}
+.p-ava b{font-size:17px;display:block;margin-bottom:5px}
+.p-info{flex:1;display:grid;grid-template-columns:repeat(3,1fr);padding-left:48px;gap:20px}
+.p-info small{display:block;font-size:8px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600}
+.p-info b{font-size:12px;font-weight:600}
+.report{padding:18px 14px}
+.report-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.report-head .sub{font-size:11px;color:var(--muted)}
+.report-head .ctrl{display:flex;gap:8px;align-items:center}
+.tag{background:var(--primary-l);color:var(--primary-d);font-size:10px;padding:7px 14px;border-radius:6px;font-weight:500}
+select.sel{appearance:none;border:1px solid var(--border);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='none' stroke='%23555' stroke-width='2'%3E%3Cpath d='M2 3l3 3 3-3'/%3E%3C/svg%3E") no-repeat right 10px center;border-radius:7px;padding:7px 28px 7px 12px;font:inherit;font-size:11px;min-width:96px;color:var(--text)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.kpi{background:#f4f7fc;border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.kpi.hl{background:var(--primary-l);border-color:#d3e2fc}
+.kpi small{font-size:10px;color:#55637f;display:block;margin-bottom:8px}
+.kpi b{font-size:20px;font-weight:700;display:block;margin-bottom:6px}
+.kpi.hl b{color:var(--primary-d);font-size:22px}
+.kpi span{font-size:10px;color:var(--muted)}
+.kpi span.up{color:var(--green);font-weight:600}
+.chart-head{display:flex;justify-content:space-between;margin:0 0 6px 0}
+.chart-head b{font-size:11px;display:block}
+.chart-head small{font-size:9px;color:var(--muted)}
+.legend{font-size:9px;color:#55637f;display:flex;align-items:center;gap:5px;margin-right:50px}
+.legend i{width:6px;height:6px;background:var(--primary);border-radius:1px}
+.chart{position:relative;height:200px;margin:14px 0 0 0;padding-left:34px}
+.chart .grid{position:absolute;left:34px;right:0;top:0;bottom:22px}
+.chart .grid div{position:absolute;left:0;right:0;border-top:1px solid #edf0f6}
+.chart .grid span{position:absolute;left:-34px;top:-6px;width:26px;text-align:right;font-size:8px;color:#55637f}
+.bars{position:absolute;left:34px;right:0;top:0;bottom:22px;display:flex;justify-content:space-around;align-items:flex-end}
+.bar{width:22px;border-radius:5px 5px 0 0;background:var(--primary-bar);position:relative;transition:.3s}
+.bar:hover{filter:brightness(.95)}
+.bar.max{background:var(--primary)}
+.bar em{position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-style:normal;font-size:9px;color:#55637f}
+.bar.max em{color:var(--primary-d);font-weight:700}
+.xlabels{position:absolute;left:34px;right:0;bottom:0;display:flex;justify-content:space-around;font-size:9px;color:#55637f}
+.xlabels span{width:22px;text-align:center}
+.note{border-top:1px solid var(--border);margin-top:20px;padding-top:12px;font-size:9px;color:var(--muted)}
+
+/* ===== Table (courts) ===== */
+/* ===== Table (courts) + Mở rộng ===== */
+.panel{padding:30px 18px 34px;background:#f4f7fc;border:1px solid var(--border);border-radius:6px}
+.toolbar{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.toolbar .grow{flex:1}
+.toolbar .sbox{display:flex;align-items:center;background:#fff;border:1px solid var(--border);border-radius:4px;width:200px;padding:5px 8px}
+.toolbar .sbox input{border:0;outline:0;font:inherit;font-size:11px;width:100%;background:transparent}
+.toolbar .total{background:#fff;border:1px solid var(--border);border-radius:5px;padding:5px 9px;font-size:11px}
+.toolbar .total b{color:var(--primary)}
+.toolbar .ghost{background:none;border:0;display:flex;gap:5px;align-items:center;font-size:11px;color:#444}
+table.tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid #cfd5e0}
+.tbl th{font-weight:500;font-size:13px;background:#f7f8fb;padding:12px 10px;border:1px solid #cfd5e0;text-align:center}
+.tbl td{padding:0 16px;border:1px solid #cfd5e0;height:58px;font-size:13px;color:#3a4558}
+.tbl td.c{text-align:center}
+.tbl td.num{text-align:center;width:36px}
+.tbl tbody tr:nth-child(even){background:#f7f8fb}
+.tbl .menu{background:none;border:0;color:#f4a300;font-size:16px;line-height:1}
+.tbl .menu.off{color:#bbb}
+.tbl tr:hover td{background:#f0f5ff}
+
+.thumb{width:48px;height:36px;object-fit:cover;border-radius:5px;display:inline-grid;place-items:center;vertical-align:middle}
+.thumb.ph{background:#eef2f8;color:var(--muted)}
+.sub2{display:block;font-size:10px;color:var(--muted);margin-top:2px;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tbl .ibtn.ok:hover{background:var(--primary-l);color:var(--primary-d)}
+.mbox.wide{width:560px;max-height:90vh;overflow:auto}
+.fld textarea{width:100%;border:1px solid transparent;background:#f1f4f9;border-radius:5px;padding:9px 11px;font:inherit;font-size:10.5px;color:var(--text);outline:0;resize:vertical}
+.fld textarea:focus,.fld input.bad{background:#fff}
+.fld textarea:focus{border-color:var(--primary)}
+.fld input.bad{border-color:var(--red)}
+.fld .err{display:block;color:var(--red);font-size:10px;margin-top:4px}
+.imgs{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.imgs .im{position:relative}
+.imgs img{width:72px;height:54px;object-fit:cover;border-radius:6px;border:1px solid var(--border);display:block}
+.imgs button{position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;border:0;background:var(--red);color:#fff;font-size:12px;line-height:1}
+.btn.danger{background:var(--red);border-color:var(--red);color:#fff}
+.btn.danger:hover{background:#b42318}
+
+/* ===== Owners list ===== */
+.filters{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.filters .grow{flex:1}
+.filters .count{font-size:10px;color:var(--muted);margin-right:6px}
+.chip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:6px;padding:6px 11px;font-size:10px;font-weight:500}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.oc{background:#fff;border:1px solid var(--border);border-top-width:4px;border-radius:6px;padding:12px 14px;cursor:pointer;transition:.15s}
+.oc:hover{box-shadow:0 4px 14px rgba(30,60,120,.12);transform:translateY(-1px)}
+.oc.ok{border-top-color:#1f6feb}.oc.ok.g{border-top-color:#54b435}.oc.ok.t{border-top-color:#1bb5a6}.oc.bad{border-top-color:#ef5a50}
+.oc .top{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:5px}
+.oc h4{font-size:12px;font-weight:700;margin-bottom:3px}
+.oc .meta{display:flex;gap:10px;font-size:9px;color:#55637f;margin-bottom:6px}
+.oc .meta span{display:flex;align-items:center;gap:3px}
+.oc .meta svg{width:10px;height:10px}
+.oc .r{display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#55637f;padding:2.5px 0}
+.oc .r b{color:var(--text);font-weight:600;font-size:9.5px}
+.oc .r .pill{font-size:8.5px;padding:1px 7px}
+.oc .foot{display:flex;justify-content:space-between;align-items:center;margin-top:4px;font-size:9px;color:#55637f}
+.oc .foot .av{width:18px;height:18px;border-radius:50%;color:#fff;font-size:8px;font-weight:600;display:grid;place-items:center}
+.warn{color:#e08a00}
+.hist{padding:14px 14px 10px}
+.hist h4{font-size:12px;margin-bottom:10px}
+.hist table{width:100%;border-collapse:collapse;font-size:9px}
+.hist th{text-align:left;color:#55637f;font-weight:500;padding:6px 4px;border-bottom:1px solid var(--border)}
+.hist td{padding:6px 4px;border-bottom:1px solid #f0f2f7}
+.hist td.p{font-weight:600}
+.hist .nt{margin-top:8px;font-size:8px;color:var(--muted)}
+
+/* ===== Khách đặt sân ===== */
+.cav{width:32px;height:32px;border-radius:50%;color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center;flex:none}
+.cu-row{display:flex;align-items:center;gap:10px;text-align:left}
+.cu-sub{display:block;font-size:10px;color:var(--muted);margin-top:1px}
+#cuBody tr{cursor:pointer}
+#cdSum b{font-size:15px}
+.mbox.xl{width:720px;max-height:90vh;overflow:auto}
+.ibtn.ok:hover{background:var(--primary-l);color:var(--primary-d)}
+.btn.danger{background:var(--red);border-color:var(--red);color:#fff}
+.btn.danger:hover{background:#b42318}
+.fld textarea{width:100%;border:1px solid transparent;background:#f1f4f9;border-radius:5px;padding:9px 11px;font:inherit;font-size:10.5px;color:var(--text);outline:0;resize:vertical}
+.fld textarea:focus{border-color:var(--primary);background:#fff}
+.fld .err{display:block;color:var(--red);font-size:10px;margin-top:4px}
+
+/* ===== Detail ===== */
+.crumb{font-size:10px;color:var(--muted);margin-bottom:10px;display:flex;gap:6px;align-items:center}
+.crumb a{color:var(--muted);text-decoration:none;display:flex;gap:4px;align-items:center}
+.crumb a:hover{color:var(--primary)}
+.crumb b{color:var(--text);font-weight:500}
+.d-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.d-ava{width:42px;height:42px;border-radius:8px;background:#d8f3f1;color:#0f8f84;font-weight:600;font-size:15px;display:grid;place-items:center}
+.d-head h2{font-size:17px;display:inline}
+.d-head .code{font-size:9px;color:var(--muted);margin-left:6px}
+.d-head .ct{display:flex;gap:16px;font-size:10px;color:#55637f;margin-top:2px}
+.d-head .ct span{display:flex;gap:4px;align-items:center}
+.d-head .ct svg{width:10px;height:10px}
+.d-head .acts{margin-left:auto;display:flex;gap:8px}
+.statusrow{display:flex;gap:26px;font-size:9px;color:var(--muted);margin-bottom:12px;align-items:center}
+.statusrow span{display:flex;gap:6px;align-items:center}
+.sum{display:grid;grid-template-columns:repeat(5,1fr);padding:14px 16px;margin-bottom:12px}
+.sum>div{border-right:1px solid var(--border);padding:0 16px}
+.sum>div:first-child{padding-left:0}.sum>div:last-child{border:0}
+.sum small{display:flex;gap:6px;align-items:center;font-size:9px;color:#55637f;margin-bottom:6px}
+.sum small svg{width:12px;height:12px}
+.sum b{font-size:19px;display:block;line-height:1.2}
+.sum span{font-size:9px;color:var(--muted)}
+.alert{background:var(--amber-bg);border:1px solid var(--amber-bd);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.alert .ic{width:28px;height:28px;border-radius:50%;background:#fde7b0;color:#c07d00;display:grid;place-items:center}
+.alert div b{font-size:11px;display:block}
+.alert div span{font-size:10px;color:#6b5a2e}
+.alert a{margin-left:auto;font-size:10px;font-weight:600;color:var(--primary-d);text-decoration:none}
+.tabs{display:flex;gap:26px;border-bottom:1px solid var(--border);margin-bottom:12px}
+.tabs button{background:none;border:0;padding:8px 0;font-size:11px;font-weight:500;color:#55637f;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button.active{color:var(--primary-d);border-color:var(--primary);font-weight:600}
+.d-grid{display:grid;grid-template-columns:1.75fr 1fr;gap:12px}
+.box{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.box h5{font-size:12px;font-weight:700;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.box h5 a{font-size:9px;font-weight:600;color:var(--primary-d);text-decoration:none}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;margin-bottom:14px}
+.kv small{display:block;font-size:9px;color:var(--muted);margin-bottom:3px}
+.kv b{font-size:11px;font-weight:500}
+.internal{background:#f4f7fc;border:1px solid var(--border);border-radius:6px;padding:9px 11px;font-size:10px;color:#55637f}
+.internal b{display:block;color:var(--text);margin-bottom:3px;font-size:10px}
+.plan{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.plan .pi{width:28px;height:28px;border-radius:6px;background:var(--primary-l);color:var(--primary);display:grid;place-items:center}
+.plan b{font-size:13px;display:block;line-height:1.2}
+.plan small{font-size:9px;color:var(--muted)}
+.plan .pill{margin-left:auto}
+.row{display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#55637f;padding:4px 0}
+.row b{font-size:10px;color:var(--text)}
+.sep{border-top:1px solid var(--border);margin:8px 0}
+.next{margin-top:2px}
+.next .big{font-size:17px;font-weight:700;text-align:right}
+.care{display:flex;gap:8px;font-size:10px;margin-bottom:8px}
+.care .ic{width:22px;height:22px;border-radius:50%;background:var(--primary-l);color:var(--primary);display:grid;place-items:center;flex:none}
+.care .ic svg{width:11px;height:11px}
+.care b{font-size:10px;display:block}
+.care small{font-size:9px;color:var(--muted);display:block}
+.care p{font-size:9.5px;margin-top:2px;color:#3a4558}
+.nextcare{background:var(--primary-l);border:1px solid #d3e2fc;border-radius:6px;padding:8px 10px;font-size:10px}
+.nextcare b{color:var(--primary-d);font-size:10px;display:block;margin-bottom:2px}
+.facility{display:flex;align-items:center;gap:10px;padding:6px 0 4px}
+.facility .fi{width:28px;height:28px;background:var(--primary-l);color:var(--primary);display:grid;place-items:center;border-radius:6px}
+.facility b{font-size:11px;display:block}
+.facility small{font-size:9px;color:var(--muted)}
+.facility .pill{margin-left:auto}
+.fac-foot{display:flex;justify-content:space-between;font-size:9px;color:#55637f;border-top:1px solid var(--border);margin-top:10px;padding-top:8px}
+.d-foot{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:14px}
+.tabpane{display:none}.tabpane.active{display:block}
+
+/* ===== Settings ===== */
+.set-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.set-head .subtitle{margin:0}
+.set-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;align-items:start}
+.set-grid>div{display:flex;flex-direction:column;gap:14px}
+.sbox2{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.sbox2 h5{font-size:12px;font-weight:700;margin-bottom:12px}
+.fld{margin-bottom:12px}
+.fld label{display:block;font-size:10px;font-weight:600;margin-bottom:4px}
+.fld input{width:100%;border:1px solid transparent;background:#f1f4f9;border-radius:5px;padding:9px 11px;font:inherit;font-size:10.5px;color:var(--text);outline:0}
+.fld input:focus{border-color:var(--primary);background:#fff}
+.fld input::placeholder{color:#6b7a96}
+.btns{display:flex;gap:8px}
+.toggle{display:flex;justify-content:space-between;align-items:center;font-size:11px;padding:6px 0}
+.sw{position:relative;width:34px;height:19px;flex:none}
+.sw input{opacity:0;width:0;height:0}
+.sw i{position:absolute;inset:0;background:#d7dce6;border-radius:20px;transition:.2s;cursor:pointer}
+.sw i:before{content:"";position:absolute;width:15px;height:15px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s}
+.sw input:checked+i{background:var(--primary)}
+.sw input:checked+i:before{transform:translateX(15px)}
+.logout p{font-size:9.5px;color:var(--muted);background:#f1f4f9;padding:9px 11px;border-radius:5px;margin-bottom:10px}
+
+.toast{position:fixed;bottom:22px;right:22px;background:#102a5c;color:#fff;padding:10px 16px;border-radius:8px;font-size:11px;opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1;transform:none}
+
+@media (max-width:1000px){
+  .sidebar{display:none}
+  .cards{grid-template-columns:1fr 1fr}
+  .d-grid,.set-grid{grid-template-columns:1fr}
+  .sum{grid-template-columns:repeat(2,1fr);gap:12px}
+  .p-info{grid-template-columns:1fr}
+  .profile-body{flex-direction:column;align-items:flex-start;gap:14px}
+  .p-ava{border:0;padding:0}.p-info{padding:0}
+  .kpis{grid-template-columns:1fr}
+}
+
+/* ===== Khung giờ & giá ===== */
+.pr-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.cin{border:1px solid transparent;background:#f1f4f9;border-radius:5px;padding:7px 8px;font:inherit;font-size:12px;color:var(--text);outline:0;width:100%;min-width:0}
+.cin:focus{border-color:var(--primary);background:#fff}
+.cin:disabled{opacity:.5}
+.cin.pin{text-align:right}
+.tbl.pr th{font-size:12px;padding:10px 8px}
+.tbl.pr td{height:50px;padding:0 8px;font-size:12px}
+.tbl .sw{display:inline-block;vertical-align:middle}
+.tbl select.sel{width:100%;min-width:0}
+.ibtn{background:none;border:0;color:var(--muted);padding:5px;border-radius:5px}
+.ibtn:hover{background:var(--red-bg);color:var(--red)}
+.tl{position:relative;height:28px;background:#eef2f8;border-radius:6px;overflow:hidden;margin:14px 0 4px}
+.tl i{position:absolute;top:0;bottom:0;font-style:normal;font-size:9px;font-weight:600;color:#fff;display:grid;place-items:center;border-right:1px solid #fff;overflow:hidden;white-space:nowrap}
+.tl-x{position:relative;height:14px;font-size:9px;color:var(--muted)}
+.tl-x span{position:absolute;transform:translateX(-50%)}
+.k-low{background:#9aa7bd}.k-normal{background:var(--primary)}.k-peak{background:#f58220}
+.lg{display:flex;gap:14px;font-size:10px;color:#55637f;margin-top:8px}
+.lg i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}
+.chips span{background:var(--primary-l);color:var(--primary-d);border-radius:5px;padding:3px 8px;font-size:10.5px;font-weight:600}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.fld select.sel{width:100%}
+.fld small.h{display:block;font-size:9.5px;color:var(--muted);margin-top:4px}
+#prSum b{font-size:16px}
+.alert.err{background:var(--red-bg);border-color:var(--red-bd)}
+.alert.err .ic{background:#fbd0cc;color:var(--red)}
+.modal{position:fixed;inset:0;background:rgba(16,42,92,.35);display:none;place-items:center;z-index:60}
+.modal.show{display:grid}
+.mbox{background:#fff;border-radius:10px;width:420px;max-width:92vw;padding:18px 20px}
+.mbox h4{font-size:14px;margin-bottom:4px}
+.ck{display:flex;gap:8px;align-items:center;font-size:12px;padding:4px 0}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
+    <symbol id="i-court" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14.5c2 .8 3.5 2.6 3.5 5.5"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1112 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 004 0"/></symbol>
+    <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0116 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M19 20c0 1-2 2-5 2"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7a2 2 0 012-2h13v4M3 7v11a2 2 0 002 2h15a1 1 0 001-1v-9a1 1 0 00-1-1H5a2 2 0 01-2-2z"/><circle cx="16.5" cy="14.5" r="1"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3.5"/><path d="M12 8V4.5M12 4.5h.01M2.5 13v3M21.5 13v3M9 13.5v1.5M15 13.5v1.5M9.5 17.5h5"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 11-3-6.7M21 4v5h-5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></symbol>
+    <symbol id="i-dollar" viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></symbol>
+    <symbol id="i-dl" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2l10 5-10 5L2 7zM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M3 9l1-5h16l1 5M3 9v11h18V9M3 9a3 3 0 006 0 3 3 0 006 0 3 3 0 006 0"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 01-1-1V4a1 1 0 011-1h10a1 1 0 011 1v1"/></symbol>
+    <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="logo-mark" viewBox="0 0 30 24" aria-hidden="true">
+        <polygon points="9,1 29,1 24,7 4,7" fill="#1f6feb"/>
+        <polygon points="6,9 26,9 21,15 1,15" fill="#f58220"/>
+        <polygon points="6,17 20,17 15,23 1,23" fill="#1f6feb"/>
+      </svg>
+      <b>SPORT.COURT</b>
+    </div>
+    <nav class="nav" id="nav">
+      <a href="#home" data-nav="home"><svg><use href="#i-home"/></svg>Trang chủ</a>
+      <a href="#courts" data-nav="courts"><svg><use href="#i-court"/></svg>Quản lý sân</a>
+      <a href="#pricing" data-nav="pricing"><svg><use href="#i-clock"/></svg>Khung giờ &amp; giá</a>
+      <a href="#owners" data-nav="owners"><svg><use href="#i-users"/></svg>Khách hàng</a>
+      <hr>
+      <a href="#settings" data-nav="settings" class="sub"><svg><use href="#i-gear"/></svg>Cài đặt hệ thống</a>
+    </nav>
+    <div class="side-spacer"></div>
+    <div class="support">
+      <svg class="bot"><use href="#i-bot"/></svg>
+      <b>Cần hỗ trợ vận hành?</b>
+      <p>Đội ngũ SPORT.COURT luôn sẵn sàng hỗ trợ bạn.</p>
+      <a href="#" onclick="toast('Đang mở Trung tâm hỗ trợ…');return false">Trung tâm hỗ trợ <svg><use href="#i-ext"/></svg></a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <label class="search"><svg><use href="#i-search"/></svg><input id="gsearch" placeholder="Tìm mã đặt sân, khách hàng..."></label>
+      <a class="link" href="#" onclick="toast('Mở website…');return false">Xem website <svg><use href="#i-ext"/></svg></a>
+      <span class="bell"><svg><use href="#i-bell"/></svg><i></i></span>
+    </header>
+
+    <main class="content">
+
+      <!-- ============ HOME ============ -->
+      <section class="view" id="view-home">
+        <h1 class="title">Trang chủ</h1>
+        <p class="subtitle">Xin chào , cùng theo dõi hoạt động sân hôm nay.</p>
+
+        <div class="card profile">
+          <h3>Hồ sơ quản trị viên</h3>
+          <p class="sub">Thông tin tài khoản quản lý SPORT.COURT</p>
+          <div class="profile-body">
+            <div class="p-ava">
+              <div class="big">K</div>
+              <div><b>Khánh</b><span class="pill green">Quản trị viên</span></div>
+            </div>
+            <div class="p-info">
+              <div><small>Địa chỉ email</small><b>Chưa cập nhật</b></div>
+              <div><small>Số điện thoại</small><b>Chưa cập nhật</b></div>
+              <div><small>Vai trò hệ thống</small><b>Quản trị viên</b></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card report">
+          <div class="report-head">
+            <div><h3>Báo cáo doanh thu</h3><p class="sub">Tổng quan doanh thu theo từng tháng trong năm</p></div>
+            <div class="ctrl">
+              <button class="btn primary" id="btnWithdraw" type="button"><svg><use href="#i-wallet"/></svg>Rút tiền</button>
+              <select class="sel" id="yearSel"></select>
+            </div>
+          </div>
+          <div class="kpis">
+            <div class="kpi hl"><small>Tổng doanh thu năm</small><b id="kTotal">0 đ</b><span id="kTotalSub"></span></div>
+            <div class="kpi"><small>Trung bình mỗi tháng</small><b id="kAvg">0 đ</b><span id="kAvgSub"></span></div>
+            <div class="kpi"><small>Tháng cao nhất</small><b id="kPeak">—</b><span id="kPeakSub"></span></div>
+          </div>
+
+          <div class="chart-head">
+            <div><b>Doanh thu theo tháng</b><small>Đơn vị: triệu đồng</small></div>
+            <div class="legend"><i></i>Doanh thu</div>
+          </div>
+          <div class="chart">
+            <div class="grid" id="grid"></div>
+            <div class="bars" id="bars"></div>
+            <div class="xlabels" id="xl"></div>
+            <div class="empty" id="chartEmpty" hidden>Chưa có dữ liệu doanh thu cho năm này</div>
+          </div>
+          <p class="note">Số liệu minh họa cho bố cục báo cáo, chưa phản ánh doanh thu thực tế.</p>
+        </div>
+      </section>
+
+      <!-- ============ COURTS ============ -->
+      <section class="view" id="view-courts">
+        <h1 class="title" style="font-size:15px;margin-bottom:12px">Quản lý sân</h1>
+        <div class="panel">
+          <div class="toolbar">
+            <button class="btn primary" onclick="toast('Thêm sân mới (demo)')"><svg><use href="#i-plus"/></svg>Thêm mới</button>
+            <button class="btn primary" onclick="openCourt()"><svg><use href="#i-plus"/></svg>Thêm mới</button>
+            <span class="grow"></span>
+            <select class="sel" id="courtStatus"><option value="">Tất cả trạng thái</option><option value="on">Đang hoạt động</option><option value="off">Đang bảo trì</option></select>
+            <div class="sbox"><input id="courtSearch" placeholder=""><svg style="width:13px;height:13px"><use href="#i-search"/></svg></div>
+            <button class="ghost" onclick="renderCourts();toast('Đã tải lại')"><svg style="width:13px;height:13px"><use href="#i-refresh"/></svg>Tải lại</button>
+            <span class="total">Tổng số : <b id="courtTotal">0</b></span>
+            <button class="ghost" title="Cài đặt cột"><svg style="width:17px;height:17px"><use href="#i-gear"/></svg></button>
+          </div>
+          <table class="tbl">
+            <thead><tr><th style="width:36px">TT</th><th style="width:70px">Ảnh</th><th>Tên sân</th><th>Loại sân</th><th>Kích thước</th><th>Tên chủ sân</th><th>Trạng thái</th><th>Địa chỉ</th><th style="width:110px">Thao tác</th></tr></thead>
+            <tbody id="courtBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ OWNERS LIST ============ -->
+      <section class="view" id="view-owners">
+        <div class="tabs" id="owTabs" style="margin-bottom:14px">
+          <button class="active" data-ow="ow-owners">Chủ sân</button>
+          <button data-ow="ow-customers">Khách đặt sân</button>
+        </div>
+        <div id="ow-owners">
+        <h1 class="title" style="font-size:18px;margin-bottom:14px">Danh sách chủ sân</h1>
+        <div class="filters">
+          <button class="chip">Tất cả trạng thái <svg style="width:10px;height:10px"><use href="#i-chev"/></svg></button>
+          <button class="chip">Gói dịch vụ <svg style="width:10px;height:10px"><use href="#i-chev"/></svg></button>
+          <button class="chip">30 ngày qua <svg style="width:10px;height:10px"><use href="#i-chev"/></svg></button>
+          <span class="grow"></span>
+          <span class="count">312 chủ sân</span>
+          <button class="btn" style="font-size:10px" onclick="toast('Đang xuất Excel…')"><svg><use href="#i-dl"/></svg>Xuất Excel</button>
+          <button class="btn primary" style="font-size:10px" onclick="toast('Thêm chủ sân (demo)')">+ Thêm chủ sân</button>
+        </div>
+        <div class="cards" id="ownerCards"></div>
+        <div class="card hist">
+          <h4>Lịch sử thuê gói</h4>
+          <table>
+            <thead><tr><th>Ngày ghi nhận</th><th>Chủ sân</th><th>Gói / chu kỳ</th><th>Thời hạn sử dụng</th><th>Phí thuê</th><th>Thanh toán</th></tr></thead>
+            <tbody id="histBody"></tbody>
+          </table>
+          <p class="nt">Kỳ hạn chưa thanh toán chưa được kích hoạt. Ngày hết hạn trên thẻ là kỳ đã thanh toán (xác gần nhất).</p>
+        </div>
+        </div><!-- /ow-owners -->
+
+        <div id="ow-customers" hidden>
+          <h1 class="title" style="font-size:18px;margin-bottom:14px">Danh sách khách đặt sân</h1>
+          <div class="card sum" id="cuSum" style="margin-bottom:14px"></div>
+          <div class="panel">
+            <div class="toolbar" style="flex-wrap:wrap">
+              <div class="sbox"><input id="cuSearch" placeholder="Tìm tên, số điện thoại, email..."><svg style="width:13px;height:13px"><use href="#i-search"/></svg></div>
+              <select class="sel" id="cuTier"><option value="">Tất cả hạng</option><option value="vip">VIP</option><option value="member">Thành viên</option><option value="normal">Thường</option></select>
+              <select class="sel" id="cuState"><option value="">Mọi trạng thái</option><option value="ok">Bình thường</option><option value="warn">Hay hủy sân</option><option value="banned">Blacklist</option></select>
+              <select class="sel" id="cuSort"><option value="recent">Đặt gần đây</option><option value="spend">Chi tiêu cao</option><option value="cancel">Tỷ lệ hủy cao</option></select>
+              <span class="grow"></span>
+              <span class="total">Tổng số : <b id="cuTotal">0</b></span>
+              <button class="btn" id="cuExport"><svg><use href="#i-dl"/></svg>Xuất CSV</button>
+              <button class="btn primary" id="cuAdd"><svg><use href="#i-plus"/></svg>Thêm khách</button>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="tbl">
+                <thead><tr><th style="width:36px">TT</th><th>Khách hàng</th><th>Hạng</th><th>Lượt đặt</th><th>Hủy / vắng</th><th>Chi tiêu</th><th>Đặt gần nhất</th><th>Trạng thái</th><th style="width:110px">Thao tác</th></tr></thead>
+                <tbody id="cuBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ OWNER DETAIL ============ -->
+      <section class="view" id="view-detail">
+        <div class="crumb"><a href="#owners"><svg style="width:10px;height:10px"><use href="#i-left"/></svg>Danh sách chủ sân</a> / <b>Chi tiết chủ sân</b></div>
+        <div class="d-head">
+          <div class="d-ava">HL</div>
+          <div>
+            <h2>Hoàng Thị Lan</h2><span class="code"># CS001089</span>
+            <div class="ct"><span><svg><use href="#i-phone"/></svg>0907 654 321</span><span><svg><use href="#i-mail"/></svg>lan.hoang@lananh.vn</span></div>
+          </div>
+          <div class="acts">
+            <button class="btn" onclick="toast('Chỉnh sửa (demo)')"><svg><use href="#i-edit"/></svg>Chỉnh sửa</button>
+            <button class="btn" onclick="toast('Đã gửi nhắc gia hạn')"><svg><use href="#i-bell"/></svg>Nhắc gia hạn</button>
+            <button class="btn primary" onclick="toast('Gia hạn gói (demo)')"><svg><use href="#i-refresh"/></svg>Gia hạn gói</button>
+            <button class="btn" style="padding:7px 10px">···</button>
+          </div>
+        </div>
+        <div class="statusrow">
+          <span>Sử dụng ứng dụng <span class="pill green">Đang hoạt động</span></span>
+          <span>Thanh toán kỳ tới <span class="pill amber">Chờ thanh toán</span></span>
+        </div>
+
+        <div class="card sum">
+          <div><small><svg><use href="#i-store"/></svg>Cơ sở</small><b>01</b><span>Đang hoạt động</span></div>
+          <div><small><svg><use href="#i-court"/></svg>Tổng số sân</small><b>12</b><span>Môn Pickleball</span></div>
+          <div><small><svg><use href="#i-box"/></svg>Gói hiện tại</small><b>Starter</b><span>Chu kỳ 1 tháng</span></div>
+          <div><small><svg><use href="#i-cal"/></svg>Hết hạn kỳ hiện tại</small><b>22/11/2026</b><span>Còn 22 ngày sử dụng</span></div>
+          <div><small><svg><use href="#i-dollar"/></svg>Còn phải thu</small><b>249.000 đ</b><span>Kỳ tới · Chưa thanh toán</span></div>
+        </div>
+
+        <div class="alert">
+          <div class="ic"><svg><use href="#i-clock"/></svg></div>
+          <div><b>Cần xử lý · Theo dõi thanh toán gia hạn 249.000 đ</b><span>Kỳ 23/11 – 22/12/2026 chưa kích hoạt. Gửi lại thông tin thanh toán theo lịch hẹn 02/11/2026.</span></div>
+          <a href="#">Xem giao dịch →</a>
+        </div>
+
+        <div class="tabs" id="dtabs">
+          <button class="active" data-tab="t1">Tổng quan</button>
+          <button data-tab="t2">Cơ sở &amp; sân</button>
+          <button data-tab="t3">Gói thuê &amp; thanh toán</button>
+          <button data-tab="t4">Lịch sử chăm sóc</button>
+        </div>
+
+        <div class="d-grid">
+          <div class="stack">
+            <div class="tabpane active" id="t1">
+              <div class="stack">
+                <div class="box">
+                  <h5>Thông tin chủ sân</h5>
+                  <div class="kv">
+                    <div><small>Họ và tên</small><b>Hoàng Thị Lan</b></div>
+                    <div><small>Loại khách hàng</small><b>Chủ sân cá nhân</b></div>
+                    <div><small>Ngày tham gia</small><b>23/08/2026</b></div>
+                    <div><small>Người phụ trách</small><b>Nguyễn Minh Khánh - CSKH</b></div>
+                  </div>
+                </div>
+                <div class="box">
+                  <h5>Thông tin xuất hóa đơn</h5>
+                  <div class="kv">
+                    <div><small>Tên đơn vị / Hộ kinh doanh</small><b>Hộ kinh doanh Sân Pickleball Lan Anh</b></div>
+                    <div><small>Mã số thuế</small><b>0318456729</b></div>
+                    <div><small>Địa chỉ xuất hóa đơn</small><b>28 Đường số 12, P. An Khánh, TP. Hồ Chí Minh</b></div>
+                    <div><small>Email nhận hóa đơn</small><b>hoadon@lananh.vn</b></div>
+                  </div>
+                  <div class="internal"><b>Ghi chú nội bộ</b>Ưu tiên liên hệ qua Zalo sau 14:00. Chủ sân muốn gửi gói Starter; gửi thông tin chuyển khoản trước khi gọi xác nhận gia hạn.</div>
+                </div>
+              </div>
+            </div>
+            <div class="tabpane" id="t2"><div class="box"><h5>Cơ sở &amp; sân</h5><p style="color:var(--muted)">Sân Pickleball Lan Anh · 12 sân · Đang hoạt động.</p></div></div>
+            <div class="tabpane" id="t3"><div class="box"><h5>Gói thuê &amp; thanh toán</h5><p style="color:var(--muted)">Gói Starter 249.000 ₫/tháng. Kỳ tiếp theo đang chờ thanh toán.</p></div></div>
+            <div class="tabpane" id="t4"><div class="box"><h5>Lịch sử chăm sóc</h5><p style="color:var(--muted)">30/10/2026 · Nhắc gia hạn qua Zalo. Hẹn tiếp theo 02/11/2026 14:30.</p></div></div>
+
+            <div class="box">
+              <h5>Cơ sở &amp; sân <a href="#">Xem 1 cơ sở →</a></h5>
+              <div class="facility">
+                <div class="fi"><svg><use href="#i-store"/></svg></div>
+                <div><b>Sân Pickleball Lan Anh</b><small>28 Đường số 12, P. An Khánh, TP. Hồ Chí Minh</small></div>
+                <span class="pill green">Đang hoạt động</span>
+              </div>
+              <div class="fac-foot"><span>Pickleball · 12 sân</span><span>Quản lý: Hoàng Thị Lan · 0907 654 321</span></div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="box">
+              <h5>Gói thuê &amp; thanh toán <a href="#">Chi tiết →</a></h5>
+              <div class="plan">
+                <div class="pi"><svg><use href="#i-box"/></svg></div>
+                <div><b>Starter</b><small>249.000 ₫ / tháng</small></div>
+                <span class="pill green">Kỳ hiện tại đã thanh toán</span>
+              </div>
+              <div class="row"><span>Hết hạn kỳ hiện tại</span><b>22/11/2026</b></div>
+              <div class="row"><span style="color:var(--primary-d)">Còn 22 ngày · Ứng dụng tiếp tục hoạt động.</span></div>
+              <div class="sep"></div>
+              <div class="row"><span>Cơ sở : 1 / 1</span><b style="font-weight:500">Sân : 12 / 15</b></div>
+              <div class="sep"></div>
+              <div class="next">
+                <div class="row"><b style="font-size:11px">Gia hạn kỳ tiếp theo</b><span class="pill amber">Chờ thanh toán</span></div>
+                <div class="row"><span style="font-size:10px">23/11/2026 – 22/12/2026</span></div>
+                <div class="row"><span>Ghi nhận 30/10/2026 · 1 tháng</span><span class="big">249.000 ₫</span></div>
+                <div class="row" style="color:var(--muted)">Chưa kích hoạt · Chưa phải trả quá hạn. Chỉ cập nhật thời hạn sau khi xác nhận thanh toán.</div>
+              </div>
+            </div>
+            <div class="box">
+              <h5>Chăm sóc gần nhất <a href="#">Lịch sử →</a></h5>
+              <div class="care">
+                <div class="ic"><svg><use href="#i-chat"/></svg></div>
+                <div><b>Nhắc gia hạn qua Zalo</b><small>30/10/2026 · 15:20 · Nguyễn Minh Khánh</small>
+                  <p>Đã gửi thông tin thanh toán. Chị Lan xác nhận tiếp tục gói Starter và hẹn phản hồi ngày 02/11.</p></div>
+              </div>
+              <div class="nextcare"><b>Tiếp theo · 02/11/2026, 14:30</b>Gửi lại thông tin chuyển khoản, nhận xác nhận thanh toán kỳ gia hạn.</div>
+            </div>
+          </div>
+        </div>
+        <div class="d-foot"><span>Dữ liệu minh họa · Không phải thông tin khách hàng thực tế</span><span>Thông tin tại ngày 31/10/2026</span></div>
+      </section>
+
+      <!-- ============ WITHDRAW ============ -->
+      <section class="view" id="view-withdraw">
+        <div class="crumb"><a href="#home"><svg style="width:10px;height:10px"><use href="#i-left"/></svg>Trang chủ</a> / <b>Rút tiền</b></div>
+        <h1 class="title">Rút tiền</h1>
+        <p class="subtitle">Rút doanh thu đang giữ trên hệ thống về tài khoản thụ hưởng.</p>
+        <div class="w-wrap">
+          <div class="w-balance">
+            <small>Tổng số tiền trên hệ thống chưa được rút</small>
+            <b id="wBalance">0 đ</b>
+          </div>
+          <div class="w-ok" id="wOk" hidden></div>
+          <form class="w-form" id="wForm" novalidate>
+            <div class="fld">
+              <label for="wAmount">Số tiền muốn rút (đ)</label>
+              <input id="wAmount" inputmode="numeric" autocomplete="off" placeholder="Nhập số tiền muốn rút">
+              <div class="hint"><span id="wMax"></span><a id="wAll">Rút toàn bộ</a></div>
+              <span class="err" id="eAmount"></span>
+            </div>
+            <div class="fld">
+              <label for="wBank">Tên ngân hàng</label>
+              <input id="wBank" list="bankList" autocomplete="off" placeholder="Chọn hoặc nhập tên ngân hàng">
+              <datalist id="bankList">
+                <option value="Vietcombank (VCB)"><option value="VietinBank (CTG)"><option value="BIDV">
+                <option value="Agribank"><option value="Techcombank (TCB)"><option value="MB Bank (MBB)">
+                <option value="ACB"><option value="VPBank"><option value="TPBank"><option value="Sacombank (STB)">
+                <option value="HDBank"><option value="VIB"><option value="SHB"><option value="OCB">
+                <option value="MSB"><option value="SeABank"><option value="Eximbank (EIB)"><option value="LPBank">
+                <option value="Nam A Bank"><option value="Bac A Bank"><option value="ABBank"><option value="Cake by VPBank">
+              </datalist>
+              <span class="err" id="eBank"></span>
+            </div>
+            <div class="fld">
+              <label for="wAcc">Số tài khoản thụ hưởng</label>
+              <input id="wAcc" inputmode="numeric" autocomplete="off" placeholder="Nhập số tài khoản thụ hưởng">
+              <span class="err" id="eAcc"></span>
+            </div>
+            <div class="fld">
+              <label for="wName">Tên tài khoản thụ hưởng</label>
+              <input id="wName" autocomplete="off" placeholder="Nhập tên tài khoản thụ hưởng">
+              <span class="err" id="eName"></span>
+            </div>
+            <div class="btns">
+              <button class="btn" type="button" onclick="location.hash='#home'">Hủy</button>
+              <button class="btn primary" type="submit">Xác nhận rút</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ============ SETTINGS ============ -->
+      <section class="view" id="view-settings">
+        <div class="set-head">
+          <div><h1 class="title">Cài đặt hệ thống</h1><p class="subtitle">Quản lý cấu hình, tích hợp và bảo mật hệ thống.</p></div>
+          <div class="btns"><button class="btn" onclick="toast('Chế độ chỉnh sửa')">Chỉnh sửa</button><button class="btn primary" onclick="toast('Đã lưu thay đổi')">Lưu thay đổi</button></div>
+        </div>
+        <div class="set-grid">
+          <div>
+            <div class="sbox2">
+              <h5>Tài khoản</h5>
+              <div class="fld"><label>Tên tài khoản</label><input value="Khánh"></div>
+              <div class="fld"><label>Số điện thoại</label><input value="0909 123 456"></div>
+              <div class="fld"><label>Email</label><input value="khanh@sportcourt.vn"></div>
+            </div>
+            <div class="sbox2">
+              <h5>Cài đặt chung</h5>
+              <div class="fld"><label>Địa chỉ website</label><input value="https://sportcourt.vn"></div>
+              <div class="fld"><label>Múi giờ mặc định</label><input value="GMT+7 (Việt Nam)"></div>
+            </div>
+            <div class="sbox2">
+              <h5>Thanh toán</h5>
+              <div class="fld"><label>Phương thức thanh toán</label><input value="Momo, VNPay, Thẻ tín dụng"></div>
+            </div>
+          </div>
+          <div>
+            <div class="sbox2">
+              <h5>Đổi mật khẩu</h5>
+              <div class="fld"><label>Mật khẩu hiện tại</label><input type="password" placeholder="Nhập mật khẩu hiện tại"></div>
+              <div class="fld"><label>Mật khẩu mới</label><input type="password" placeholder="Nhập mật khẩu mới"></div>
+              <div class="fld"><label>Xác nhận mật khẩu</label><input type="password" placeholder="Nhập lại mật khẩu mới"></div>
+              <div class="btns"><button class="btn" onclick="toast('Đã hủy')">Hủy</button><button class="btn primary" onclick="toast('Đã cập nhật mật khẩu')">Cập nhật mật khẩu</button></div>
+            </div>
+            <div class="sbox2">
+              <h5>Bảo mật</h5>
+              <div class="toggle">Xác thực 2 yếu tố <label class="sw"><input type="checkbox" checked><i></i></label></div>
+              <div class="toggle">Lưu nhật ký hoạt động <label class="sw"><input type="checkbox" checked><i></i></label></div>
+              <div class="toggle">Cảnh báo bảo mật <label class="sw"><input type="checkbox"><i></i></label></div>
+            </div>
+            <div class="sbox2 logout">
+              <h5>Đăng xuất</h5>
+              <p>Đăng xuất khỏi tài khoản quản trị hiện tại.</p>
+              <button class="btn" style="color:var(--primary-d)" onclick="toast('Đã đăng xuất (demo)')">Đăng xuất</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PRICING ============ -->
+      <section class="view" id="view-pricing">
+        <div class="set-head">
+          <div><h1 class="title">Quản lý khung giờ và giá</h1><p class="subtitle">Cấu hình giờ hoạt động, bảng giá và quy tắc đặt cho từng sân.</p></div>
+          <div class="btns"><button class="btn" id="prCopy"><svg><use href="#i-copy"/></svg>Sao chép sang sân khác</button><button class="btn" id="prReset"><svg><use href="#i-refresh"/></svg>Khôi phục</button><button class="btn primary" id="prSave">Lưu thay đổi</button></div>
+        </div>
+        <div class="pr-bar"><select class="sel" id="prCourt" style="min-width:260px"></select><span id="prStatus"></span><span id="prDirty"></span></div>
+        <div class="alert" id="prWarn" hidden></div>
+        <div class="card sum" id="prSum"></div>
+        <div class="tabs" id="prTabs">
+          <button class="active" data-pt="pp-h">Khung giờ hoạt động</button><button data-pt="pp-p">Bảng giá</button><button data-pt="pp-l">Ngày lễ</button><button data-pt="pp-r">Quy tắc đặt sân</button>
+        </div>
+        <div class="d-grid">
+          <div class="stack">
+            <div class="tabpane active" id="pp-h"><div class="box">
+              <h5>Giờ mở cửa theo ngày <span class="btns"><button class="btn" data-ap="wk">Áp dụng giờ Thứ 2 cho T2–T6</button><button class="btn" data-ap="all">Cho cả tuần</button></span></h5>
+              <div style="overflow-x:auto"><table class="tbl pr"><thead><tr><th>Thứ</th><th>Hoạt động</th><th>Mở cửa</th><th>Đóng cửa</th><th>Nghỉ giữa ca từ</th><th>Đến</th><th>Tổng giờ</th></tr></thead><tbody id="prHours"></tbody></table></div>
+              <p class="note" style="margin-top:12px;padding-top:10px">Để trống giờ nghỉ giữa ca nếu sân mở liên tục. Ngày tắt "Hoạt động" sẽ không nhận đặt.</p>
+            </div></div>
+            <div class="tabpane" id="pp-p"><div class="box">
+              <h5>Khung giá theo giờ <span class="btns" style="align-items:center"><input class="cin" id="prPct" type="number" placeholder="±%" style="width:64px"><button class="btn" id="prPctBtn">Tăng/giảm giá</button><button class="btn primary" id="prAddSlot"><svg><use href="#i-plus"/></svg>Thêm khung giá</button></span></h5>
+              <div style="overflow-x:auto"><table class="tbl pr"><thead><tr><th style="width:36px">TT</th><th>Tên khung</th><th>Loại</th><th>Từ</th><th>Đến</th><th>Ngày thường</th><th>Cuối tuần</th><th>Ngày lễ</th><th style="width:44px"></th></tr></thead><tbody id="prSlots"></tbody></table></div>
+              <p class="note" style="margin-top:12px;padding-top:10px">Đơn vị giá: đ / giờ. Cuối tuần gồm Thứ 7 và Chủ nhật; ngày lễ cấu hình ở tab "Ngày lễ".</p>
+              <div style="padding:0 12px"><div class="tl" id="prTl"></div><div class="tl-x" id="prTx"></div></div>
+              <div class="lg"><span><i class="k-low"></i>Giờ thấp điểm</span><span><i class="k-normal"></i>Giờ thường</span><span><i class="k-peak"></i>Giờ vàng</span></div>
+            </div></div>
+            <div class="tabpane" id="pp-l"><div class="box">
+              <h5>Ngày lễ và ngày đặc biệt <button class="btn primary" id="prAddHol"><svg><use href="#i-plus"/></svg>Thêm ngày lễ</button></h5>
+              <div style="overflow-x:auto"><table class="tbl pr"><thead><tr><th style="width:36px">TT</th><th>Tên ngày lễ</th><th>Từ ngày</th><th>Đến ngày</th><th>Lặp hàng năm</th><th>Áp dụng</th><th style="width:44px"></th></tr></thead><tbody id="prHols"></tbody></table></div>
+              <p class="note" style="margin-top:12px;padding-top:10px">Ngày lễ âm lịch (Tết, Giỗ Tổ) đổi theo năm nên không bật "Lặp hàng năm". Ngày Tết trong dữ liệu mẫu chỉ là ước tính, hãy cập nhật theo thông báo chính thức.</p>
+            </div></div>
+            <div class="tabpane" id="pp-r"><div class="stack">
+              <div class="box"><h5>Quy tắc đặt sân</h5><div id="prRules"></div></div>
+              <div class="box"><h5>Mốc giờ và thời lượng hợp lệ</h5>
+                <small style="color:var(--muted)">Mốc giờ bắt đầu (theo giờ Thứ 2)</small><div class="chips" id="rStarts"></div>
+                <small style="color:var(--muted)">Thời lượng khách có thể chọn</small><div class="chips" id="rDurs"></div>
+              </div>
+            </div></div>
+          </div>
+          <div class="stack"><div class="box">
+            <h5>Tính thử giá</h5>
+            <div class="fld"><label>Ngày đặt</label><input type="date" id="pvDate"></div>
+            <div class="f2"><div class="fld"><label>Giờ bắt đầu</label><select class="sel" id="pvStart"></select></div><div class="fld"><label>Thời lượng</label><select class="sel" id="pvDur"></select></div></div>
+            <div id="pvOut"></div>
+          </div></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+<div class="modal" id="cpModal"><div class="mbox">
+  <h4>Sao chép cấu hình sang sân khác</h4>
+  <p class="subtitle" style="margin-bottom:10px">Dữ liệu hiện tại (kể cả chưa lưu) sẽ ghi đè lên sân được chọn.</p>
+  <b style="font-size:11px">Nội dung</b>
+  <div id="cpSecs"><label class="ck"><input type="checkbox" value="h" checked>Khung giờ hoạt động</label><label class="ck"><input type="checkbox" value="s" checked>Bảng giá</label><label class="ck"><input type="checkbox" value="v" checked>Ngày lễ</label><label class="ck"><input type="checkbox" value="r" checked>Quy tắc đặt sân</label></div>
+  <b style="font-size:11px;display:block;margin-top:8px">Sân nhận cấu hình</b>
+  <div id="cpCourts"></div>
+  <div class="btns" style="margin-top:14px;justify-content:flex-end"><button class="btn" id="cpCancel">Hủy</button><button class="btn primary" id="cpOk">Sao chép</button></div>
+</div></div>
+<div class="modal" id="courtModal"><div class="mbox wide">
+  <h4 id="cmTitle">Thêm sân mới</h4>
+  <p class="subtitle" style="margin-bottom:10px">Thông tin hiển thị với khách khi đặt sân.</p>
+  <div class="f2">
+    <div class="fld"><label>Tên sân *</label><input id="cmName"><span class="err" id="cmErr"></span></div>
+    <div class="fld"><label>Loại sân</label><select class="sel" id="cmType"></select></div>
+    <div class="fld"><label>Tên chủ sân</label><input id="cmOwner"></div>
+    <div class="fld"><label>Trạng thái</label><select class="sel" id="cmStatus"><option value="on">Đang hoạt động</option><option value="off">Đang bảo trì</option></select></div>
+    <div class="fld"><label>Chiều dài (m)</label><input id="cmLen" inputmode="decimal" placeholder="VD: 13,4"></div>
+    <div class="fld"><label>Chiều rộng (m)</label><input id="cmWid" inputmode="decimal" placeholder="VD: 6,1"></div>
+  </div>
+  <div class="fld"><label>Địa chỉ</label><input id="cmAddr"></div>
+  <div class="fld"><label>Mô tả</label><textarea id="cmDesc" rows="3"></textarea></div>
+  <div class="fld"><label>Hình ảnh (tối đa 4)</label><input type="file" id="cmFile" accept="image/*" multiple><div class="imgs" id="cmImgs"></div></div>
+  <div class="btns" style="justify-content:flex-end"><button class="btn" id="cmCancel">Hủy</button><button class="btn primary" id="cmOk">Lưu</button></div>
+</div></div>
+
+<div class="modal" id="blockModal"><div class="mbox wide">
+  <h4 id="bkTitle">Chặn lịch</h4>
+  <p class="subtitle" style="margin-bottom:10px">Khách không thể đặt sân trong các khoảng thời gian bị chặn.</p>
+  <div style="overflow-x:auto"><table class="tbl pr"><thead><tr><th>Lý do</th><th>Thời gian</th><th>Ghi chú</th><th style="width:44px"></th></tr></thead><tbody id="bkBody"></tbody></table></div>
+  <b style="font-size:11px;display:block;margin:14px 0 6px">Thêm lịch chặn</b>
+  <div class="f2">
+    <div class="fld"><label>Lý do</label><select class="sel" id="bkReason"><option value="maint">Bảo trì</option><option value="event">Sự kiện</option><option value="other">Khác</option></select></div>
+    <div class="fld"><label>Ghi chú</label><input id="bkNote" placeholder="VD: Thay sàn, giải nội bộ..."></div>
+    <div class="fld"><label>Từ ngày</label><input type="date" id="bkFrom"></div>
+    <div class="fld"><label>Đến ngày</label><input type="date" id="bkTo"></div>
+    <div class="fld"><label>Từ giờ</label><input type="time" id="bkFT" value="08:00"></div>
+    <div class="fld"><label>Đến giờ</label><input type="time" id="bkTT" value="12:00"></div>
+  </div>
+  <div class="toggle">Chặn cả ngày <label class="sw"><input type="checkbox" id="bkAll" checked><i></i></label></div>
+  <div class="btns" style="justify-content:flex-end;margin-top:10px"><button class="btn" id="bkClose">Đóng</button><button class="btn primary" id="bkAdd"><svg><use href="#i-plus"/></svg>Thêm lịch chặn</button></div>
+</div></div>
+<!-- Chi tiết khách -->
+<div class="modal" id="cuModal"><div class="mbox xl">
+  <div class="d-head">
+    <span class="cav" id="cdAva" style="width:42px;height:42px;font-size:15px"></span>
+    <div>
+      <h2 id="cdName"></h2><span class="code" id="cdCode"></span>
+      <div style="margin:4px 0" id="cdTier"></div>
+      <div class="ct"><span><svg><use href="#i-phone"/></svg><span id="cdPhone"></span></span><span><svg><use href="#i-mail"/></svg><span id="cdMail"></span></span></div>
+    </div>
+    <div class="acts"><button class="btn" id="cdEdit"><svg><use href="#i-edit"/></svg>Sửa</button><button class="btn" id="cdBlock"></button></div>
+  </div>
+  <div class="card sum" id="cdSum" style="grid-template-columns:repeat(4,1fr);margin:10px 0"></div>
+  <div class="alert err" id="cdBan" hidden></div>
+  <div class="alert" id="cdWarn" hidden></div>
+  <div class="tabs" id="cdTabs"><button class="active" data-cp="cp-info">Thông tin &amp; ghi chú</button><button data-cp="cp-hist">Lịch sử đặt sân</button></div>
+  <div id="cp-info">
+    <div class="kv" id="cdKv"></div>
+    <div class="fld"><label>Ghi chú nội bộ</label><textarea id="cdNote" rows="3" placeholder="VD: Hay đặt sân số 2, cần xuất hóa đơn công ty..."></textarea></div>
+    <div class="btns"><button class="btn primary" id="cdNoteSave">Lưu ghi chú</button></div>
+  </div>
+  <div id="cp-hist" hidden>
+    <div class="pr-bar"><select class="sel" id="cdHF"><option value="">Tất cả lượt đặt</option><option value="done">Hoàn thành</option><option value="upcoming">Sắp tới</option><option value="cancelled">Đã hủy</option><option value="noshow">Không đến</option></select></div>
+    <div style="overflow-x:auto"><table class="tbl pr"><thead><tr><th>Mã đặt</th><th>Ngày</th><th>Giờ</th><th>Sân</th><th>Số tiền</th><th>Trạng thái</th></tr></thead><tbody id="cdHist"></tbody></table></div>
+  </div>
+  <div class="btns" style="justify-content:flex-end;margin-top:14px"><button class="btn" id="cdClose">Đóng</button></div>
+</div></div>
+
+<!-- Thêm / sửa khách -->
+<div class="modal" id="cuForm"><div class="mbox">
+  <h4 id="cuFTitle">Thêm khách</h4>
+  <div class="fld" style="margin-top:10px"><label>Họ và tên *</label><input id="cuFName"></div>
+  <div class="f2">
+    <div class="fld"><label>Số điện thoại *</label><input id="cuFPhone" inputmode="numeric"></div>
+    <div class="fld"><label>Hạng khách</label><select class="sel" id="cuFTier"><option value="normal">Thường</option><option value="member">Thành viên</option><option value="vip">VIP</option></select></div>
+  </div>
+  <div class="fld"><label>Email</label><input id="cuFMail"></div>
+  <div class="fld"><label>Ghi chú nội bộ</label><textarea id="cuFNote" rows="3"></textarea><span class="err" id="cuFErr"></span></div>
+  <div class="btns" style="justify-content:flex-end"><button class="btn" id="cuFCancel">Hủy</button><button class="btn primary" id="cuFOk">Lưu</button></div>
+</div></div>
+
+<!-- Đưa vào blacklist -->
+<div class="modal" id="cuBan"><div class="mbox">
+  <h4>Đưa vào blacklist</h4>
+  <p class="subtitle" style="margin-bottom:10px">Khách <b id="cuBanFor"></b> sẽ không thể đặt sân cho đến khi được bỏ chặn.</p>
+  <div class="fld"><label>Lý do</label><select class="sel" id="cuBanReason"></select></div>
+  <div class="fld"><label>Ghi chú</label><input id="cuBanNote" placeholder="VD: Vắng 3 lần liên tiếp, không báo trước"></div>
+  <div class="btns" style="justify-content:flex-end"><button class="btn" id="cuBanCancel">Hủy</button><button class="btn danger" id="cuBanOk">Chặn khách</button></div>
+</div></div>
+<div class="modal" id="cfModal"><div class="mbox">
+  <h4 id="cfTitle">Xác nhận</h4>
+  <p class="subtitle" id="cfMsg" style="margin-bottom:14px"></p>
+  <div class="btns" style="justify-content:flex-end"><button class="btn" id="cfNo">Hủy</button><button class="btn primary" id="cfYes">Đồng ý</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- Data ---------- */
+/* Doanh thu theo năm (đơn vị: triệu đồng). Thay bằng dữ liệu từ API khi có. */
+const revenueByYear={
+  2023:[44,48,50,46,54,58,62,56,60,66,70,76],
+  2024:[60,64,68,62,72,78,84,76,80,88,94,100],
+  2025:[84,92,98,88,104,112,120,108,116,128,136,144],
+  2026:[118,126,131,122,139,147,155,142,150,162,170,178]
+};
+const MIN_YEAR=2023;
+const NOW=new Date(), CUR_Y=NOW.getFullYear(), CUR_M=NOW.getMonth()+1;
+/* Trả về 12 phần tử; tháng chưa đến (hoặc năm chưa có dữ liệu) = null */
+function getRevenue(y){
+  const base=revenueByYear[y]||new Array(12).fill(null);
+  return base.map((v,i)=>{
+    if(v==null||y>CUR_Y) return null;
+    if(y===CUR_Y && i+1>CUR_M) return null;
+    return v;
+  });
+}
+const fmt=n=>Math.round(n).toLocaleString('de-DE');
+const courts=[
+ {n:"Minh Dương Badminton",o:"Nguyễn Văn A",s:"on",a:"Ng. 286 Đ. Nguyễn Xiển, Thanh Liệt, Hà Nội"},
+ {n:"Phúc Long Badminton",o:"Nguyễn Văn B",s:"off",a:"P. Trần Quý Cáp, Văn Miếu - Quốc Tử Giám, Hà Nội"},
+ {n:"Sân Cầu Lông City Chùa Bộc",o:"Nguyễn Văn C",s:"on",a:"Số 1 ngõ 165 Chùa Bộc, Phường Kim Liên, Hà Nội"},
+ {n:"Pick & Badminton HUCE",o:"Nguyễn Văn D",s:"off",a:"72 Trần Đại Nghĩa, Phường Bạch Mai, TP Hà Nội"},
+ {n:"Sân Cầu Lông Parabol",o:"Nguyễn Văn E",s:"on",a:"41 Phương Liệt, Thanh Xuân, Hà Nội"}
+];
+const owners=[
+ {id:"CS001248",n:"Nguyễn Văn An",sn:18,pk:"Gói Pro",ph:"0903 123 456",cs:"Sân bóng đá An Phát",ex:"12/12/2026",pay:"Đã thanh toán",pc:"green",left:"Còn 42 ngày",lc:"",btn:"Xem hóa đơn",bc:"blue",tag:"Chủ sân VIP",av:"A",avc:"#102a5c",on:true,cls:"ok"},
+ {id:"CS001135",n:"Trần Thị Bích",sn:24,pk:"Gói Pro",ph:"0909 876 543",cs:"Sân tennis Bích Thư",ex:"28/12/2026",pay:"Đã thanh toán",pc:"green",left:"Còn 56 ngày",lc:"",btn:"Xem hóa đơn",bc:"blue",tag:"Chủ sân VIP",av:"B",avc:"#7c3aed",on:true,cls:"ok g"},
+ {id:"CS000987",n:"Lê Quốc Hùng",sn:7,pk:"Gói Starter",ph:"0905 676 901",cs:"Sân bóng đá Hùng Phát",ex:"05/10/2026",pay:"Chưa thanh toán",pc:"red",left:"Quá hạn 26 ngày",lc:"t-red",btn:"Nhắc gia hạn",bc:"blue",tag:"Chủ sân thường",av:"H",avc:"#e11d48",on:false,cls:"bad"},
+ {id:"CS001302",n:"Phạm Minh Tuấn",sn:31,pk:"Gói Pro",ph:"0901 234 567",cs:"Sân cầu lông Tuấn Phát",ex:"16/01/2027",pay:"Đã thanh toán",pc:"green",left:"Còn 79 ngày",lc:"",btn:"Xem hóa đơn",bc:"blue",tag:"★ Top chủ sân",tw:true,av:"T",avc:"#1f6feb",on:true,cls:"ok"},
+ {id:"CS001089",n:"Hoàng Thị Lan",sn:12,pk:"Gói Starter",ph:"0907 654 321",cs:"Sân Pickleball Lan Anh",ex:"22/11/2026",pay:"Chờ thanh toán",pc:"amber",left:"Còn 22 ngày",lc:"",btn:"Nhắc gia hạn",bc:"blue",tag:"Chủ sân thường",av:"L",avc:"#14b8a6",on:true,cls:"ok t",detail:true},
+ {id:"CS000758",n:"Vũ Đức Thành",sn:3,pk:"Gói Starter",ph:"0908 765 432",cs:"Sân tennis Thành Long",ex:"01/10/2026",pay:"Chưa thanh toán",pc:"red",left:"Quá hạn 30 ngày",lc:"t-red",btn:"Nhắc gia hạn",bc:"blue",tag:"Chủ sân thường",av:"T",avc:"#6b7280",on:false,cls:"bad"}
+];
+const history=[
+ ["12/09/2026","Nguyễn Văn An","Pro - 3 tháng","13/09/2026 – 12/12/2026","1.497.000 ₫","Đã thanh toán","green"],
+ ["28/09/2026","Trần Thị Bích","Pro - 3 tháng","29/09/2026 – 28/12/2026","1.497.000 ₫","Đã thanh toán","green"],
+ ["06/10/2026","Lê Quốc Hùng","Starter - 1 tháng","06/10/2026 – 05/11/2026","249.000 ₫","Chưa thanh toán","red"],
+ ["18/10/2026","Phạm Minh Tuấn","Pro - 3 tháng","19/10/2026 – 18/01/2027","1.497.000 ₫","Đã thanh toán","green"],
+ ["30/10/2026","Hoàng Thị Lan","Starter - 1 tháng","23/11/2026 – 22/12/2026","249.000 ₫","Chờ thanh toán","amber"],
+ ["02/10/2026","Vũ Đức Thành","Starter - 1 tháng","02/10/2026 – 01/11/2026","249.000 ₫","Chưa thanh toán","red"]
+];
+
+/* ---------- Helpers ---------- */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1800)}
+window.toast=toast;
+
+/* ---------- Home chart ---------- */
+function renderChart(year){
+  const data=getRevenue(year);
+  const vals=data.filter(v=>v!=null);
+  const has=vals.length>0;
+  const maxV=has?Math.max(...vals):0;
+  const max=has?Math.max(40,Math.ceil(maxV/40)*40):160;
+  const peakIdx=has?data.indexOf(maxV):-1;
+
+  /* Trục và cột */
+  $('#grid').innerHTML=[0,1,2,3,4].map(i=>`<div style="top:${i*25}%"><span>${Math.round(max*(1-i/4))}</span></div>`).join('');
+  $('#bars').innerHTML=data.map((v,i)=>v==null
+    ? `<div style="width:22px"></div>`
+    : `<div class="bar ${i===peakIdx?'max':''}" data-h="${v/max*100}" style="height:0"><em>${v}</em></div>`).join('');
+  $('#xl').innerHTML=data.map((_,i)=>`<span>T${i+1}</span>`).join('');
+  $('#chartEmpty').hidden=has;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    $$('#bars .bar').forEach(b=>b.style.height=b.dataset.h+'%');
+  }));
+
+  /* Thẻ thống kê */
+  const sum=vals.reduce((a,b)=>a+b,0);
+  $('#kTotal').textContent=fmt(sum*1e6)+' đ';
+  $('#kTotalSub').textContent=has?`Tổng cộng ${vals.length} tháng có doanh thu`:'Chưa có doanh thu';
+  $('#kAvg').textContent=has?fmt(sum*1e6/vals.length)+' đ':'0 đ';
+  $('#kAvgSub').textContent=has?`Bình quân ${vals.length} tháng đã có số liệu`:'Chưa có doanh thu';
+  const peakSub=$('#kPeakSub');
+  if(!has){
+    $('#kPeak').textContent='—';peakSub.textContent='Chưa có doanh thu';peakSub.className='';
+  }else{
+    $('#kPeak').textContent=`Tháng ${peakIdx+1} · ${maxV} triệu`;
+    const prev=peakIdx>0?data[peakIdx-1]:null;
+    if(prev){
+      const pct=(maxV-prev)/prev*100;
+      peakSub.textContent=`${pct>=0?'+':''}${pct.toFixed(1).replace('.',',')}% so với tháng ${peakIdx}`;
+      peakSub.className=pct>=0?'up':'t-red';
+    }else{
+      peakSub.textContent='Tháng đầu có số liệu';peakSub.className='';
+    }
+  }
+}
+function initYearSelect(){
+  const sel=$('#yearSel');
+  let html='';
+  for(let y=CUR_Y;y>=MIN_YEAR;y--) html+=`<option value="${y}">Năm ${y}</option>`;
+  sel.innerHTML=html;sel.value=CUR_Y;
+  sel.addEventListener('change',e=>renderChart(+e.target.value));
+}
+
+/* ---------- Courts ---------- */
+const COURT_TYPES=['Cầu lông','Pickleball','Tennis','Bóng đá mini','Bóng rổ','Bóng bàn','Khác'];
+const REASON={maint:['Bảo trì','amber'],event:['Sự kiện','blue'],other:['Khác','gray']};
+const dm=n=>String(n).replace('.',','), vd=s=>s?s.split('-').reverse().join('/'):'';
+function ensureCourt(c){
+  if(c.id)return c;
+  Object.assign(c,{id:uid(),type:'Cầu lông',len:13.4,wid:6.1,desc:'',imgs:[],blocks:[]});
+  return c;
+}
+function renderCourts(){
+  courts.forEach(ensureCourt);
+  const q=($('#courtSearch').value||'').toLowerCase(),st=$('#courtStatus').value,today=localDate(new Date());
+  const list=courts.filter(c=>(c.n+c.o+c.a+c.type).toLowerCase().includes(q)&&(!st||c.s===st));
+  $('#courtBody').innerHTML=list.map((c,i)=>{
+    const nb=c.blocks.filter(b=>b.to>=today).length;
+    return `<tr><td class="num">${i+1}</td>
+    <td class="c">${c.imgs[0]?`<img class="thumb" src="${c.imgs[0]}" alt="">`:'<span class="thumb ph"><svg><use href="#i-court"/></svg></span>'}</td>
+    <td>${esc(c.n)}${c.desc?`<small class="sub2">${esc(c.desc)}</small>`:''}</td>
+    <td class="c">${esc(c.type)}</td><td class="c">${c.len&&c.wid?dm(c.len)+' × '+dm(c.wid)+' m':'—'}</td><td class="c">${esc(c.o)}</td>
+    <td class="c"><span class="pill ${c.s==='on'?'green':'gray'}">${c.s==='on'?'Đang hoạt động':'Đang bảo trì'}</span>${nb?`<br><span class="pill amber" style="margin-top:4px" title="Lịch chặn hiện tại và sắp tới">${nb} lịch chặn</span>`:''}</td>
+    <td>${esc(c.a)}</td>
+    <td class="c" style="white-space:nowrap">
+      <button class="ibtn ok" data-ca="edit" data-id="${c.id}" title="Sửa"><svg><use href="#i-edit"/></svg></button>
+      <button class="ibtn ok" data-ca="block" data-id="${c.id}" title="Chặn lịch"><svg><use href="#i-cal"/></svg></button>
+      <button class="ibtn" data-ca="del" data-id="${c.id}" title="Xóa"><svg><use href="#i-trash"/></svg></button></td></tr>`}).join('')
+    ||'<tr><td colspan="9" class="c" style="color:var(--muted);height:50px">Không có sân phù hợp.</td></tr>';
+  $('#courtTotal').textContent=list.length;
+}
+$('#courtBody').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-ca]');if(!b)return;
+  const c=courts.find(x=>x.id===b.dataset.id);if(!c)return;
+  if(b.dataset.ca==='edit')openCourt(c);else if(b.dataset.ca==='block')openBlocks(c);else delCourt(c);
+});
+$('#courtStatus').addEventListener('change',renderCourts);
+  /* ----- Thêm / sửa sân ----- */
+let editing=null,cmImgs=[];
+function showImgs(){$('#cmImgs').innerHTML=cmImgs.map((s,i)=>`<span class="im"><img src="${s}" alt=""><button type="button" data-i="${i}" title="Xóa ảnh">×</button></span>`).join('')}
+function shrink(f){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();
+  im.onload=()=>{const k=Math.min(1,800/Math.max(im.width,im.height)),cv=document.createElement('canvas');cv.width=im.width*k;cv.height=im.height*k;cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);res(cv.toDataURL('image/jpeg',.8))};
+  im.onerror=()=>res(null);im.src=r.result};r.onerror=()=>res(null);r.readAsDataURL(f)})}
+function openCourt(c){
+  editing=c||null;
+  const types=c&&!COURT_TYPES.includes(c.type)?[...COURT_TYPES,c.type]:COURT_TYPES;
+  $('#cmTitle').textContent=c?'Sửa thông tin sân':'Thêm sân mới';
+  $('#cmType').innerHTML=types.map(t=>`<option${c&&c.type===t?' selected':''}>${esc(t)}</option>`).join('');
+  $('#cmName').value=c?c.n:'';$('#cmOwner').value=c?c.o:'';$('#cmAddr').value=c?c.a:'';$('#cmStatus').value=c?c.s:'on';
+  $('#cmLen').value=c&&c.len?dm(c.len):'';$('#cmWid').value=c&&c.wid?dm(c.wid):'';$('#cmDesc').value=c?c.desc:'';
+  cmImgs=c?[...c.imgs]:[];showImgs();$('#cmErr').textContent='';$('#cmName').classList.remove('bad');
+  $('#courtModal').classList.add('show');
+}
+$('#cmImgs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;cmImgs.splice(+b.dataset.i,1);showImgs()});
+$('#cmFile').addEventListener('change',async e=>{
+  for(const f of e.target.files){if(cmImgs.length>=4){toast('Tối đa 4 ảnh');break}const s=await shrink(f);if(s)cmImgs.push(s)}
+  e.target.value='';showImgs();
+});
+$('#cmCancel').onclick=()=>$('#courtModal').classList.remove('show');
+$('#cmOk').onclick=()=>{
+  const num=s=>parseFloat(String($(s).value).replace(',','.'))||0,n=$('#cmName').value.trim(),err=m=>{$('#cmErr').textContent=m;$('#cmName').classList.add('bad')};
+  if(!n)return err('Vui lòng nhập tên sân');
+  if(courts.some(x=>x!==editing&&x.n.toLowerCase()===n.toLowerCase()))return err('Tên sân đã tồn tại');
+  const d={n,type:$('#cmType').value,o:$('#cmOwner').value.trim(),s:$('#cmStatus').value,a:$('#cmAddr').value.trim(),len:num('#cmLen'),wid:num('#cmWid'),desc:$('#cmDesc').value.trim(),imgs:[...cmImgs]};
+  if(editing){Object.assign(editing,d);toast('Đã cập nhật sân')}
+  else{
+    courts.push({...d,id:uid(),blocks:[]});
+    if(typeof PR!=='undefined'){PR.saved.push(seedCfg(courts.length-1));PR.draft.push(clone(PR.saved[PR.saved.length-1]))} /* giữ khớp với mục Khung giờ & giá */
+    toast('Đã thêm sân mới');
+  }
+  $('#courtModal').classList.remove('show');renderCourts();
+};
+  /* ----- Xóa sân ----- */
+async function delCourt(c){
+  if(courts.length<=1){toast('Cần giữ lại ít nhất 1 sân');return}
+  if(!await askConfirm(`Sân "${c.n}" cùng cấu hình khung giờ & giá và lịch chặn sẽ bị xóa vĩnh viễn.`,{title:'Xóa sân?',ok:'Xóa sân',danger:true}))return;
+  const i=courts.indexOf(c);courts.splice(i,1);
+  if(typeof PR!=='undefined'){PR.saved.splice(i,1);PR.draft.splice(i,1);if(i<PR.cur)PR.cur--;if(PR.cur>=courts.length)PR.cur=courts.length-1}
+  renderCourts();toast('Đã xóa sân');
+}
+function askConfirm(msg,{title='Xác nhận',ok='Đồng ý',danger=false}={}){
+  return new Promise(res=>{
+    const m=$('#cfModal'),y=$('#cfYes'),n=$('#cfNo');
+    $('#cfTitle').textContent=title;$('#cfMsg').textContent=msg;
+    y.textContent=ok;y.className='btn '+(danger?'danger':'primary');
+    const key=e=>{if(e.key==='Escape')done(false)};
+    const done=v=>{m.classList.remove('show');y.onclick=n.onclick=m.onclick=null;document.removeEventListener('keydown',key);res(v)};
+    y.onclick=()=>done(true);n.onclick=()=>done(false);
+    m.onclick=e=>{if(e.target===m)done(false)};
+    document.addEventListener('keydown',key);
+    m.classList.add('show');n.focus();
+  });
+}
+  /* ----- Chặn lịch (bảo trì / sự kiện) ----- */
+let bkCourt=null;
+function bkTimes(){$('#bkFT').disabled=$('#bkTT').disabled=$('#bkAll').checked}
+function showBlocks(){
+  const t=localDate(new Date()),bl=[...bkCourt.blocks].sort((a,b)=>a.from<b.from?-1:1);
+  $('#bkBody').innerHTML=bl.map(b=>`<tr${b.to<t?' style="opacity:.5"':''}><td class="c"><span class="pill ${REASON[b.reason][1]}">${REASON[b.reason][0]}</span></td>
+    <td class="c">${vd(b.from)}${b.to!==b.from?' – '+vd(b.to):''} · ${b.all?'Cả ngày':b.ft+' – '+b.tt}</td><td>${esc(b.note)}</td>
+    <td class="c"><button class="ibtn" data-b="${b.id}" title="Xóa"><svg><use href="#i-trash"/></svg></button></td></tr>`).join('')
+    ||'<tr><td colspan="4" class="c" style="color:var(--muted);height:50px">Chưa có lịch chặn nào.</td></tr>';
+}
+function openBlocks(c){
+  bkCourt=c;$('#bkTitle').textContent='Chặn lịch · '+c.n;
+  const t=localDate(new Date());$('#bkFrom').value=t;$('#bkTo').value=t;$('#bkNote').value='';$('#bkAll').checked=true;bkTimes();
+  showBlocks();$('#blockModal').classList.add('show');
+}
+$('#bkAll').addEventListener('change',bkTimes);
+$('#bkAdd').onclick=()=>{
+  const f=$('#bkFrom').value,t=$('#bkTo').value,all=$('#bkAll').checked,ft=$('#bkFT').value,tt=$('#bkTT').value;
+  if(!f||!t||t<f){toast('Ngày kết thúc phải sau hoặc bằng ngày bắt đầu');return}
+  if(!all&&(!ft||!tt||tt<=ft)){toast('Giờ kết thúc phải sau giờ bắt đầu');return}
+  bkCourt.blocks.push({id:uid(),reason:$('#bkReason').value,from:f,to:t,all,ft,tt,note:$('#bkNote').value.trim()});
+  showBlocks();renderCourts();toast('Đã thêm lịch chặn');
+};
+$('#bkBody').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-b]');if(!b)return;
+  bkCourt.blocks=bkCourt.blocks.filter(x=>x.id!==b.dataset.b);showBlocks();renderCourts();
+});
+$('#bkClose').onclick=()=>$('#blockModal').classList.remove('show');
+
+/* ---------- Owners ---------- */
+function renderOwners(){
+  $('#ownerCards').innerHTML=owners.map((o,i)=>`
+   <div class="oc ${o.cls}" data-i="${i}">
+     <div class="top"><span># ${o.id}</span><span class="pill ${o.on?'green':'red'}" style="font-size:9px">${o.on?'Đang hoạt động':'Ngừng hoạt động'}</span></div>
+     <h4>${o.n}</h4>
+     <div class="meta"><span><svg><use href="#i-court"/></svg>${o.sn} sân</span><span><svg><use href="#i-dollar"/></svg>${o.pk}</span></div>
+     <div class="r"><span>Liên hệ:</span><b>${o.ph}</b></div>
+     <div class="r"><span>Cơ sở:</span><b>${o.cs}</b></div>
+     <div class="r"><span>Hết hạn</span><b>${o.ex}</b></div>
+     <div class="r"><span>Thanh toán</span><span class="pill ${o.pc}">${o.pay}</span></div>
+     <div class="r"><span class="${o.lc}">${o.left}</span><span class="pill ${o.bc}">${o.btn}</span></div>
+     <div class="foot"><span class="${o.tw?'warn':''}">${o.tag}</span><span class="av" style="background:${o.avc}">${o.av}</span></div>
+   </div>`).join('');
+  $$('#ownerCards .oc').forEach(el=>el.onclick=()=>{location.hash='#detail'});
+  $('#histBody').innerHTML=history.map(h=>`<tr><td>${h[0]}</td><td>${h[1]}</td><td>${h[2]}</td><td>${h[3]}</td><td>${h[4]}</td><td class="p t-${h[6]}" style="color:${{green:'#1a8f3c',red:'#d92d20',amber:'#b7791f'}[h[6]]}">${h[5]}</td></tr>`).join('');
+}
+
+/* ---------- Detail tabs ---------- */
+$$('#dtabs button').forEach(b=>b.onclick=()=>{
+  $$('#dtabs button').forEach(x=>x.classList.toggle('active',x===b));
+  $$('.tabpane').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));
+  $$('#view-detail .tabpane').forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));
+});
+
+/* ---------- Withdraw ---------- */
+let balance=328500000; /* demo: thay bằng số dư thật từ API */
+const onlyDigits=s=>(s||'').replace(/\D/g,'');
+function renderBalance(){
+  $('#wBalance').textContent=fmt(balance)+' đ';
+  $('#wMax').textContent='Tối đa '+fmt(balance)+' đ';
+}
+function setErr(inputId,errId,msg){
+  $('#'+errId).textContent=msg||'';
+  $('#'+inputId).classList.toggle('bad',!!msg);
+}
+$('#btnWithdraw').addEventListener('click',()=>{$('#wOk').hidden=true;location.hash='#withdraw'});
+$('#wAmount').addEventListener('input',e=>{const d=onlyDigits(e.target.value);e.target.value=d?fmt(+d):''});
+$('#wAcc').addEventListener('input',e=>{e.target.value=onlyDigits(e.target.value)});
+$('#wAll').addEventListener('click',()=>{$('#wAmount').value=balance?fmt(balance):''});
+$('#wForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const amount=+onlyDigits($('#wAmount').value);
+  const bank=$('#wBank').value.trim();
+  const acc=$('#wAcc').value.trim();
+  const name=$('#wName').value.trim();
+  let ok=true;
+  if(bank.length<2){setErr('wBank','eBank','Vui lòng chọn hoặc nhập tên ngân hàng');ok=false}
+  else setErr('wBank','eBank');
+  if(!amount){setErr('wAmount','eAmount','Vui lòng nhập số tiền muốn rút');ok=false}
+  else if(amount>balance){setErr('wAmount','eAmount','Số tiền vượt quá số dư chưa rút ('+fmt(balance)+' đ)');ok=false}
+  else setErr('wAmount','eAmount');
+  if(acc.length<6||acc.length>19){setErr('wAcc','eAcc','Số tài khoản gồm 6–19 chữ số');ok=false}
+  else setErr('wAcc','eAcc');
+  if(name.length<2){setErr('wName','eName','Vui lòng nhập tên tài khoản thụ hưởng');ok=false}
+  else setErr('wName','eName');
+  if(!ok) return;
+  balance-=amount;
+  renderBalance();
+  const box=$('#wOk');
+  box.textContent=`Đã gửi yêu cầu rút ${fmt(amount)} đ về tài khoản ${acc} - ${name.toUpperCase()} (${bank}).`;
+  box.hidden=false;
+  $('#wForm').reset();
+  toast('Yêu cầu rút tiền đã được gửi');
+});
+renderBalance();
+
+/* ---------- Khung giờ & giá ---------- */
+const DAYS=['Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7','Chủ nhật'];
+const KINDS={low:'Giờ thấp điểm',normal:'Giờ thường',peak:'Giờ vàng'};
+const uid=()=>Math.random().toString(36).slice(2,8);
+const esc=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const toMin=t=>{if(!t)return null;const a=t.split(':');return +a[0]*60+ +a[1]};
+const toT=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const clone=o=>JSON.parse(JSON.stringify(o));
+const r1k=n=>Math.round(n/1000)*1000;
+function localDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function seedCfg(i){
+  const m=[1,1.1,.9,1.2,.8][i%5], P=(a,b,c)=>({wd:r1k(a*m),we:r1k(b*m),hol:r1k(c*m)});
+  const H=(n,f,t,y,mode)=>({id:uid(),name:n,from:f,to:t,yearly:y,mode:mode});
+  return{
+    hours:DAYS.map((_,d)=>({on:true,open:d<5?'05:30':'06:00',close:'23:00',bs:'',be:''})),
+    slots:[
+      {id:uid(),name:'Sáng – chiều',kind:'low',from:'05:30',to:'16:00',p:P(60000,80000,100000)},
+      {id:uid(),name:'Giờ vàng tối',kind:'peak',from:'16:00',to:'21:00',p:P(110000,130000,160000)},
+      {id:uid(),name:'Khuya',kind:'normal',from:'21:00',to:'23:00',p:P(80000,100000,120000)}],
+    holidays:[
+      H('Tết Dương lịch','2027-01-01','2027-01-01',true,'price'),
+      H('Tết Nguyên đán (ước tính)','2027-02-05','2027-02-10',false,'closed'),
+      H('Giải phóng miền Nam','2027-04-30','2027-04-30',true,'price'),
+      H('Quốc tế Lao động','2027-05-01','2027-05-01',true,'price'),
+      H('Quốc khánh','2027-09-02','2027-09-02',true,'price')],
+    rules:{min:60,step:60,max:180,buffer:0,adv:30,notice:2,cancel:6,online:true,auto:false}
+  };
+}
+const PR={saved:courts.map((_,i)=>seedCfg(i)),cur:0};
+PR.draft=PR.saved.map(clone);
+const cur=()=>PR.draft[PR.cur];
+const isDirty=()=>JSON.stringify(PR.draft[PR.cur])!==JSON.stringify(PR.saved[PR.cur]);
+function holidayOf(c,ds){return c.holidays.find(h=>{let a=h.from,b=h.to||h.from,d=ds;if(!a)return false;if(h.yearly){a=a.slice(5);b=b.slice(5);d=d.slice(5)}return d>=a&&d<=b})}
+
+function prHours(){
+  $('#prHours').innerHTML=cur().hours.map((h,i)=>`<tr${h.on?'':' style="opacity:.55"'}><td class="c">${DAYS[i]}</td><td class="c"><label class="sw"><input type="checkbox" data-t="h" data-i="${i}" data-f="on"${h.on?' checked':''}><i></i></label></td>`
+    +['open','close','bs','be'].map(f=>`<td><input type="time" class="cin" data-t="h" data-i="${i}" data-f="${f}" value="${h[f]}"${h.on?'':' disabled'}></td>`).join('')+`<td class="c" id="ht${i}"></td></tr>`).join('');
+}
+function prSlots(){
+  const c=cur(),ip=(s,f,ty)=>`<td><input type="${ty}" class="cin" data-t="s" data-i="${s.id}" data-f="${f}" value="${esc(s[f])}"></td>`;
+  $('#prSlots').innerHTML=c.slots.map((s,i)=>`<tr><td class="num">${i+1}</td>${ip(s,'name','text')}<td><select class="sel" data-t="s" data-i="${s.id}" data-f="kind">${Object.keys(KINDS).map(k=>`<option value="${k}"${k===s.kind?' selected':''}>${KINDS[k]}</option>`).join('')}</select></td>${ip(s,'from','time')}${ip(s,'to','time')}`
+    +['wd','we','hol'].map(f=>`<td><input class="cin pin" inputmode="numeric" placeholder="0" data-t="p" data-i="${s.id}" data-f="${f}" value="${s.p[f]?fmt(s.p[f]):''}"></td>`).join('')
+    +`<td class="c"><button class="ibtn" data-del="s" data-i="${s.id}" title="Xóa khung giá"><svg><use href="#i-trash"/></svg></button></td></tr>`).join('')
+    ||'<tr><td colspan="9" class="c" style="color:var(--muted);height:50px">Chưa có khung giá. Bấm "Thêm khung giá" để bắt đầu.</td></tr>';
+}
+function prHols(){
+  const c=cur(),ip=(h,f)=>`<td><input type="${f==='name'?'text':'date'}" class="cin" data-t="v" data-i="${h.id}" data-f="${f}" value="${esc(h[f])}"></td>`;
+  $('#prHols').innerHTML=c.holidays.map((h,i)=>`<tr><td class="num">${i+1}</td>${ip(h,'name')}${ip(h,'from')}${ip(h,'to')}<td class="c"><label class="sw"><input type="checkbox" data-t="v" data-i="${h.id}" data-f="yearly"${h.yearly?' checked':''}><i></i></label></td>`
+    +`<td><select class="sel" data-t="v" data-i="${h.id}" data-f="mode"><option value="price"${h.mode==='price'?' selected':''}>Áp dụng giá ngày lễ</option><option value="closed"${h.mode==='closed'?' selected':''}>Đóng cửa</option></select></td>`
+    +`<td class="c"><button class="ibtn" data-del="v" data-i="${h.id}" title="Xóa"><svg><use href="#i-trash"/></svg></button></td></tr>`).join('')
+    ||'<tr><td colspan="7" class="c" style="color:var(--muted);height:50px">Chưa có ngày lễ nào.</td></tr>';
+}
+function prRules(){
+  const r=cur().rules;
+  const S=(f,l,fn)=>`<select class="sel" data-t="r" data-f="${f}">${l.map(x=>`<option value="${x}"${x===r[f]?' selected':''}>${fn(x)}</option>`).join('')}</select>`;
+  const F=(lb,h,html)=>`<div class="fld"><label>${lb}</label>${html}<small class="h">${h}</small></div>`;
+  const mn=x=>x+' phút',hr=x=>x?x+' giờ':'Không giới hạn';
+  const T=(lb,f)=>`<div class="toggle">${lb}<label class="sw"><input type="checkbox" data-t="r" data-f="${f}"${r[f]?' checked':''}><i></i></label></div>`;
+  $('#prRules').innerHTML='<div class="f2">'
+    +F('Thời lượng tối thiểu','Ngắn nhất cho một lượt đặt',S('min',[30,60,90,120],mn))
+    +F('Bước đặt','Mốc giờ bắt đầu và thời lượng tăng theo bước này',S('step',[30,60,90,120],mn))
+    +F('Thời lượng tối đa','Dài nhất cho một lượt đặt',S('max',[60,90,120,180,240,300,360],mn))
+    +F('Đệm giữa các lượt','Thời gian dọn sân giữa hai lượt',S('buffer',[0,5,10,15,30],x=>x?x+' phút':'Không có'))
+    +F('Đặt trước tối đa','Khách chỉ đặt được trong khoảng này',S('adv',[7,14,30,60,90],x=>x+' ngày'))
+    +F('Đặt trước tối thiểu','Chặn đặt sát giờ',S('notice',[0,1,2,3,6,12,24],hr))
+    +F('Hủy miễn phí trước','Sau mốc này tính phí theo chính sách',S('cancel',[0,2,6,12,24,48],x=>x?x+' giờ':'Không hỗ trợ'))
+    +'</div>'+T('Nhận đặt sân trên website','online')+T('Tự động xác nhận đơn đặt','auto');
+}
+function prValidate(c){
+  const er=[],wn=[];
+  c.hours.forEach((h,i)=>{if(!h.on)return;const o=toMin(h.open),e=toMin(h.close);
+    if(o==null||e==null||e<=o){er.push(`${DAYS[i]}: giờ đóng cửa phải sau giờ mở cửa`);return}
+    if(h.bs||h.be){const a=toMin(h.bs),b=toMin(h.be);if(a==null||b==null||b<=a||a<o||b>e)er.push(`${DAYS[i]}: giờ nghỉ giữa ca không hợp lệ`)}});
+  const sl=[...c.slots].sort((a,b)=>(toMin(a.from)||0)-(toMin(b.from)||0));
+  sl.forEach((s,i)=>{const a=toMin(s.from),b=toMin(s.to),nm=s.name.trim()||'Khung giá';
+    if(!s.name.trim())er.push('Có khung giá chưa nhập tên');
+    if(a==null||b==null||b<=a)er.push(`"${esc(nm)}": giờ kết thúc phải sau giờ bắt đầu`);
+    else if(i&&toMin(sl[i-1].to)>a)er.push(`"${esc(sl[i-1].name)}" và "${esc(nm)}" bị chồng giờ`);
+    if(!s.p.wd||!s.p.we||!s.p.hol)wn.push(`"${esc(nm)}" chưa nhập đủ giá`)});
+  c.holidays.forEach(h=>{if(!h.name.trim()||!h.from)er.push('Ngày lễ thiếu tên hoặc ngày bắt đầu');else if(h.to&&h.to<h.from)er.push(`"${esc(h.name)}": ngày kết thúc trước ngày bắt đầu`)});
+  if(c.rules.max<c.rules.min)er.push('Thời lượng tối đa phải lớn hơn hoặc bằng tối thiểu');
+  if(!er.length){
+    if(!c.slots.length)wn.push('Chưa có khung giá nào');
+    else c.hours.forEach((h,i)=>{if(!h.on)return;let gap=false;for(let t=toMin(h.open);t<toMin(h.close);t+=30)if(!c.slots.some(s=>t>=toMin(s.from)&&t<toMin(s.to)))gap=true;if(gap)wn.push(`${DAYS[i]}: có giờ hoạt động chưa nằm trong khung giá nào`)});
+  }
+  if(courts[PR.cur].s!=='on')wn.push('Sân đang bảo trì, khách chưa thể đặt dù đã cấu hình');
+  return{er:er,wn:[...new Set(wn)]};
+}
+const DAY_SHORT = ['T2','T3','T4','T5','T6','T7','CN'];
+
+function groupDayRanges(hours) {
+  const groups = [];
+  let start = 0;
+
+  const signature = h => JSON.stringify(
+    h.on
+      ? [true, h.open, h.close, h.bs, h.be]
+      : [false]
+  );
+
+  for (let i = 1; i <= hours.length; i++) {
+    if (i < hours.length &&
+        signature(hours[i]) === signature(hours[start])) {
+      continue;
+    }
+
+    const h = hours[start];
+    const label = start === i - 1
+      ? DAY_SHORT[start]
+      : `${DAY_SHORT[start]}–${DAY_SHORT[i - 1]}`;
+
+    const time = h.on
+      ? `${h.open}–${h.close}${h.bs && h.be ? ` (nghỉ ${h.bs}–${h.be})` : ''}`
+      : 'Nghỉ';
+
+    groups.push(`${label}: ${time}`);
+    start = i;
+  }
+
+  return groups;
+}
+function prRefresh(){
+  const c=cur(),cc=courts[PR.cur],r=c.rules;
+  $('#prStatus').innerHTML=`<span class="pill ${cc.s==='on'?'green':'gray'}">${cc.s==='on'?'Đang hoạt động':'Đang bảo trì'}</span>`;
+  $('#prDirty').innerHTML=isDirty()?'<span class="pill amber">Có thay đổi chưa lưu</span>':'';
+  c.hours.forEach((h,i)=>{const o=toMin(h.open),e=toMin(h.close),a=toMin(h.bs),b=toMin(h.be);
+    const m=h.on&&o!=null&&e>o?e-o-(a!=null&&b>a?b-a:0):0,el=$('#ht'+i);
+    if(el)el.textContent=h.on?(m/60).toFixed(1).replace('.',',').replace(',0','')+' giờ':'Nghỉ'});
+  const scheduleText = groupDayRanges(c.hours).join('<br> <br>');
+  const ps=c.slots.flatMap(s=>[s.p.wd,s.p.we,s.p.hol]).filter(x=>x>0);
+  $('#prSum').innerHTML=[
+  ['i-clock','Lịch hoạt động',scheduleText,'Tổng hợp theo từng ngày có cấu hình giống nhau'],
+  ['i-layers','Khung giá',c.slots.length,c.slots.filter(s=>s.kind==='peak').length+' khung giờ vàng'],
+  ['i-dollar','Giá / giờ',ps.length?fmt(Math.min(...ps))+' – '+fmt(Math.max(...ps)):'—','Đơn vị: đ'],
+  ['i-cal','Ngày lễ',c.holidays.length,c.holidays.filter(h=>h.mode==='closed').length+' ngày đóng cửa'],
+  ['i-box','Bước đặt',r.step+' phút','Tối thiểu '+r.min+' phút']
+  ].map(x=>`<div><small><svg><use href="#${x[0]}"/></svg>${x[1]}</small><b>${x[2]}</b><span>${x[3]}</span></div>`).join('');
+  /* dải khung giờ */
+  const act=c.hours.filter(h=>h.on&&toMin(h.open)!=null);
+  let lo=act.length?Math.min(...act.map(h=>toMin(h.open))):300,hi=act.length?Math.max(...act.map(h=>toMin(h.close)||0)):1380;
+  lo=Math.floor(lo/60)*60;hi=Math.ceil(hi/60)*60;if(hi<=lo)hi=lo+60;
+  const sp=hi-lo;
+  $('#prTl').innerHTML=c.slots.map(s=>{const a=toMin(s.from),b=toMin(s.to);if(a==null||b==null||b<=a)return'';const L=Math.max(a,lo),R=Math.min(b,hi);if(R<=L)return'';
+    return`<i class="k-${s.kind}" style="left:${(L-lo)/sp*100}%;width:${(R-L)/sp*100}%" title="${esc(s.name)} ${s.from}–${s.to}">${esc(s.name)}</i>`}).join('');
+  let tk='';for(let t=lo;t<=hi;t+=120)tk+=`<span style="left:${(t-lo)/sp*100}%">${Math.floor(t/60)}h</span>`;
+  $('#prTx').innerHTML=tk;
+  /* mốc giờ & thời lượng hợp lệ */
+  const o0=toMin(c.hours[0].open),e0=toMin(c.hours[0].close),st=[],du=[];
+  if(o0!=null&&e0!=null)for(let t=o0;t+r.min<=e0;t+=r.step)st.push(toT(t));
+  for(let d=r.min;d<=r.max;d+=r.step)du.push(d);
+  $('#rStarts').innerHTML=st.map(t=>`<span>${t}</span>`).join('')||'—';
+  $('#rDurs').innerHTML=du.map(d=>`<span>${d} phút</span>`).join('')||'—';
+  /* cảnh báo */
+  const v=prValidate(c),msgs=v.er.length?v.er:v.wn,w=$('#prWarn');
+  w.hidden=!msgs.length;w.className='alert'+(v.er.length?' err':'');
+  w.innerHTML=`<div class="ic"><svg><use href="#i-clock"/></svg></div><div><b>${v.er.length?'Cần sửa trước khi lưu':'Lưu ý cấu hình'}</b><span>${msgs.join('<br>')}</span></div>`;
+  pvFill();pvCalc();
+}
+function pvFill(){
+  const c=cur(),r=c.rules,ds=$('#pvDate').value,wd=ds?(new Date(ds+'T00:00').getDay()+6)%7:0,h=c.hours[wd];
+  const o=toMin(h.open),e=toMin(h.close),ps=$('#pvStart').value,pd=$('#pvDur').value;
+  let a='',b='';
+  if(o!=null&&e!=null)for(let t=o;t+r.min<=e;t+=r.step)a+=`<option value="${toT(t)}">${toT(t)}</option>`;
+  for(let d=r.min;d<=r.max;d+=r.step)b+=`<option value="${d}">${d} phút</option>`;
+  const S=$('#pvStart'),D=$('#pvDur');S.innerHTML=a;D.innerHTML=b;
+  if([...S.options].some(x=>x.value===ps))S.value=ps;
+  if([...D.options].some(x=>x.value===pd))D.value=pd;
+}
+function pvCalc(){
+  const c=cur(),out=$('#pvOut'),ds=$('#pvDate').value,st=toMin($('#pvStart').value),du=+$('#pvDur').value;
+  const bad=m=>{out.innerHTML=`<div class="internal"><b style="color:var(--red)">Không thể đặt</b>${m}</div>`};
+  if(!ds||st==null||!du)return bad('Chọn đủ ngày, giờ bắt đầu và thời lượng.');
+  const td=new Date();td.setHours(0,0,0,0);
+  const diff=Math.round((new Date(ds+'T00:00')-td)/864e5);
+  if(diff<0)return bad('Ngày đã qua.');
+  if(diff>c.rules.adv)return bad(`Vượt thời hạn đặt trước tối đa (${c.rules.adv} ngày).`);
+  const nw=new Date(),nm=nw.getHours()*60+nw.getMinutes();
+  if(diff===0&&st<nm+c.rules.notice*60)return bad(`Cần đặt trước tối thiểu ${c.rules.notice} giờ.`);
+  const wd=(new Date(ds+'T00:00').getDay()+6)%7,hol=holidayOf(c,ds),h=c.hours[wd];
+  if(hol&&hol.mode==='closed')return bad('Sân đóng cửa dịp '+esc(hol.name)+'.');
+  if(!h.on)return bad(DAYS[wd]+' sân nghỉ.');
+  const en=st+du,o=toMin(h.open),e=toMin(h.close),bs=toMin(h.bs),be=toMin(h.be);
+  if(st<o||en>e)return bad(`Ngoài giờ hoạt động (${h.open} – ${h.close}).`);
+  if(bs!=null&&be>bs&&st<be&&en>bs)return bad(`Trùng giờ nghỉ giữa ca (${h.bs} – ${h.be}).`);
+  const k=hol?'hol':wd>=5?'we':'wd',kl=hol?'Ngày lễ · '+esc(hol.name):wd>=5?'Cuối tuần':'Ngày thường';
+  let tot=0,cov=0,rows='';
+  c.slots.forEach(s=>{const a=toMin(s.from),b=toMin(s.to);if(a==null||b==null)return;const m=Math.min(en,b)-Math.max(st,a);
+    if(m>0){const v=m/60*s.p[k];tot+=v;cov+=m;rows+=`<div class="row"><span>${esc(s.name)} · ${m} phút × ${fmt(s.p[k])} đ/giờ</span><b>${fmt(v)} đ</b></div>`}});
+  out.innerHTML=`<div class="row"><span>${kl}</span><span class="pill blue">${DAYS[wd]}</span></div><div class="sep"></div>${rows}`
+    +(du>cov?`<div class="row t-amber">${du-cov} phút chưa có khung giá</div>`:'')
+    +`<div class="sep"></div><div class="row"><b style="font-size:11px">Tạm tính ${st>=0?toT(st)+' – '+toT(en):''}</b><b style="font-size:17px">${fmt(tot)} đ</b></div>`;
+}
+function prRender(){
+  $('#prCourt').innerHTML=courts.map((c,i)=>`<option value="${i}"${i===PR.cur?' selected':''}>${esc(c.n)}</option>`).join('');
+  if(!$('#pvDate').value)$('#pvDate').value=localDate(new Date());
+  prHours();prSlots();prHols();prRules();prRefresh();
+}
+function prEdit(e){
+  const t=e.target,d=t.dataset;
+  if(t.id==='pvDate'){pvFill();pvCalc();return}
+  if(t.id&&t.id.startsWith('pv')){pvCalc();return}
+  if(!d.t)return;
+  const c=cur();let v=t.type==='checkbox'?t.checked:t.value;
+  if(d.t==='p'){v=+(String(v).replace(/\D/g,'')||0);t.value=v?fmt(v):''}
+  if(d.t==='h')c.hours[d.i][d.f]=v;
+  else if(d.t==='s'||d.t==='p'){const s=c.slots.find(x=>x.id===d.i);if(!s)return;d.t==='p'?s.p[d.f]=v:s[d.f]=v}
+  else if(d.t==='v'){const h=c.holidays.find(x=>x.id===d.i);if(h)h[d.f]=v}
+  else if(d.t==='r')c.rules[d.f]=t.tagName==='SELECT'?+v:v;
+  if(d.t==='h'&&d.f==='on'&&e.type==='change')prHours();
+  prRefresh();
+}
+const prv=$('#view-pricing');
+prv.addEventListener('input',prEdit);prv.addEventListener('change',prEdit);
+prv.addEventListener('click',async e=>{
+  const b=e.target.closest('button');if(!b)return;
+  const c=cur(),d=b.dataset;
+  if(d.pt){$$('#prTabs button').forEach(x=>x.classList.toggle('active',x===b));$$('#view-pricing .tabpane').forEach(p=>p.classList.toggle('active',p.id===d.pt));return}
+  if(d.del){if(!await askConfirm('Dòng này sẽ bị xóa khỏi cấu hình.',{title:'Xóa dòng?',ok:'Xóa',danger:true}))return;
+  if(d.del==='s'){c.slots=c.slots.filter(x=>x.id!==d.i);prSlots()}else{c.holidays=c.holidays.filter(x=>x.id!==d.i);prHols()}
+    prRefresh();return}
+  if(d.ap){const s=c.hours[0];c.hours.forEach((h,i)=>{if(i&&(d.ap==='all'||i<5))Object.assign(h,{on:s.on,open:s.open,close:s.close,bs:s.bs,be:s.be})});prHours();prRefresh();toast('Đã áp dụng giờ của Thứ 2');return}
+  if(b.id==='prAddSlot'){
+    const last=[...c.slots].sort((a,b)=>toMin(a.to)-toMin(b.to)).pop(),a=last?toMin(last.to):(toMin(c.hours[0].open)||330);
+    c.slots.push({id:uid(),name:'Khung mới',kind:'normal',from:toT(Math.min(a,1380)),to:toT(Math.min(a+60,1439)),p:{wd:0,we:0,hol:0}});
+    prSlots();prRefresh();return}
+  if(b.id==='prAddHol'){c.holidays.push({id:uid(),name:'Ngày lễ mới',from:localDate(new Date()),to:localDate(new Date()),yearly:false,mode:'price'});prHols();prRefresh();return}
+  if(b.id==='prPctBtn'){const p=parseFloat($('#prPct').value);if(!p){toast('Nhập % cần tăng hoặc giảm');return}
+    c.slots.forEach(s=>['wd','we','hol'].forEach(f=>{s.p[f]=Math.max(0,r1k(s.p[f]*(1+p/100)))}));prSlots();prRefresh();toast(`Đã ${p>0?'tăng':'giảm'} giá ${Math.abs(p)}%`)}
+});
+$('#prCourt').addEventListener('change',async e=>{
+  const to=+e.target.value;
+  if(isDirty()){
+    if(!await askConfirm('Thay đổi chưa lưu của sân hiện tại sẽ bị bỏ. Tiếp tục?',{title:'Bỏ thay đổi?',ok:'Bỏ thay đổi',danger:true})){e.target.value=PR.cur;return}
+    PR.draft[PR.cur]=clone(PR.saved[PR.cur]);
+  }
+  PR.cur=to;prRender();
+});
+$('#prSave').onclick=()=>{
+  const c=cur();if(prValidate(c).er.length){toast('Còn lỗi cần sửa trước khi lưu');return}
+  c.slots.sort((a,b)=>toMin(a.from)-toMin(b.from));PR.saved[PR.cur]=clone(c);prSlots();prRefresh();toast('Đã lưu khung giờ & giá');
+};
+$('#prReset').onclick=()=>{if(!isDirty()){toast('Chưa có thay đổi nào');return}PR.draft[PR.cur]=clone(PR.saved[PR.cur]);prRender();toast('Đã khôi phục bản đã lưu')};
+$('#prCopy').onclick=()=>{
+  $('#cpCourts').innerHTML=courts.map((c,i)=>i===PR.cur?'':`<label class="ck"><input type="checkbox" value="${i}" checked>${esc(c.n)}</label>`).join('');
+  $('#cpModal').classList.add('show');
+};
+$('#cpCancel').onclick=()=>$('#cpModal').classList.remove('show');
+$('#cpOk').onclick=()=>{
+  const tg=$$('#cpCourts input:checked').map(x=>+x.value),sc=$$('#cpSecs input:checked').map(x=>x.value);
+  if(!tg.length||!sc.length){toast('Chọn nội dung và sân nhận cấu hình');return}
+  const src=cur(),mp={h:'hours',s:'slots',v:'holidays',r:'rules'};
+  tg.forEach(i=>sc.forEach(k=>{[PR.saved,PR.draft].forEach(a=>{a[i][mp[k]]=clone(src[mp[k]])})}));
+  $('#cpModal').classList.remove('show');toast(`Đã sao chép sang ${tg.length} sân`);
+};
+
+/* ---------- Khách đặt sân ---------- */
+const TIERS={vip:['VIP','amber'],member:['Thành viên','blue'],normal:['Thường','gray']};
+const BK_ST={done:['Hoàn thành','green'],upcoming:['Sắp tới','blue'],cancelled:['Đã hủy','gray'],noshow:['Không đến','red']};
+const BAN_REASONS=['Hay hủy sân','Không đến nhiều lần','Làm hỏng tài sản','Gây mất trật tự','Khác'];
+const CU_WARN={rate:.3,min:5}; /* "Hay hủy": từ 30% lượt bị hủy/không đến, tối thiểu 5 lượt đã qua */
+const CU_COLORS=['#102a5c','#7c3aed','#e11d48','#1f6feb','#14b8a6','#6b7280','#f58220'];
+const fd=s=>s?s.split('-').reverse().join('/'):'';
+const ago=n=>{const d=new Date();d.setDate(d.getDate()-n);return localDate(d)};
+const cuIni=n=>n.trim().split(/\s+/).slice(-2).map(w=>w[0]).join('').toUpperCase();
+const cuCol=n=>CU_COLORS[[...n].reduce((a,c)=>a+c.charCodeAt(0),0)%CU_COLORS.length];
+const cuAsk=(m,o)=>typeof askConfirm==='function'?askConfirm(m,o):Promise.resolve(confirm(m));
+
+/* Dữ liệu mẫu: d=hoàn thành, c=đã hủy, n=không đến, u=sắp tới. Thay bằng API khi có backend. */
+let cuSeq=1000;
+function cuGen(p,ci,from,dur){
+  return [...p].map((s,k)=>{
+    const c=courts[(ci+k)%courts.length],pr=[70,80,90,100,75][(ci+k)%5]*1000;
+    return{id:'DS'+(++cuSeq),court:c.n,date:ago(s==='u'?-(2+k):4+k*6),from,to:toT(toMin(from)+dur),
+      amount:Math.round(dur/60*pr),status:{d:'done',c:'cancelled',n:'noshow',u:'upcoming'}[s]};
+  });
+}
+const customers=[
+ {n:'Trần Quang Huy',p:'0912 345 678',e:'huy.tran@example.com',t:'vip',j:300,note:'Đặt cố định tối thứ 4 và thứ 6, đi nhóm khoảng 8 người.',b:cuGen('dddddddu',0,'18:00',90)},
+ {n:'Hoàng Mai Linh',p:'0944 092 576',e:'linh.hoang@example.com',t:'vip',j:420,note:'',b:cuGen('dddddddddd',2,'19:00',60)},
+ {n:'Lê Thu Hà',p:'0903 222 114',e:'ha.le@example.com',t:'member',j:200,note:'Hay đặt sân cuối tuần.',b:cuGen('dddddu',1,'08:00',120)},
+ {n:'Vũ Minh Châu',p:'0935 118 407',e:'',t:'member',j:150,note:'',b:cuGen('ddddd',3,'17:00',60)},
+ {n:'Phạm Đức Anh',p:'0988 761 230',e:'',t:'normal',j:60,note:'',b:cuGen('ddc',4,'20:00',60)},
+ {n:'Đỗ Gia Bảo',p:'0966 540 823',e:'bao.do@example.com',t:'normal',j:30,note:'',b:cuGen('dd',0,'16:00',60)},
+ {n:'Nguyễn Hoài Nam',p:'0975 410 962',e:'',t:'normal',j:140,note:'Đã nhắc nhở qua điện thoại về việc hủy sát giờ.',b:cuGen('cdcncdc',1,'18:30',60)},
+ {n:'Bùi Thanh Tùng',p:'0919 667 305',e:'',t:'normal',j:90,note:'',b:cuGen('nnncd',2,'20:00',60),
+  ban:{reason:'Không đến nhiều lần',note:'Vắng 3 lần liên tiếp, không báo trước.',date:ago(12)}}
+].map((x,i)=>({id:'KH'+String(i+1).padStart(4,'0'),name:x.n,phone:x.p,email:x.e,tier:x.t,joined:ago(x.j),note:x.note,ban:x.ban||null,bookings:x.b}));
+
+const cuF={q:'',tier:'',st:'',sort:'recent'};
+let cuCur=null,cuEdit=null;
+
+function cuStats(c){
+  const past=c.bookings.filter(b=>b.status!=='upcoming'),done=past.filter(b=>b.status==='done'),
+        bad=past.filter(b=>b.status==='cancelled'||b.status==='noshow');
+  return{total:past.length,done:done.length,bad:bad.length,upcoming:c.bookings.length-past.length,
+    rate:past.length?bad.length/past.length:0,spend:done.reduce((a,b)=>a+b.amount,0),
+    last:done.map(b=>b.date).sort().pop()||'',
+    flag:past.length>=CU_WARN.min&&bad.length/past.length>=CU_WARN.rate};
+}
+const cuState=(c,s)=>c.ban?['red','Blacklist']:s.flag?['amber','Hay hủy sân']:['green','Bình thường'];
+
+function cuList(){
+  const q=cuF.q.toLowerCase().replace(/\s/g,'');
+  const arr=customers.map(c=>({c,s:cuStats(c)})).filter(({c,s})=>
+    (c.name.toLowerCase().replace(/\s/g,'')+c.phone.replace(/\s/g,'')+c.email.toLowerCase()).includes(q)
+    &&(!cuF.tier||c.tier===cuF.tier)
+    &&(!cuF.st||(cuF.st==='banned'?!!c.ban:cuF.st==='warn'?(!c.ban&&s.flag):(!c.ban&&!s.flag))));
+  const key={recent:x=>x.s.last,spend:x=>x.s.spend,cancel:x=>x.s.rate}[cuF.sort];
+  return arr.sort((a,b)=>key(a)<key(b)?1:key(a)>key(b)?-1:0);
+}
+
+function renderCustomers(){
+  const cnt=f=>customers.filter(f).length;
+  $('#cuSum').innerHTML=[
+    ['i-users','Tổng khách',customers.length,'Trong hệ thống'],
+    ['i-layers','Khách VIP',cnt(c=>c.tier==='vip'),'Ưu tiên chăm sóc'],
+    ['i-box','Thành viên',cnt(c=>c.tier==='member'),'Hạng thành viên'],
+    ['i-bell','Hay hủy sân',cnt(c=>!c.ban&&cuStats(c).flag),'Cần theo dõi'],
+    ['i-ban','Blacklist',cnt(c=>c.ban),'Không được đặt sân']
+  ].map(x=>`<div><small><svg><use href="#${x[0]}"/></svg>${x[1]}</small><b>${x[2]}</b><span>${x[3]}</span></div>`).join('');
+  const list=cuList();
+  $('#cuBody').innerHTML=list.map(({c,s},i)=>{
+    const T=TIERS[c.tier],st=cuState(c,s);
+    return `<tr data-id="${c.id}"><td class="num">${i+1}</td>
+    <td><div class="cu-row"><span class="cav" style="background:${cuCol(c.name)}">${cuIni(c.name)}</span><div><b style="font-weight:600;color:var(--text)">${esc(c.name)}</b><span class="cu-sub">${esc(c.phone)}${c.email?' · '+esc(c.email):''}</span></div></div></td>
+    <td class="c"><span class="pill ${T[1]}">${T[0]}</span></td>
+    <td class="c">${s.done}</td>
+    <td class="c">${s.bad?`<span class="${s.flag?'t-red':''}">${s.bad}</span> · ${Math.round(s.rate*100)}%`:'0'}</td>
+    <td class="c">${fmt(s.spend)} đ</td><td class="c">${s.last?fd(s.last):'—'}</td>
+    <td class="c"><span class="pill ${st[0]}">${st[1]}</span></td>
+    <td class="c" style="white-space:nowrap">
+      <button class="ibtn ok" data-a="view" title="Lịch sử đặt sân"><svg><use href="#i-cal"/></svg></button>
+      <button class="ibtn ok" data-a="edit" title="Sửa thông tin"><svg><use href="#i-edit"/></svg></button>
+      <button class="ibtn" data-a="ban" title="${c.ban?'Bỏ chặn':'Chặn khách'}"><svg><use href="#i-ban"/></svg></button></td></tr>`}).join('')
+    ||'<tr><td colspan="9" class="c" style="color:var(--muted);height:50px">Không có khách phù hợp.</td></tr>';
+  $('#cuTotal').textContent=list.length;
+}
+
+/* ----- Chi tiết khách ----- */
+function cuHist(){
+  const f=$('#cdHF').value,rows=cuCur.bookings.filter(b=>!f||b.status===f).sort((a,b)=>a.date<b.date?1:-1);
+  $('#cdHist').innerHTML=rows.map(b=>`<tr><td class="c">${b.id}</td><td class="c">${fd(b.date)}</td><td class="c">${b.from} – ${b.to}</td><td>${esc(b.court)}</td>
+    <td class="c"${b.status==='cancelled'?' style="text-decoration:line-through;color:var(--muted)"':''}>${fmt(b.amount)} đ</td>
+    <td class="c"><span class="pill ${BK_ST[b.status][1]}">${BK_ST[b.status][0]}</span></td></tr>`).join('')
+    ||'<tr><td colspan="6" class="c" style="color:var(--muted);height:50px">Chưa có lượt đặt nào.</td></tr>';
+}
+function cuOpenDetail(c){
+  cuCur=c;const s=cuStats(c),st=cuState(c,s),T=TIERS[c.tier],av=$('#cdAva');
+  av.textContent=cuIni(c.name);av.style.background=cuCol(c.name);
+  $('#cdName').textContent=c.name;$('#cdCode').textContent='# '+c.id;
+  $('#cdTier').innerHTML=`<span class="pill ${T[1]}">${T[0]}</span> <span class="pill ${st[0]}">${st[1]}</span>`;
+  $('#cdPhone').textContent=c.phone;$('#cdMail').textContent=c.email||'Chưa cập nhật';
+  $('#cdBlock').innerHTML=`<svg><use href="#i-ban"/></svg>${c.ban?'Bỏ chặn':'Chặn khách'}`;
+  $('#cdSum').innerHTML=[
+    ['Lượt hoàn thành',s.done,s.upcoming+' lượt sắp tới'],
+    ['Hủy / không đến',s.bad,Math.round(s.rate*100)+'% tổng lượt'],
+    ['Tổng chi tiêu',fmt(s.spend)+' đ','Chỉ tính lượt hoàn thành'],
+    ['Đặt gần nhất',s.last?fd(s.last):'—','Tham gia '+fd(c.joined)]
+  ].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b><span>${x[2]}</span></div>`).join('');
+  $('#cdKv').innerHTML=[['Họ và tên',esc(c.name)],['Hạng khách',T[0]],['Số điện thoại',esc(c.phone)],['Email',esc(c.email||'Chưa cập nhật')],['Ngày tham gia',fd(c.joined)],['Tình trạng',st[1]]]
+    .map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('');
+  const ban=$('#cdBan'),warn=$('#cdWarn');
+  ban.hidden=!c.ban;
+  if(c.ban)ban.innerHTML=`<div class="ic"><svg><use href="#i-ban"/></svg></div><div><b>Khách đang trong blacklist · ${esc(c.ban.reason)}</b><span>Từ ${fd(c.ban.date)}${c.ban.note?' · '+esc(c.ban.note):''}</span></div><a href="#">Bỏ chặn →</a>`;
+  warn.hidden=!(s.flag&&!c.ban);
+  if(!warn.hidden)warn.innerHTML=`<div class="ic"><svg><use href="#i-bell"/></svg></div><div><b>Khách hay hủy sân · ${s.bad}/${s.total} lượt bị hủy hoặc không đến (${Math.round(s.rate*100)}%)</b><span>Cân nhắc nhắc nhở hoặc yêu cầu đặt cọc cho các lượt sau.</span></div>`;
+  $('#cdNote').value=c.note;$('#cdHF').value='';cuHist();
+  $$('#cdTabs button')[0].click();
+  $('#cuModal').classList.add('show');
+}
+const cuRefresh=()=>{renderCustomers();if($('#cuModal').classList.contains('show'))cuOpenDetail(cuCur)};
+
+/* ----- Thêm / sửa khách ----- */
+function cuOpenForm(c){
+  cuEdit=c||null;$('#cuFTitle').textContent=c?'Sửa thông tin khách':'Thêm khách';
+  $('#cuFName').value=c?c.name:'';$('#cuFPhone').value=c?c.phone:'';$('#cuFMail').value=c?c.email:'';
+  $('#cuFTier').value=c?c.tier:'normal';$('#cuFNote').value=c?c.note:'';$('#cuFErr').textContent='';
+  $('#cuForm').classList.add('show');
+}
+$('#cuFCancel').onclick=()=>$('#cuForm').classList.remove('show');
+$('#cuFOk').onclick=()=>{
+  const name=$('#cuFName').value.trim(),phone=$('#cuFPhone').value.replace(/[\s.\-]/g,''),mail=$('#cuFMail').value.trim(),err=m=>{$('#cuFErr').textContent=m};
+  if(!name)return err('Vui lòng nhập họ tên');
+  if(!/^0\d{9,10}$/.test(phone))return err('Số điện thoại gồm 10–11 số, bắt đầu bằng 0');
+  if(mail&&!/^\S+@\S+\.\S+$/.test(mail))return err('Email không hợp lệ');
+  if(customers.some(x=>x!==cuEdit&&x.phone.replace(/\s/g,'')===phone))return err('Số điện thoại đã tồn tại');
+  const d={name,phone:phone.replace(/^(\d{4})(\d{3})(\d+)$/,'$1 $2 $3'),email:mail,tier:$('#cuFTier').value,note:$('#cuFNote').value.trim()};
+  if(cuEdit){Object.assign(cuEdit,d);toast('Đã cập nhật thông tin khách')}
+  else{
+    const n=Math.max(0,...customers.map(c=>+c.id.slice(2)))+1;
+    customers.unshift({...d,id:'KH'+String(n).padStart(4,'0'),joined:localDate(new Date()),ban:null,bookings:[]});toast('Đã thêm khách mới');
+  }
+  $('#cuForm').classList.remove('show');cuRefresh();
+};
+
+/* ----- Blacklist ----- */
+function cuOpenBan(c){
+  cuCur=c;$('#cuBanFor').textContent=c.name;
+  $('#cuBanReason').innerHTML=BAN_REASONS.map(r=>`<option>${r}</option>`).join('');$('#cuBanNote').value='';
+  $('#cuBan').classList.add('show');
+}
+$('#cuBanCancel').onclick=()=>$('#cuBan').classList.remove('show');
+$('#cuBanOk').onclick=()=>{
+  cuCur.ban={reason:$('#cuBanReason').value,note:$('#cuBanNote').value.trim(),date:localDate(new Date())};
+  $('#cuBan').classList.remove('show');cuRefresh();toast('Đã đưa khách vào blacklist');
+};
+async function cuUnban(c){
+  if(!await cuAsk(`Khách "${c.name}" sẽ được phép đặt sân trở lại.`,{title:'Bỏ chặn khách?',ok:'Bỏ chặn'}))return;
+  c.ban=null;cuRefresh();toast('Đã bỏ chặn');
+}
+
+/* ----- Xuất CSV (Excel mở được) ----- */
+function cuExport(){
+  const rows=[['Mã','Họ tên','Số điện thoại','Email','Hạng','Lượt hoàn thành','Hủy/không đến','Chi tiêu (đ)','Đặt gần nhất','Trạng thái','Ghi chú']];
+  cuList().forEach(({c,s})=>rows.push([c.id,c.name,c.phone,c.email,TIERS[c.tier][0],s.done,s.bad,s.spend,fd(s.last),cuState(c,s)[1],c.note]));
+  const csv='\ufeff'+rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='khach-hang.csv';a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+
+/* ----- Gắn sự kiện ----- */
+$$('#owTabs button').forEach(b=>b.onclick=()=>{
+  $$('#owTabs button').forEach(x=>x.classList.toggle('active',x===b));
+  ['ow-owners','ow-customers'].forEach(id=>$('#'+id).hidden=id!==b.dataset.ow);
+});
+$$('#cdTabs button').forEach(b=>b.onclick=()=>{
+  $$('#cdTabs button').forEach(x=>x.classList.toggle('active',x===b));
+  ['cp-info','cp-hist'].forEach(id=>$('#'+id).hidden=id!==b.dataset.cp);
+});
+$('#cuSearch').addEventListener('input',e=>{cuF.q=e.target.value;renderCustomers()});
+$('#cuTier').addEventListener('change',e=>{cuF.tier=e.target.value;renderCustomers()});
+$('#cuState').addEventListener('change',e=>{cuF.st=e.target.value;renderCustomers()});
+$('#cuSort').addEventListener('change',e=>{cuF.sort=e.target.value;renderCustomers()});
+$('#cuAdd').onclick=()=>cuOpenForm();
+$('#cuExport').onclick=cuExport;
+$('#cuBody').addEventListener('click',e=>{
+  const r=e.target.closest('tr[data-id]');if(!r)return;
+  const c=customers.find(x=>x.id===r.dataset.id),b=e.target.closest('button[data-a]'),a=b?b.dataset.a:'view';
+  if(a==='edit')cuOpenForm(c);else if(a==='ban')c.ban?cuUnban(c):cuOpenBan(c);else cuOpenDetail(c);
+});
+$('#cdHF').addEventListener('change',cuHist);
+$('#cdEdit').onclick=()=>cuOpenForm(cuCur);
+$('#cdBlock').onclick=()=>cuCur.ban?cuUnban(cuCur):cuOpenBan(cuCur);
+$('#cdBan').addEventListener('click',e=>{if(e.target.closest('a')){e.preventDefault();cuUnban(cuCur)}});
+$('#cdNoteSave').onclick=()=>{cuCur.note=$('#cdNote').value.trim();toast('Đã lưu ghi chú')};
+$('#cdClose').onclick=()=>$('#cuModal').classList.remove('show');
+renderCustomers();
+
+/* ---------- Router ---------- */
+const navMap={withdraw:'home',home:'home',courts:'courts',owners:'owners',detail:'owners',settings:'settings',pricing:'pricing'};
+function route(){
+  let h=(location.hash||'#home').slice(1); if(!navMap[h]) h='home';
+  $$('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+h));
+  $$('#nav a').forEach(a=>a.classList.toggle('active',a.dataset.nav===navMap[h]));
+  window.scrollTo(0,0);
+  if(h==='pricing')prRender();window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+$('#courtSearch').addEventListener('input',renderCourts);
+
+initYearSelect();renderChart(CUR_Y);renderCourts();renderOwners();route();
+</script>
+</body>
+</html>
