@@ -1,0 +1,3533 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng nhập - SPORT.COURT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --blue: #1769e0;
+      --blue-dark: #0f4fb3;
+      --blue-soft: #eaf2ff;
+      --orange: #f26b1d;
+      --ink: #10244a;
+      --muted: #6b7a99;
+      --line: #dfe7f5;
+      --red: #d93025;
+      --green: #1a9a54;
+      --bg: #f6f9ff
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+      color: var(--ink);
+      font-size: 14px;
+      background: #fff
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      background: none;
+      color: inherit
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600
+    }
+
+    a:hover {
+      text-decoration: underline
+    }
+
+    [hidden] {
+      display: none !important
+    }
+
+    .container {
+      max-width: 1024px;
+      margin: 0 auto;
+      padding: 0 20px
+    }
+
+    /* LOGIN */
+    .auth {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+      background: #f6f9ff
+    }
+
+    .auth-side {
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      padding: 36px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #1550c0 0%, #1f6fe5 55%, #2a9a8a 100%)
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--blue);
+      letter-spacing: .5px;
+      text-decoration: none;
+      white-space: nowrap
+    }
+
+    .logo svg {
+      width: 44px;
+      height: 30px
+    }
+
+    .auth-side .logo {
+      font-size: 24px;
+      color: #fff
+    }
+
+    .side-text {
+      position: relative;
+      z-index: 2;
+      max-width: 420px
+    }
+
+    .side-text small {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      opacity: .9
+    }
+
+    .side-text h2 {
+      font-size: 32px;
+      line-height: 1.25;
+      font-weight: 800;
+      margin: 10px 0 22px
+    }
+
+    .side-text ul {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      font-size: 14px;
+      opacity: .96
+    }
+
+    .deco {
+      position: absolute;
+      right: -30px;
+      bottom: -10px;
+      width: 70%;
+      opacity: .9
+    }
+
+    .auth-main {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px
+    }
+
+    .back {
+      position: absolute;
+      top: 22px;
+      left: 28px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500
+    }
+
+    .auth-box {
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(16, 36, 74, .08);
+      padding: 26px 30px 30px
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--blue-soft);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 22px
+    }
+
+    .tab {
+      padding: 9px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #4a5c82
+    }
+
+    .tab.on {
+      background: #fff;
+      color: var(--blue);
+      box-shadow: 0 2px 6px rgba(16, 36, 74, .1)
+    }
+
+    .form h1 {
+      font-size: 22px;
+      font-weight: 800
+    }
+
+    .sub {
+      color: var(--muted);
+      margin: 4px 0 20px;
+      font-size: 13px
+    }
+
+    .field {
+      margin-bottom: 14px
+    }
+
+    .field label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 6px
+    }
+
+    .input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 42px;
+      border: 1px solid #cfdcf3;
+      border-radius: 9px;
+      padding: 0 12px;
+      background: #fff;
+      transition: .15s
+    }
+
+    .input:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(23, 105, 224, .12)
+    }
+
+    .input input {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      border: none;
+      outline: none;
+      font: inherit;
+      font-size: 13.5px;
+      color: var(--ink);
+      background: none
+    }
+
+    .input input::placeholder {
+      color: #9aa8c4
+    }
+
+    .input.ta {
+      height: auto;
+      align-items: flex-start;
+      padding: 10px 12px
+    }
+
+    .input.ta .ico {
+      margin-top: 1px
+    }
+
+    .input textarea {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      border: none;
+      outline: none;
+      resize: vertical;
+      min-height: 64px;
+      font: inherit;
+      font-size: 13.5px;
+      color: var(--ink);
+      background: none
+    }
+
+    .input textarea::placeholder {
+      color: #9aa8c4
+    }
+
+    .ico {
+      font-size: 14px;
+      opacity: .75
+    }
+
+    .eye {
+      font-size: 15px;
+      opacity: .6;
+      padding: 2px 4px
+    }
+
+    .field.bad .input {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(217, 48, 37, .1)
+    }
+
+    .err {
+      display: none;
+      font-style: normal;
+      color: var(--red);
+      font-size: 12px;
+      margin-top: 5px
+    }
+
+    .field.bad .err,
+    .err.show {
+      display: block
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 4px 0 16px;
+      font-size: 12.5px
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      color: #33476f
+    }
+
+    .check input {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--blue)
+    }
+
+    .agree {
+      font-size: 12.5px;
+      align-items: flex-start;
+      line-height: 1.5
+    }
+
+    .agree input {
+      margin-top: 2px
+    }
+
+    #agreeErr {
+      margin: 4px 0 8px
+    }
+
+    .form-msg {
+      display: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 12px
+    }
+
+    .form-msg.show {
+      display: block
+    }
+
+    .form-msg.error {
+      background: #fdecea;
+      color: var(--red)
+    }
+
+    .form-msg.ok {
+      background: #e6f6ec;
+      color: var(--green)
+    }
+
+    .btn-primary {
+      width: 100%;
+      height: 44px;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 9px;
+      margin-top: 4px;
+      transition: .15s
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-dark)
+    }
+
+    .btn-primary:disabled {
+      opacity: .6;
+      cursor: wait
+    }
+
+    .or {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 14px;
+      color: var(--muted);
+      font-size: 12px
+    }
+
+    .or:before,
+    .or:after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line)
+    }
+
+    .socials {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
+    }
+
+    .soc {
+      width: 100%;
+      height: 40px;
+      border: 1px solid #cfdcf3;
+      border-radius: 9px;
+      font-weight: 600;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #fff
+    }
+
+    .soc:hover {
+      border-color: var(--blue);
+      background: var(--blue-soft)
+    }
+
+    .soc b {
+      font-size: 15px
+    }
+
+    .switch {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .demo {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 11.5px;
+      color: var(--muted);
+      background: var(--blue-soft);
+      border-radius: 8px;
+      padding: 8px
+    }
+
+    .demo b {
+      color: var(--ink)
+    }
+
+    /* HOME HEADER / FILTERS */
+    header {
+      background: #fff
+    }
+
+    .header-in {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      height: 66px
+    }
+
+    .search {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--blue-soft);
+      border: 1px solid #cfe0fb;
+      border-radius: 999px;
+      padding: 0 16px;
+      height: 36px
+    }
+
+    .search input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      background: none;
+      outline: none;
+      font: inherit;
+      font-size: 13px;
+      color: var(--ink)
+    }
+
+    .search input::placeholder {
+      color: #8a9bbd
+    }
+
+    .head-right {
+      display: flex;
+      align-items: center;
+      gap: 18px
+    }
+
+    .login-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--ink);
+      padding-right: 18px;
+      border-right: 1px solid var(--line)
+    }
+
+    .login-info button {
+      color: var(--blue);
+      font-weight: 600;
+      font-size: 12px
+    }
+
+    .cart {
+      position: relative;
+      font-size: 22px
+    }
+
+    .cart b {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background: var(--orange);
+      color: #fff;
+      font-size: 10px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center
+    }
+
+    .filterbar {
+      background: #edf3ff;
+      border-top: 1px solid #e3ecfb;
+      border-bottom: 1px solid #e3ecfb;
+      position: relative;
+      z-index: 20
+    }
+
+    .filter-in {
+      display: grid;
+      grid-template-columns: 150px repeat(4, 1fr) 100px;
+      gap: 14px;
+      padding: 12px 20px;
+      max-width: 1024px;
+      margin: 0 auto
+    }
+
+    .btn-book {
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      border-radius: 8px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px
+    }
+
+    .btn-book:hover {
+      background: var(--blue-dark)
+    }
+
+    .dd {
+      position: relative
+    }
+
+    .dd-btn {
+      width: 100%;
+      height: 40px;
+      background: #fff;
+      border: 1px solid #cfdcf3;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      font-size: 13px;
+      color: #33476f;
+      text-align: left
+    }
+
+    .dd-btn .lbl {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .dd-btn .arrow {
+      transition: transform .2s;
+      font-size: 10px
+    }
+
+    .dd.open .dd-btn {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(23, 105, 224, .12)
+    }
+
+    .dd.open .arrow {
+      transform: rotate(180deg)
+    }
+
+    .dd.active .dd-btn {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 600
+    }
+
+    .dd-panel {
+      display: none;
+      position: absolute;
+      top: 46px;
+      left: 0;
+      min-width: 100%;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 12px 30px rgba(16, 36, 74, .15);
+      padding: 6px;
+      z-index: 30
+    }
+
+    .dd.open .dd-panel {
+      display: block
+    }
+
+    .dd-panel.wide {
+      min-width: 260px;
+      padding: 14px
+    }
+
+    .opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 9px 12px;
+      border-radius: 7px;
+      font-size: 13px;
+      white-space: nowrap
+    }
+
+    .opt:hover {
+      background: var(--blue-soft)
+    }
+
+    .opt.sel {
+      background: var(--blue);
+      color: #fff;
+      font-weight: 600
+    }
+
+    .field select {
+      width: 100%;
+      height: 38px;
+      border: 1px solid #cfdcf3;
+      border-radius: 8px;
+      padding: 0 10px;
+      font: inherit;
+      font-size: 13px;
+      color: var(--ink);
+      background: #fff;
+      outline: none
+    }
+
+    .field select:focus {
+      border-color: var(--blue)
+    }
+
+    .field select:disabled {
+      background: #f1f4fa;
+      color: #9aa8c4
+    }
+
+    .btn-reset {
+      height: 40px;
+      border: 1px solid #cfdcf3;
+      background: #fff;
+      border-radius: 8px;
+      color: #33476f;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px
+    }
+
+    .btn-reset:hover {
+      border-color: var(--orange);
+      color: var(--orange)
+    }
+
+    /* BANNERS / COURT CARDS */
+    .banners {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px
+    }
+
+    .banner {
+      position: relative;
+      height: 150px;
+      border-radius: 10px;
+      overflow: hidden;
+      color: #fff;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center
+    }
+
+    .banner.b1 {
+      background: linear-gradient(110deg, #1550c0 0%, #1f6fe5 55%, #2a8ae8 100%)
+    }
+
+    .banner.b2 {
+      background: linear-gradient(110deg, #1a59c6 0%, #1d7adf 50%, #2f9a58 100%)
+    }
+
+    .banner small {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .3px;
+      opacity: .9
+    }
+
+    .banner h3 {
+      font-size: 22px;
+      font-weight: 800;
+      margin: 6px 0 4px;
+      letter-spacing: .3px
+    }
+
+    .banner p {
+      font-size: 13px;
+      opacity: .95
+    }
+
+    .banner .cta {
+      margin-top: 12px;
+      align-self: flex-start;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 7px 16px;
+      border-radius: 5px
+    }
+
+    .banner .deco {
+      position: absolute;
+      right: -10px;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      opacity: .95;
+      pointer-events: none
+    }
+
+    .page-title {
+      margin: 26px 0 16px
+    }
+
+    .page-title h1 {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: .3px
+    }
+
+    .page-title p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-top: 2px
+    }
+
+    .result-info {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px
+    }
+
+    .result-info b {
+      color: var(--blue)
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 2px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(16, 36, 74, .05);
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(16, 36, 74, .12)
+    }
+
+    .thumb {
+      position: relative;
+      height: 130px;
+      border-radius: 8px 8px 0 0;
+      overflow: hidden
+    }
+
+    .thumb svg {
+      width: 100%;
+      height: 100%;
+      display: block
+    }
+
+    .tag {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #fff;
+      border-radius: 6px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .card-body {
+      padding: 12px 14px 14px
+    }
+
+    .card h3 {
+      font-size: 15px;
+      font-weight: 700
+    }
+
+    .loc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 12px;
+      color: #51617f;
+      gap: 6px
+    }
+
+    .loc-row .addr {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      min-width: 0
+    }
+
+    .loc-row .addr span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .rate {
+      white-space: nowrap;
+      color: #51617f
+    }
+
+    .rate i {
+      color: #f5a524;
+      font-style: normal
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #51617f;
+      gap: 6px
+    }
+
+    .meta b {
+      color: var(--blue);
+      font-weight: 700
+    }
+
+    .slots {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 10px
+    }
+
+    .slot {
+      background: var(--orange);
+      color: #fff;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 6px 0;
+      border-radius: 4px
+    }
+
+    .slot:hover {
+      filter: brightness(1.1)
+    }
+
+    .btn-main {
+      width: 100%;
+      margin-top: 12px;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12.5px;
+      height: 34px;
+      border-radius: 5px
+    }
+
+    .btn-main:hover {
+      background: var(--blue-dark)
+    }
+
+    .empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      background: var(--bg);
+      border-radius: 12px
+    }
+
+    .empty .big {
+      font-size: 42px;
+      margin-bottom: 8px
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 26px 0 30px
+    }
+
+    .pg {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+      display: grid;
+      place-items: center
+    }
+
+    .pg:hover:not(:disabled) {
+      border-color: var(--blue);
+      color: var(--blue)
+    }
+
+    .pg.on {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      width: 30px;
+      height: 30px
+    }
+
+    .pg:disabled {
+      opacity: .4;
+      cursor: not-allowed
+    }
+
+    footer {
+      background: #f3f7ff;
+      border-top: 1px solid #e3ecfb;
+      padding-top: 14px;
+      margin-top: 20px
+    }
+
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.2fr 1.2fr;
+      gap: 20px;
+      align-items: center
+    }
+
+    .foot-info div {
+      margin-top: 8px;
+      font-size: 13px
+    }
+
+    .foot-info .hot {
+      font-weight: 700;
+      color: var(--blue);
+      font-size: 14px
+    }
+
+    .socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px
+    }
+
+    .form .socials {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 0
+    }
+
+    .socials span {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700
+    }
+
+    .map {
+      height: 94px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: linear-gradient(90deg, transparent 48%, #fff 48%, #fff 52%, transparent 52%), linear-gradient(0deg, transparent 45%, #fff 45%, #fff 50%, transparent 50%), #e5eddc;
+      position: relative;
+      overflow: hidden
+    }
+
+    .map .pin {
+      position: absolute;
+      left: 42%;
+      top: 30%;
+      font-size: 22px
+    }
+
+    .map .map-label {
+      position: absolute;
+      left: 30%;
+      top: 6px;
+      background: #fff;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 9px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .15)
+    }
+
+    .nation {
+      background: #e6efff;
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start
+    }
+
+    .nation h4 {
+      font-size: 12px
+    }
+
+    .nation p {
+      font-size: 10.5px;
+      color: #51617f;
+      margin-top: 4px
+    }
+
+    .nation button {
+      margin-top: 8px;
+      border: 1px solid var(--blue);
+      color: var(--blue);
+      background: #fff;
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 11px;
+      font-weight: 600
+    }
+
+    .copy {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #dbe5f6;
+      margin-top: 14px;
+      padding: 10px 0;
+      font-size: 10.5px;
+      color: var(--muted);
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    .copy div span {
+      margin-left: 14px
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: var(--ink);
+      color: #fff;
+      padding: 11px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .3s;
+      z-index: 99;
+      max-width: 90%;
+      text-align: center
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0)
+    }
+
+    /* ===== TRANG CHI TIẾT SÂN ===== */
+    .dt-head {
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 25
+    }
+
+    .dt-head .header-in {
+      gap: 16px
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid #cfdcf3;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      background: var(--blue-soft)
+    }
+
+    .btn-back:hover {
+      border-color: var(--blue)
+    }
+
+    .dt-head .spacer {
+      flex: 1
+    }
+
+    .crumb {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin: 16px 0 12px
+    }
+
+    .crumb a {
+      font-weight: 500
+    }
+
+    .crumb b {
+      color: var(--ink)
+    }
+
+    .dt-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 20px;
+      align-items: start;
+      padding-bottom: 10px
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(16, 36, 74, .05);
+      overflow: hidden
+    }
+
+    .dt-hero {
+      position: relative;
+      height: 230px
+    }
+
+    .dt-hero svg {
+      width: 100%;
+      height: 100%;
+      display: block
+    }
+
+    .dt-hero .tag {
+      top: 12px;
+      right: 12px;
+      font-size: 12px;
+      padding: 5px 11px
+    }
+
+    .dt-info {
+      padding: 16px 20px 18px
+    }
+
+    .dt-info h1 {
+      font-size: 24px;
+      font-weight: 800
+    }
+
+    .dt-addr {
+      margin-top: 6px;
+      color: #51617f;
+      font-size: 13px
+    }
+
+    .dt-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 14px
+    }
+
+    .stat {
+      background: var(--blue-soft);
+      border-radius: 9px;
+      padding: 10px 12px
+    }
+
+    .stat small {
+      display: block;
+      font-size: 11px;
+      color: var(--muted)
+    }
+
+    .stat b {
+      display: block;
+      font-size: 14px;
+      margin-top: 2px
+    }
+
+    .stat b.price {
+      color: var(--orange)
+    }
+
+    .sec {
+      margin-top: 20px;
+      padding: 18px 20px 20px
+    }
+
+    .sec h2 {
+      font-size: 18px;
+      font-weight: 800
+    }
+
+    .sec .sub {
+      margin: 2px 0 14px
+    }
+
+    .legend {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 12.5px;
+      margin-bottom: 14px
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #33476f
+    }
+
+    .legend i {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      display: inline-block
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 14px
+    }
+
+    .day {
+      border: 1px solid #cfdcf3;
+      border-radius: 10px;
+      padding: 8px 4px;
+      text-align: center;
+      background: #fff;
+      line-height: 1.35
+    }
+
+    .day small {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600
+    }
+
+    .day b {
+      display: block;
+      font-size: 13.5px
+    }
+
+    .day:hover {
+      border-color: var(--blue)
+    }
+
+    .day.on {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff
+    }
+
+    .day.on small {
+      color: #dbe8ff
+    }
+
+    .sched-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 10px
+    }
+
+    .sched {
+      border-collapse: separate;
+      border-spacing: 0;
+      width: max-content;
+      min-width: 100%
+    }
+
+    .sched th {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 8px 4px;
+      background: #f6f9ff;
+      border-bottom: 1px solid var(--line);
+      min-width: 58px
+    }
+
+    .sched th.sc-h {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      min-width: 76px;
+      text-align: left;
+      padding-left: 12px;
+      color: var(--ink);
+      font-size: 12.5px;
+      background: #f6f9ff;
+      border-right: 1px solid var(--line)
+    }
+
+    .sched tbody th.sc-h {
+      background: #fff
+    }
+
+    .sched td {
+      padding: 4px;
+      border-bottom: 1px solid #eef2fa
+    }
+
+    .sched tr:last-child td,
+    .sched tr:last-child th {
+      border-bottom: 0
+    }
+
+    .cell {
+      height: 34px;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      user-select: none;
+      transition: .12s
+    }
+
+    .cell.free {
+      background: #2fb36d;
+      cursor: pointer
+    }
+
+    .cell.free:hover {
+      filter: brightness(1.08);
+      transform: scale(1.06)
+    }
+
+    .cell.sel {
+      background: var(--orange);
+      cursor: pointer;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--orange)
+    }
+
+    .cell.booked {
+      background: #e5484d;
+      cursor: not-allowed
+    }
+
+    .cell.past {
+      background: #e3e8f2;
+      cursor: not-allowed
+    }
+
+    .lg-free {
+      background: #2fb36d
+    }
+
+    .lg-booked {
+      background: #e5484d
+    }
+
+    .lg-sel {
+      background: var(--orange)
+    }
+
+    .lg-past {
+      background: #e3e8f2
+    }
+
+    .book-card {
+      position: sticky;
+      top: 82px;
+      padding: 18px 18px 20px
+    }
+
+    .book-card h2 {
+      font-size: 18px;
+      font-weight: 800
+    }
+
+    .book-card .sub {
+      margin-bottom: 12px
+    }
+
+    .picked {
+      background: var(--blue-soft);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      font-size: 12.5px
+    }
+
+    .picked .none {
+      color: var(--muted)
+    }
+
+    .picked ul {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+      max-height: 150px;
+      overflow-y: auto
+    }
+
+    .picked li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: #fff;
+      border-radius: 7px;
+      padding: 6px 9px
+    }
+
+    .picked li button {
+      color: var(--red);
+      font-weight: 800;
+      font-size: 14px;
+      line-height: 1;
+      padding: 0 2px
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-weight: 700;
+      font-size: 13px
+    }
+
+    .total b {
+      color: var(--orange);
+      font-size: 16px
+    }
+
+    .btn-confirm {
+      width: 100%;
+      height: 46px;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 800;
+      font-size: 14.5px;
+      border-radius: 10px;
+      margin-top: 6px
+    }
+
+    .btn-confirm:hover {
+      filter: brightness(1.07)
+    }
+
+    .bk-ok {
+      display: none;
+      background: #e6f6ec;
+      color: var(--green);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 13px;
+      margin-bottom: 14px;
+      line-height: 1.5
+    }
+
+    .bk-ok.show {
+      display: block
+    }
+
+    .bk-ok b {
+      color: var(--ink)
+    }
+
+    /* ===== MENU NGƯỜI DÙNG + HỘP THOẠI ===== */
+    .user-menu {
+      position: relative;
+      z-index: 60
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px 4px 4px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink)
+    }
+
+    .user-btn:hover,
+    .user-menu.open .user-btn {
+      background: var(--blue-soft);
+      border-color: #cfe0fb
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--blue-soft);
+      border: 1px solid #cfe0fb;
+      display: grid;
+      place-items: center;
+      font-size: 15px
+    }
+
+    .uname {
+      max-width: 130px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .user-btn .arrow {
+      font-size: 9px;
+      color: var(--muted);
+      transition: transform .2s
+    }
+
+    .user-menu.open .arrow {
+      transform: rotate(180deg)
+    }
+
+    .user-panel {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 6px);
+      min-width: 200px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 12px 30px rgba(16, 36, 74, .15);
+      padding: 6px
+    }
+
+    .user-panel button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 7px;
+      font-size: 13px;
+      text-align: left;
+      font-weight: 500
+    }
+
+    .user-panel button:hover {
+      background: var(--blue-soft)
+    }
+
+    .user-panel .danger {
+      color: var(--red)
+    }
+
+    .user-panel hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 4px 0
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 36, 74, .45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 80
+    }
+
+    .modal-box {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      max-height: 92vh;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px 26px 26px;
+      box-shadow: 0 20px 60px rgba(16, 36, 74, .3)
+    }
+
+    .modal-box h2 {
+      font-size: 20px;
+      font-weight: 800
+    }
+
+    .modal-x {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 18px;
+      color: var(--muted);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%
+    }
+
+    .modal-x:hover {
+      background: var(--blue-soft);
+      color: var(--ink)
+    }
+
+    .opt-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .pill {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border: 1px solid #cfdcf3;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #33476f;
+      cursor: pointer;
+      background: #fff;
+      user-select: none
+    }
+
+    .pill input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none
+    }
+
+    .pill:hover {
+      border-color: var(--blue)
+    }
+
+    .pill:has(input:checked) {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff
+    }
+
+    .pill:has(input:focus-visible) {
+      box-shadow: 0 0 0 3px rgba(23, 105, 224, .25)
+    }
+
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px
+    }
+
+    .btn-row .btn-primary {
+      margin-top: 0
+    }
+
+    .btn-ghost {
+      height: 44px;
+      border: 1px solid #cfdcf3;
+      border-radius: 9px;
+      font-weight: 700;
+      font-size: 14px;
+      background: #fff;
+      color: #33476f
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--blue);
+      color: var(--blue)
+    }
+
+    .input input[readonly] {
+      color: var(--muted);
+      cursor: not-allowed
+    }
+
+    .hint {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 5px
+    }
+
+    /* ===== GIỎ ĐẶT SÂN / LỊCH SỬ ===== */
+    .cart-btn {
+      display: block;
+      line-height: 1;
+      padding: 2px
+    }
+
+    .cart-menu .user-panel {
+      min-width: 240px
+    }
+
+    .card.static {
+      cursor: default
+    }
+
+    .card.static:hover {
+      transform: none;
+      box-shadow: 0 2px 8px rgba(16, 36, 74, .05)
+    }
+
+    .hist-meta {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #51617f;
+      line-height: 1.7
+    }
+
+    .my-rating {
+      color: #f5a524;
+      font-weight: 600
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px
+    }
+
+    .card-actions .btn-main {
+      margin-top: 0
+    }
+
+    .btn-rate {
+      height: 34px;
+      border: 1px solid var(--orange);
+      color: var(--orange);
+      font-weight: 700;
+      font-size: 12.5px;
+      border-radius: 5px;
+      background: #fff
+    }
+
+    .btn-rate:hover {
+      background: var(--orange);
+      color: #fff
+    }
+
+    .bk-list {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 30px
+    }
+
+    .bk-item {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(16, 36, 74, .05)
+    }
+
+    .bk-item .thumb {
+      height: 100%;
+      min-height: 150px;
+      border-radius: 0
+    }
+
+    .bk-body {
+      padding: 14px 18px 16px;
+      min-width: 0
+    }
+
+    .bk-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start
+    }
+
+    .bk-top h3 {
+      font-size: 16px;
+      font-weight: 800
+    }
+
+    .bk-code {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap
+    }
+
+    .badge.up {
+      background: #fff1e8;
+      color: var(--orange)
+    }
+
+    .badge.done {
+      background: #e6f6ec;
+      color: var(--green)
+    }
+
+    .bk-slots {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 10px 0
+    }
+
+    .bk-slots li {
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 6px
+    }
+
+    .bk-foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 12.5px;
+      color: #51617f
+    }
+
+    .bk-foot b {
+      color: var(--orange);
+      font-size: 14px
+    }
+
+    .stars {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin: 6px 0 14px
+    }
+
+    .star {
+      font-size: 36px;
+      line-height: 1;
+      color: #d5dcec;
+      transition: transform .1s
+    }
+
+    .star.on {
+      color: #f5a524
+    }
+
+    .star:hover {
+      transform: scale(1.12)
+    }
+
+    .rv-court {
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 8px
+    }
+
+    .cd {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 4px 0 10px;
+      font-size: 12.5px;
+      color: #51617f
+    }
+
+    .cd .u {
+      background: #fff1e8;
+      color: var(--orange);
+      border-radius: 8px;
+      padding: 5px 10px;
+      text-align: center;
+      min-width: 58px;
+      font-size: 11px;
+      font-weight: 600
+    }
+
+    .cd .u b {
+      display: block;
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 800
+    }
+
+    .cd .live {
+      background: #fdecea;
+      color: var(--red);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-weight: 700
+    }
+
+    /* ===== THANH TOÁN / HỦY ĐẶT SÂN ===== */
+    .pay-owner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--blue-soft);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px
+    }
+
+    .pay-avt {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      flex: none;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;
+      background: linear-gradient(135deg, var(--blue), #2a9a8a);
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(16, 36, 74, .2)
+    }
+
+    .pay-owner small {
+      display: block;
+      font-size: 11.5px;
+      color: var(--muted)
+    }
+
+    .pay-owner b {
+      font-size: 15.5px
+    }
+
+    .pay-qr {
+      display: flex;
+      justify-content: center;
+      margin: 4px 0 12px
+    }
+
+    .pay-qr img {
+      width: 220px;
+      height: 220px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 8px;
+      background: #fff
+    }
+
+    .qr-fail {
+      width: 220px;
+      height: 220px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 16px;
+      font-size: 12.5px;
+      color: var(--muted);
+      border: 1px dashed #cfdcf3;
+      border-radius: 12px
+    }
+
+    .pay-rows {
+      margin-bottom: 14px
+    }
+
+    .pay-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: 1px dashed var(--line);
+      font-size: 13px
+    }
+
+    .pay-row>span {
+      color: var(--muted);
+      white-space: nowrap
+    }
+
+    .pay-row b {
+      text-align: right;
+      word-break: break-word
+    }
+
+    .pay-row .cp {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      margin-left: 8px;
+      white-space: nowrap
+    }
+
+    .pay-row.total b {
+      color: var(--orange);
+      font-size: 17px
+    }
+
+    .btn-cancel {
+      border: 1px solid var(--red);
+      color: var(--red);
+      background: #fff;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap
+    }
+
+    .btn-cancel:hover {
+      background: var(--red);
+      color: #fff
+    }
+
+    .btn-danger {
+      height: 44px;
+      background: var(--red);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 9px
+    }
+
+    .btn-danger:hover {
+      filter: brightness(1.08)
+    }
+
+    .warn {
+      background: #fff4e5;
+      color: #9a3f0c;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px
+    }
+
+    .pay-row.refund b {
+      color: var(--green);
+      font-size: 16px
+    }
+
+    /* ===== LƯỢT ĐẶT ĐÃ HỦY (trong Lịch sử đặt sân) ===== */
+    .badge.cancel {
+      background: #fdecea;
+      color: var(--red)
+    }
+
+    .bk-item.cancelled .thumb {
+      filter: grayscale(.7);
+      opacity: .85
+    }
+
+    .bk-item.cancelled .bk-slots li {
+      background: #f1f4fa;
+      color: var(--muted);
+      text-decoration: line-through
+    }
+
+    .sec-title {
+      margin: 28px 0 12px;
+      font-size: 18px;
+      font-weight: 800
+    }
+
+    .sec-title small {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 13px
+    }
+
+    .pay-refund {
+      color: var(--green);
+      font-weight: 700
+    }
+
+    .bk-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px
+    }
+
+    .bk-actions .btn-main {
+      width: auto;
+      margin-top: 0;
+      padding: 0 20px
+    }
+
+    @media(max-width:620px) {
+      .bk-item {
+        grid-template-columns: 1fr
+      }
+
+      .bk-item .thumb {
+        height: 130px;
+        min-height: 0
+      }
+    }
+
+    @media(max-width:900px) {
+      .filter-in {
+        grid-template-columns: repeat(3, minmax(0, 1fr))
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .foot-grid {
+        grid-template-columns: 1fr
+      }
+
+      .auth-side {
+        padding: 28px
+      }
+
+      .side-text h2 {
+        font-size: 27px
+      }
+
+      .dt-wrap {
+        grid-template-columns: 1fr
+      }
+
+      .book-card {
+        position: static
+      }
+    }
+
+    @media(max-width:620px) {
+      .auth {
+        grid-template-columns: 1fr
+      }
+
+      .auth-side {
+        padding: 18px 22px;
+        min-height: 86px
+      }
+
+      .side-text,
+      .auth-side .deco {
+        display: none
+      }
+
+      .auth-main {
+        padding: 38px 16px 24px
+      }
+
+      .back {
+        top: 12px;
+        left: 18px
+      }
+
+      .auth-box {
+        padding: 22px 18px
+      }
+
+      .header-in {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 0;
+        gap: 10px
+      }
+
+      .search {
+        order: 3;
+        flex-basis: 100%
+      }
+
+      .filter-in {
+        grid-template-columns: 1fr 1fr;
+        padding: 10px
+      }
+
+      .grid,
+      .banners {
+        grid-template-columns: 1fr
+      }
+
+      .page-title h1 {
+        font-size: 25px
+      }
+
+      .banner h3 {
+        font-size: 19px
+      }
+
+      .head-right {
+        margin-left: auto
+      }
+
+      .login-info {
+        padding-right: 8px
+      }
+
+      .slots {
+        gap: 5px
+      }
+
+      .dt-hero {
+        height: 170px
+      }
+
+      .dt-stats {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .dt-info h1 {
+        font-size: 20px
+      }
+
+      .days {
+        gap: 4px
+      }
+
+      .day b {
+        font-size: 12px
+      }
+
+      .dt-head .header-in {
+        flex-wrap: nowrap;
+        padding: 0
+      }
+
+      .dt-head .uname,
+      .dt-head .user-btn .arrow {
+        display: none
+      }
+
+      .user-btn {
+        padding-right: 4px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- MÀN HÌNH ĐĂNG NHẬP: được hiển thị đầu tiên -->
+  <section id="loginPage">
+    <div class="auth">
+      <aside class="auth-side">
+        <a class="logo" href="#" aria-label="SPORT.COURT">
+          <svg viewBox="0 0 44 30" aria-hidden="true">
+            <path d="M14 2h28l-5 8H9z" fill="#fff" />
+            <path d="M8 12h28l-5 7H3z" fill="#f26b1d" />
+            <path d="M4 21h24l-4 7H0z" fill="#fff" />
+          </svg>SPORT.COURT
+        </a>
+        <div class="side-text"><small>THỂ THAO KẾT NỐI CỘNG ĐỒNG</small>
+          <h2>Đặt sân nhanh chóng,<br>chơi thể thao thả ga</h2>
+          <ul>
+            <li>✔ Hơn 100+ sân tại Hà Nội, TP.HCM và nhiều tỉnh thành</li>
+            <li>✔ Xem lịch trống và đặt sân chỉ trong vài giây</li>
+            <li>✔ Bóng đá, bóng chuyền, cầu lông, pickleball</li>
+          </ul>
+        </div>
+        <svg class="deco" viewBox="0 0 200 150" aria-hidden="true">
+          <ellipse cx="110" cy="70" rx="62" ry="58" fill="#0d1b3a" opacity=".55" transform="rotate(-25 110 70)" />
+          <circle cx="170" cy="105" r="24" fill="#f4e04a" />
+          <g fill="#caa800">
+            <circle cx="162" cy="98" r="3" />
+            <circle cx="175" cy="96" r="3" />
+            <circle cx="168" cy="110" r="3" />
+            <circle cx="180" cy="108" r="3" />
+          </g>
+        </svg>
+      </aside>
+      <main class="auth-main">
+        <div class="auth-box">
+          <div class="tabs"><button class="tab on" data-tab="login">Đăng nhập</button><button class="tab"
+              data-tab="register">Đăng ký</button></div>
+          <form id="formLogin" class="form" novalidate>
+            <h1>Chào mừng trở lại 👋</h1>
+            <p class="sub">Đăng nhập để đặt sân và quản lý lịch của bạn.</p>
+            <div class="field"><label for="lgId">Email hoặc số điện thoại</label>
+              <div class="input"><span class="ico">👤</span><input id="lgId" type="text"
+                  placeholder="Nhập email hoặc số điện thoại" autocomplete="username"></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="lgPw">Mật khẩu</label>
+              <div class="input"><span class="ico">🔒</span><input id="lgPw" type="password" placeholder="Nhập mật khẩu"
+                  autocomplete="current-password"><button type="button" class="eye" data-eye="lgPw"
+                  aria-label="Hiện mật khẩu">👁</button></div><em class="err"></em>
+            </div>
+            <div class="row"><label class="check"><input type="checkbox" id="remember"> Ghi nhớ đăng nhập</label><a
+                href="#" id="forgot">Quên mật khẩu?</a></div>
+            <div class="form-msg" id="msgLogin"></div><button class="btn-primary" type="submit">Đăng nhập</button>
+            <div class="or"><span>hoặc tiếp tục với</span></div>
+            <div class="socials"><button type="button" class="soc" data-soc="Google"><b style="color:#ea4335">G</b>
+                Google</button><button type="button" class="soc" data-soc="Facebook"><b style="color:#1877f2">f</b>
+                Facebook</button></div>
+            <p class="switch">Chưa có tài khoản? <a href="#" data-go="register">Đăng ký ngay</a></p>
+            <p class="demo">Tài khoản demo: <b>demo@sportcourt.vn</b> / <b>123456</b></p>
+          </form>
+          <form id="formRegister" class="form" novalidate hidden>
+            <h1>Tạo tài khoản mới</h1>
+            <p class="sub">Chỉ mất 1 phút để bắt đầu đặt sân.</p>
+            <div class="field"><label for="rgName">Họ và tên</label>
+              <div class="input"><span class="ico">🙂</span><input id="rgName" type="text" placeholder="Nguyễn Văn A"
+                  autocomplete="name"></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="rgId">Email hoặc số điện thoại</label>
+              <div class="input"><span class="ico">✉️</span><input id="rgId" type="text"
+                  placeholder="Nhập email hoặc số điện thoại" autocomplete="username"></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="rgPw">Mật khẩu</label>
+              <div class="input"><span class="ico">🔒</span><input id="rgPw" type="password"
+                  placeholder="Tối thiểu 6 ký tự" autocomplete="new-password"><button type="button" class="eye"
+                  data-eye="rgPw" aria-label="Hiện mật khẩu">👁</button></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="rgPw2">Nhập lại mật khẩu</label>
+              <div class="input"><span class="ico">🔒</span><input id="rgPw2" type="password"
+                  placeholder="Nhập lại mật khẩu" autocomplete="new-password"><button type="button" class="eye"
+                  data-eye="rgPw2" aria-label="Hiện mật khẩu">👁</button></div><em class="err"></em>
+            </div>
+            <label class="check agree"><input type="checkbox" id="agree"> <span>Tôi đồng ý với <a href="#"
+                  data-info="Điều khoản sử dụng">Điều khoản sử dụng</a> và <a href="#"
+                  data-info="Chính sách bảo mật">Chính sách bảo mật</a></span></label><em class="err"
+              id="agreeErr"></em>
+            <div class="form-msg" id="msgRegister"></div><button class="btn-primary" type="submit">Đăng ký</button>
+            <p class="switch">Đã có tài khoản? <a href="#" data-go="login">Đăng nhập</a></p>
+          </form>
+          <form id="formForgot" class="form" novalidate hidden>
+            <h1>Khôi phục mật khẩu</h1>
+            <p class="sub">Nhập email hoặc số điện thoại đã đăng ký và tạo mật khẩu mới.</p>
+            <div class="field"><label for="fpId">Email hoặc số điện thoại</label>
+              <div class="input"><span class="ico">👤</span><input id="fpId" type="text"
+                  placeholder="Nhập email hoặc số điện thoại" autocomplete="username"></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="fpPw">Mật khẩu mới</label>
+              <div class="input"><span class="ico">🔒</span><input id="fpPw" type="password"
+                  placeholder="Tối thiểu 6 ký tự" autocomplete="new-password"><button type="button" class="eye"
+                  data-eye="fpPw" aria-label="Hiện mật khẩu">👁</button></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="fpPw2">Nhập lại mật khẩu mới</label>
+              <div class="input"><span class="ico">🔒</span><input id="fpPw2" type="password"
+                  placeholder="Nhập lại mật khẩu mới" autocomplete="new-password"><button type="button" class="eye"
+                  data-eye="fpPw2" aria-label="Hiện mật khẩu">👁</button></div><em class="err"></em>
+            </div>
+            <div class="form-msg" id="msgForgot"></div>
+            <button class="btn-primary" type="submit">Đặt lại mật khẩu</button>
+            <p class="switch"><a href="#" data-go="login">← Quay lại đăng nhập</a></p>
+          </form>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- TRANG CHỦ: chỉ hiện sau khi đăng nhập thành công -->
+  <section id="homePage" hidden>
+    <header>
+      <div class="container header-in">
+        <a class="logo" href="#" data-action="top"><svg viewBox="0 0 44 30" aria-hidden="true">
+            <path d="M14 2h28l-5 8H9z" fill="#1769e0" />
+            <path d="M8 12h28l-5 7H3z" fill="#f26b1d" />
+            <path d="M4 21h24l-4 7H0z" fill="#1769e0" />
+          </svg>SPORT.COURT</a>
+        <div class="search">🔍<input id="q" type="text" placeholder="Tìm sân, khu vực, môn thể thao..."></div>
+        <div class="head-right">
+          <div class="user-menu" data-um-host></div>
+          <div class="cart-menu user-menu" data-cart-host></div>
+        </div>
+      </div>
+    </header>
+    <div class="filterbar">
+      <div class="filter-in">
+        <button class="btn-book" id="bookNow">📅 Đặt sân ngay</button>
+        <div class="dd" id="dd-area"><button class="dd-btn"><span>📍</span><span class="lbl">Khu vực</span><span
+              class="arrow">▼</span></button>
+          <div class="dd-panel wide">
+            <div class="field"><label for="selProvince">Tỉnh / Thành phố</label><select id="selProvince">
+                <option value="">Tất cả tỉnh/thành</option>
+              </select></div>
+            <div class="field"><label for="selWard">Xã / Phường</label><select id="selWard" disabled>
+                <option value="">Chọn tỉnh trước</option>
+              </select></div>
+          </div>
+        </div>
+        <div class="dd" id="dd-type"><button class="dd-btn"><span>⚽</span><span class="lbl">Danh mục sân</span><span
+              class="arrow">▼</span></button>
+          <div class="dd-panel"></div>
+        </div>
+        <div class="dd" id="dd-rating"><button class="dd-btn"><span>⭐</span><span class="lbl">Đánh giá</span><span
+              class="arrow">▼</span></button>
+          <div class="dd-panel"></div>
+        </div>
+        <div class="dd" id="dd-price"><button class="dd-btn"><span>🏷️</span><span class="lbl">Mức giá</span><span
+              class="arrow">▼</span></button>
+          <div class="dd-panel"></div>
+        </div>
+        <button class="btn-reset" id="reset">✕ Xóa lọc</button>
+      </div>
+    </div>
+    <main class="container">
+      <div class="banners">
+        <div class="banner b1"><small>THỂ THAO KẾT NỐI CỘNG ĐỒNG</small>
+          <h3>ĐẶT SÂN PICKLEBALL</h3>
+          <p>Nhanh chóng - Tiện lợi - An toàn</p><button class="cta" data-cat="pickleball">Đặt ngay ➜</button><svg
+            class="deco" viewBox="0 0 200 150" aria-hidden="true">
+            <ellipse cx="110" cy="70" rx="62" ry="58" fill="#0d1b3a" transform="rotate(-25 110 70)" />
+            <rect x="38" y="108" width="38" height="14" rx="6" fill="#0d1b3a" transform="rotate(-25 57 115)" />
+            <circle cx="170" cy="105" r="24" fill="#f4e04a" />
+            <g fill="#caa800">
+              <circle cx="162" cy="98" r="3" />
+              <circle cx="175" cy="96" r="3" />
+              <circle cx="168" cy="110" r="3" />
+              <circle cx="180" cy="108" r="3" />
+            </g>
+          </svg>
+        </div>
+        <div class="banner b2"><small>SÂN BÓNG ĐÁ CHẤT LƯỢNG CAO</small>
+          <h3>THOẢ SỨC VẬN ĐỘNG</h3>
+          <p>Cùng bạn trên mọi sân cỏ</p><button class="cta" data-cat="bongda">Xem ngay ➜</button><svg class="deco"
+            viewBox="0 0 200 150" aria-hidden="true">
+            <rect x="20" y="20" width="170" height="100" fill="none" stroke="#fff" stroke-width="3" opacity=".6" />
+            <circle cx="150" cy="95" r="30" fill="#fff" />
+            <path d="M150 80l12 9-4 14h-16l-4-14z" fill="#222" />
+          </svg>
+        </div>
+      </div>
+      <div class="page-title">
+        <h1>DANH SÁCH SÂN</h1>
+        <p>Tìm sân phù hợp và đặt lịch nhanh chóng</p>
+      </div>
+      <div class="result-info" id="info"></div>
+      <div class="grid" id="grid"></div>
+      <div class="pagination" id="pagination"></div>
+    </main>
+    <footer>
+      <div class="container">
+        <div class="foot-grid">
+          <div class="foot-info"><a class="logo" href="#" data-action="top" style="font-size:18px">SPORT.COURT</a>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Đặt sân thể thao - Kết nối đam mê</div>
+            <div>📞 Hotline: <span class="hot">0377 338 8006</span></div>
+            <div>✉️ Email: khodt@sportc.vn</div>
+            <div class="socials"><span style="background:#1877f2">f</span><span style="background:#1769e0">Z</span><span
+                style="background:#e02424">▶</span></div>
+          </div>
+          <div class="map">
+            <div class="map-label"><b>SPORT.COURT</b><br>Hà Nội, Việt Nam</div>
+            <div class="pin">📍</div>
+          </div>
+          <div class="nation">
+            <div style="font-size:26px">📍</div>
+            <div>
+              <h4>Hệ thống sân toàn quốc</h4>
+              <p>Hơn 100+ sân tại Hà Nội, TP.HCM và các tỉnh thành khác.</p><button type="button" id="mapBtn">Xem bản đồ
+                ›</button>
+            </div>
+          </div>
+        </div>
+        <div class="copy"><span>© 2025 SPORT.COURT. All rights reserved.</span>
+          <div><span>Điều khoản sử dụng</span><span>Chính sách bảo mật</span><span>Hỗ trợ</span></div>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+  <!-- TRANG CHI TIẾT SÂN: mở khi nhấn vào thẻ sân -->
+  <section id="detailPage" hidden>
+    <header class="dt-head">
+      <div class="container header-in">
+        <a class="logo" href="#" id="dtLogo"><svg viewBox="0 0 44 30" aria-hidden="true">
+            <path d="M14 2h28l-5 8H9z" fill="#1769e0" />
+            <path d="M8 12h28l-5 7H3z" fill="#f26b1d" />
+            <path d="M4 21h24l-4 7H0z" fill="#1769e0" />
+          </svg>SPORT.COURT</a>
+        <button type="button" class="btn-back" id="dtBack">← Danh sách sân</button>
+        <div class="spacer"></div>
+        <div class="head-right">
+          <div class="user-menu" data-um-host></div>
+          <div class="cart-menu user-menu" data-cart-host></div>
+        </div>
+      </div>
+    </header>
+    <main class="container">
+      <div class="crumb"><a href="#" id="dtCrumb">Danh sách sân</a> › <b id="dtCrumbName"></b></div>
+      <div class="dt-wrap">
+        <div>
+          <div class="panel">
+            <div class="dt-hero" id="dtHero"></div>
+            <div class="dt-info">
+              <h1 id="dtName"></h1>
+              <div class="dt-addr" id="dtAddr"></div>
+              <div class="dt-stats">
+                <div class="stat"><small>Đánh giá</small><b id="dtRate"></b></div>
+                <div class="stat"><small>Số sân</small><b id="dtCount"></b></div>
+                <div class="stat"><small>Giờ hoạt động</small><b>06:00 – 22:00</b></div>
+                <div class="stat"><small>Giá thuê</small><b class="price" id="dtPrice"></b></div>
+              </div>
+            </div>
+          </div>
+          <div class="panel sec">
+            <h2>Lịch đặt sân</h2>
+            <p class="sub">Chọn ngày, sau đó nhấn vào ô xanh để chọn khung giờ (mỗi ô là 1 giờ).</p>
+            <div class="legend">
+              <span><i class="lg-free"></i> Còn trống</span>
+              <span><i class="lg-booked"></i> Đã đặt</span>
+              <span><i class="lg-sel"></i> Đang chọn</span>
+              <span><i class="lg-past"></i> Đã qua giờ</span>
+            </div>
+            <div class="days" id="dtDays"></div>
+            <div class="sched-wrap" id="dtSched"></div>
+          </div>
+        </div>
+        <aside class="panel book-card" id="bookCard">
+          <h2>Thông tin đặt sân</h2>
+          <p class="sub">Điền thông tin để xác nhận đặt sân.</p>
+          <div class="bk-ok" id="bkOk" role="status"></div>
+          <div class="picked" id="picked"></div>
+          <form id="formBook" novalidate>
+            <div class="field"><label for="bkName">Họ và tên</label>
+              <div class="input"><span class="ico">🙂</span><input id="bkName" type="text" placeholder="Nguyễn Văn A"
+                  autocomplete="name"></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="bkPhone">Số điện thoại</label>
+              <div class="input"><span class="ico">📞</span><input id="bkPhone" type="tel" placeholder="0901234567"
+                  autocomplete="tel"></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="bkEmail">Email</label>
+              <div class="input"><span class="ico">✉️</span><input id="bkEmail" type="email"
+                  placeholder="ban@example.com" autocomplete="email"></div><em class="err"></em>
+            </div>
+            <div class="field"><label for="bkNote">Ghi chú</label>
+              <div class="input ta"><span class="ico">📝</span><textarea id="bkNote"
+                  placeholder="Yêu cầu thêm (không bắt buộc)"></textarea></div>
+            </div>
+            <button class="btn-confirm" type="submit">Xác nhận đặt sân</button>
+          </form>
+        </aside>
+      </div>
+    </main>
+  </section>
+  <!-- HỒ SƠ CÁ NHÂN -->
+  <div class="modal" id="mdProfile" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="pfTitle">
+      <button type="button" class="modal-x" data-close aria-label="Đóng">✕</button>
+      <h2 id="pfTitle">Hồ sơ cá nhân</h2>
+      <p class="sub">Quản lý thông tin để đặt sân nhanh hơn.</p>
+      <form id="formProfile" novalidate>
+        <div class="field"><label for="pfName">Họ và tên</label>
+          <div class="input"><span class="ico">🙂</span><input id="pfName" type="text" placeholder="Nguyễn Văn A"
+              autocomplete="name"></div><em class="err"></em>
+        </div>
+        <div class="field"><label for="pfPhone">Số điện thoại</label>
+          <div class="input"><span class="ico">📞</span><input id="pfPhone" type="tel" placeholder="0901234567"
+              autocomplete="tel"></div><em class="err"></em>
+        </div>
+        <div class="field"><label for="pfEmail">Email</label>
+          <div class="input"><span class="ico">✉️</span><input id="pfEmail" type="email" placeholder="ban@example.com"
+              autocomplete="email"></div><em class="err"></em>
+        </div>
+        <div class="field"><label for="pfBank">Tên ngân hàng</label>
+          <div class="input"><span class="ico">🏦</span><input id="pfBank" type="text" list="bankList"
+              placeholder="VD: Vietcombank" autocomplete="off"></div><em class="err"></em>
+          <datalist id="bankList">
+            <option value="Vietcombank"></option>
+            <option value="VietinBank"></option>
+            <option value="BIDV"></option>
+            <option value="Agribank"></option>
+            <option value="MB Bank"></option>
+            <option value="Techcombank"></option>
+            <option value="ACB"></option>
+            <option value="VPBank"></option>
+            <option value="TPBank"></option>
+            <option value="Sacombank"></option>
+            <option value="HDBank"></option>
+            <option value="VIB"></option>
+            <option value="SHB"></option>
+            <option value="OCB"></option>
+            <option value="MSB"></option>
+          </datalist>
+        </div>
+        <div class="field"><label for="pfAcc">Số tài khoản (STK)</label>
+          <div class="input"><span class="ico">💳</span><input id="pfAcc" type="text" inputmode="numeric"
+              placeholder="Nhập số tài khoản ngân hàng" autocomplete="off"></div><em class="err"></em>
+          <p class="hint">Dùng để hoàn tiền khi bạn hủy đặt sân.</p>
+        </div>
+        <div class="field"><label>Giới tính</label>
+          <div class="opt-row" id="pfGender">
+            <label class="pill"><input type="radio" name="pfGender" value="Nam"> Nam</label>
+            <label class="pill"><input type="radio" name="pfGender" value="Nữ"> Nữ</label>
+            <label class="pill"><input type="radio" name="pfGender" value="Khác"> Khác</label>
+          </div>
+        </div>
+        <div class="field"><label>Các môn thể thao ưa thích</label>
+          <div class="opt-row" id="pfSports">
+            <label class="pill"><input type="checkbox" name="pfSport" value="bongda"> ⚽ Bóng đá</label>
+            <label class="pill"><input type="checkbox" name="pfSport" value="bongchuyen"> 🏐 Bóng chuyền</label>
+            <label class="pill"><input type="checkbox" name="pfSport" value="caulong"> 🏸 Cầu lông</label>
+            <label class="pill"><input type="checkbox" name="pfSport" value="pickleball"> 🏓 Pickleball</label>
+          </div>
+        </div>
+        <div class="form-msg" id="msgProfile"></div>
+        <div class="btn-row"><button type="button" class="btn-ghost" data-close>Hủy</button><button class="btn-primary"
+            type="submit">Lưu thay đổi</button></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ĐỔI MẬT KHẨU -->
+  <div class="modal" id="mdPassword" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="pwTitle">
+      <button type="button" class="modal-x" data-close aria-label="Đóng">✕</button>
+      <h2 id="pwTitle">Đổi mật khẩu</h2>
+      <p class="sub">Mật khẩu mới cần tối thiểu 6 ký tự.</p>
+      <form id="formPassword" novalidate>
+        <div class="field"><label for="pwOld">Mật khẩu hiện tại</label>
+          <div class="input"><span class="ico">🔒</span><input id="pwOld" type="password"
+              placeholder="Nhập mật khẩu hiện tại" autocomplete="current-password"><button type="button" class="eye"
+              data-eye="pwOld" aria-label="Hiện mật khẩu">👁</button></div><em class="err"></em>
+        </div>
+        <div class="field"><label for="pwNew">Mật khẩu mới</label>
+          <div class="input"><span class="ico">🔒</span><input id="pwNew" type="password"
+              placeholder="Tối thiểu 6 ký tự" autocomplete="new-password"><button type="button" class="eye"
+              data-eye="pwNew" aria-label="Hiện mật khẩu">👁</button></div><em class="err"></em>
+        </div>
+        <div class="field"><label for="pwNew2">Nhập lại mật khẩu mới</label>
+          <div class="input"><span class="ico">🔒</span><input id="pwNew2" type="password"
+              placeholder="Nhập lại mật khẩu mới" autocomplete="new-password"><button type="button" class="eye"
+              data-eye="pwNew2" aria-label="Hiện mật khẩu">👁</button></div><em class="err"></em>
+        </div>
+        <div class="form-msg" id="msgPassword"></div>
+        <div class="btn-row"><button type="button" class="btn-ghost" data-close>Hủy</button><button class="btn-primary"
+            type="submit">Đổi mật khẩu</button></div>
+      </form>
+    </div>
+  </div>
+  <!-- THANH TOÁN -->
+  <div class="modal" id="mdPay" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="payTitle">
+      <button type="button" class="modal-x" data-close aria-label="Đóng">✕</button>
+      <h2 id="payTitle">Thanh toán đặt sân</h2>
+      <p class="sub">Quét mã QR hoặc chuyển khoản cho chủ sân để hoàn tất đặt sân.</p>
+      <div class="pay-owner">
+        <div class="pay-avt" id="payAvt"></div>
+        <div><small>Chủ sân</small><b id="payOwner"></b><small>📞 <span id="payPhone"></span></small></div>
+      </div>
+      <div class="pay-qr"><img id="payQr" alt="Mã QR thanh toán">
+        <div class="qr-fail" id="payQrFail" hidden>Không tải được mã QR. Hãy chuyển khoản theo thông tin bên dưới.</div>
+      </div>
+      <div class="pay-rows">
+        <div class="pay-row"><span>Sân</span><b id="payCourt"></b></div>
+        <div class="pay-row"><span>Ngân hàng</span><b id="payBank"></b></div>
+        <div class="pay-row"><span>Số tài khoản</span>
+          <div><b id="payAcc"></b><button type="button" class="cp" data-copy="payAcc">Sao chép</button></div>
+        </div>
+        <div class="pay-row"><span>Chủ tài khoản</span><b id="payAccName"></b></div>
+        <div class="pay-row"><span>Nội dung chuyển khoản</span>
+          <div><b id="payNote"></b><button type="button" class="cp" data-copy="payNote">Sao chép</button></div>
+        </div>
+        <div class="pay-row total"><span>Số tiền</span><b id="payAmount"></b></div>
+      </div>
+      <div class="btn-row"><button type="button" class="btn-ghost" data-close>Quay lại</button><button type="button"
+          class="btn-primary" id="payDone">Tôi đã thanh toán</button></div>
+    </div>
+  </div>
+
+  <!-- HỦY ĐẶT SÂN -->
+  <div class="modal" id="mdCancel" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="cancelTitle">
+      <button type="button" class="modal-x" data-close aria-label="Đóng">✕</button>
+      <h2 id="cancelTitle">Hủy đặt sân</h2>
+      <p class="sub" id="cancelTxt"></p>
+      <div class="warn">⚠️ Khi hủy đặt sân, bạn sẽ mất 50% tiền đặt sân.</div>
+      <div class="pay-rows">
+        <div class="pay-row"><span>Ngân hàng của bạn</span><b id="cancelBank"></b></div>
+        <div class="pay-row"><span>Số tài khoản (STK)</span><b id="cancelAcc"></b></div>
+        <div class="pay-row"><span>Tiền đã thanh toán</span><b id="cancelTotal"></b></div>
+        <div class="pay-row refund"><span>Tiền hoàn lại (50%)</span><b id="cancelRefund"></b></div>
+      </div>
+      <div class="form-msg error show" id="cancelNoBank" hidden>Bạn chưa có thông tin ngân hàng để nhận hoàn tiền. <a
+          href="#" id="cancelToProfile">Cập nhật hồ sơ cá nhân</a></div>
+      <div class="btn-row"><button type="button" class="btn-ghost" data-close>Quay lại</button><button type="button"
+          class="btn-danger" id="cancelYes">Xác nhận hủy</button></div>
+    </div>
+  </div>
+
+  <!-- ĐÁNH GIÁ SÂN -->
+  <div class="modal" id="mdReview" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="rvTitle">
+      <button type="button" class="modal-x" data-close aria-label="Đóng">✕</button>
+      <h2 id="rvTitle">Đánh giá sân</h2>
+      <p class="sub">Chia sẻ trải nghiệm của bạn để giúp người chơi khác.</p>
+      <form id="formReview" novalidate>
+        <div class="rv-court" id="rvName"></div>
+        <div class="stars" id="rvStars">
+          <button type="button" class="star" data-s="1" aria-label="1 sao">★</button>
+          <button type="button" class="star" data-s="2" aria-label="2 sao">★</button>
+          <button type="button" class="star" data-s="3" aria-label="3 sao">★</button>
+          <button type="button" class="star" data-s="4" aria-label="4 sao">★</button>
+          <button type="button" class="star" data-s="5" aria-label="5 sao">★</button>
+        </div>
+        <div class="field"><label for="rvComment">Nhận xét</label>
+          <div class="input ta"><span class="ico">📝</span><textarea id="rvComment"
+              placeholder="Mặt sân, ánh sáng, dịch vụ... (không bắt buộc)"></textarea></div>
+        </div>
+        <div class="form-msg" id="msgReview"></div>
+        <div class="btn-row"><button type="button" class="btn-ghost" data-close>Hủy</button><button class="btn-primary"
+            type="submit">Gửi đánh giá</button></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- LỊCH SỬ ĐẶT SÂN / DANH SÁCH SÂN ĐÃ ĐẶT -->
+  <section id="myPage" hidden>
+    <header class="dt-head">
+      <div class="container header-in">
+        <a class="logo" href="#" id="myLogo"><svg viewBox="0 0 44 30" aria-hidden="true">
+            <path d="M14 2h28l-5 8H9z" fill="#1769e0" />
+            <path d="M8 12h28l-5 7H3z" fill="#f26b1d" />
+            <path d="M4 21h24l-4 7H0z" fill="#1769e0" />
+          </svg>SPORT.COURT</a>
+        <button type="button" class="btn-back" id="myBack">← Trang chủ</button>
+        <div class="spacer"></div>
+        <div class="head-right">
+          <div class="user-menu" data-um-host></div>
+          <div class="cart-menu user-menu" data-cart-host></div>
+        </div>
+      </div>
+    </header>
+    <main class="container">
+      <div class="page-title">
+        <h1 id="myTitle"></h1>
+        <p id="mySub"></p>
+      </div>
+      <div class="result-info" id="myInfo"></div>
+      <div id="myList"></div>
+    </main>
+  </section>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /* ============ DÙNG CHUNG ============ */
+    const $ = s => document.querySelector(s);
+    const USERS_KEY = 'sc_users';
+    const SESSION_KEY = 'sc_user';
+    function safeGet(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
+    function safeSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { toast('Trình duyệt không cho phép lưu dữ liệu.'); } }
+    function getUsers() {
+      let users = safeGet(USERS_KEY);
+      if (!Array.isArray(users)) users = [];
+      if (!users.some(u => u.id === 'demo@sportcourt.vn')) users.push({ name: 'Khách demo', id: 'demo@sportcourt.vn', pw: '123456' });
+      return users;
+    }
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const PHONE_RE = /^(0|\+84)\d{9}$/;
+    const normId = v => v.trim().toLowerCase().replace(/\s+/g, '');
+    const validId = v => EMAIL_RE.test(v) || PHONE_RE.test(v);
+    let toastTimer;
+    function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400); }
+    function setError(input, msg) { const f = input.closest('.field'); if (!f) return; f.classList.toggle('bad', !!msg); const e = f.querySelector('.err'); if (e) e.textContent = msg || ''; }
+    function showMsg(el, type, text) { el.className = 'form-msg show ' + type; el.textContent = text; }
+    function clearMsg(el) { el.className = 'form-msg'; el.textContent = ''; }
+    function go(tab) {
+      const isForgot = tab === 'forgot';
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.tab === tab));
+      $('.tabs').hidden = isForgot;
+      $('#formLogin').hidden = tab !== 'login';
+      $('#formRegister').hidden = tab !== 'register';
+      $('#formForgot').hidden = !isForgot;
+      document.title = (tab === 'login' ? 'Đăng nhập' : tab === 'register' ? 'Đăng ký' : 'Quên mật khẩu') + ' - SPORT.COURT';
+      if (tab === 'login') clearMsg($('#msgLogin'));
+      if (tab === 'register') clearMsg($('#msgRegister'));
+      if (isForgot) clearMsg($('#msgForgot'));
+    }
+    function showLogin() {
+      $('#homePage').hidden = true; $('#detailPage').hidden = true; $('#myPage').hidden = true; $('#loginPage').hidden = false; go('login'); window.scrollTo(0, 0);
+    }
+    function finishLogin(user, remember) {
+      safeSet(SESSION_KEY, { name: user.name, id: user.id, remember: !!remember });
+      setUserName(user.name); refreshCart();
+      $('#loginPage').hidden = true; $('#detailPage').hidden = true; $('#myPage').hidden = true; $('#homePage').hidden = false;
+      document.title = 'SPORT.COURT - Đặt sân thể thao';
+      window.scrollTo(0, 0); toast('Đăng nhập thành công! Chào mừng ' + user.name + '.');
+    }
+
+    /* ============ ĐĂNG NHẬP / ĐĂNG KÝ ============ */
+    document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => go(t.dataset.tab)));
+    document.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); go(a.dataset.go); }));
+    document.querySelectorAll('.eye').forEach(b => b.addEventListener('click', () => { const i = document.getElementById(b.dataset.eye); i.type = i.type === 'password' ? 'text' : 'password'; b.style.opacity = i.type === 'text' ? '1' : ''; }));
+    document.querySelectorAll('#loginPage .input input').forEach(i => i.addEventListener('input', () => {
+      setError(i, '');
+      clearMsg($('#msgLogin'));
+      clearMsg($('#msgRegister'));
+      clearMsg($('#msgForgot'));
+    }));
+    $('#formLogin').addEventListener('submit', e => {
+      e.preventDefault();
+      const idEl = $('#lgId'), pwEl = $('#lgPw'), msg = $('#msgLogin'), id = normId(idEl.value), pw = pwEl.value;
+      let ok = true;
+      if (!id) { setError(idEl, 'Vui lòng nhập email hoặc số điện thoại'); ok = false; } else if (!validId(id)) { setError(idEl, 'Email hoặc số điện thoại không hợp lệ'); ok = false; } else setError(idEl, '');
+      if (!pw) { setError(pwEl, 'Vui lòng nhập mật khẩu'); ok = false; } else if (pw.length < 6) { setError(pwEl, 'Mật khẩu tối thiểu 6 ký tự'); ok = false; } else setError(pwEl, '');
+      if (!ok) return;
+      const btn = e.currentTarget.querySelector('.btn-primary'); btn.disabled = true; btn.textContent = 'Đang đăng nhập...';
+      setTimeout(() => {
+        const user = getUsers().find(u => u.id === id && u.pw === pw);
+        btn.disabled = false; btn.textContent = 'Đăng nhập';
+        if (!user) { showMsg(msg, 'error', 'Tài khoản hoặc mật khẩu không chính xác.'); return; }
+        finishLogin(user, $('#remember').checked);
+      }, 350);
+    });
+    $('#forgot').addEventListener('click', e => {
+      e.preventDefault();
+      $('#fpId').value = $('#lgId').value;
+      go('forgot');
+    });
+
+    $('#formForgot').addEventListener('submit', e => {
+      e.preventDefault();
+      const idEl = $('#fpId'), pwEl = $('#fpPw'), pw2El = $('#fpPw2');
+      const id = normId(idEl.value), pw = pwEl.value, pw2 = pw2El.value;
+      const msg = $('#msgForgot');
+      let ok = true;
+
+      if (!id) {
+        setError(idEl, 'Vui lòng nhập email hoặc số điện thoại');
+        ok = false;
+      } else if (!validId(id)) {
+        setError(idEl, 'Email hoặc số điện thoại không hợp lệ');
+        ok = false;
+      } else setError(idEl, '');
+
+      if (pw.length < 6) {
+        setError(pwEl, 'Mật khẩu tối thiểu 6 ký tự');
+        ok = false;
+      } else setError(pwEl, '');
+
+      if (!pw2) {
+        setError(pw2El, 'Vui lòng nhập lại mật khẩu mới');
+        ok = false;
+      } else if (pw2 !== pw) {
+        setError(pw2El, 'Mật khẩu nhập lại không khớp');
+        ok = false;
+      } else setError(pw2El, '');
+
+      if (!ok) return;
+
+      const users = getUsers();
+      const user = users.find(u => u.id === id);
+      if (!user) {
+        showMsg(msg, 'error', 'Không tìm thấy tài khoản với email hoặc số điện thoại này.');
+        return;
+      }
+
+      user.pw = pw;
+      safeSet(USERS_KEY, users);
+      showMsg(msg, 'ok', 'Đặt lại mật khẩu thành công! Bạn có thể đăng nhập bằng mật khẩu mới.');
+      $('#lgId').value = id;
+      $('#lgPw').value = '';
+      setTimeout(() => go('login'), 1200);
+    });
+    document.querySelectorAll('.soc').forEach(b => b.addEventListener('click', () => toast('Đăng nhập bằng ' + b.dataset.soc + ' sẽ được cập nhật sau.')));
+    $('#formRegister').addEventListener('submit', e => {
+      e.preventDefault();
+      const nameEl = $('#rgName'), idEl = $('#rgId'), pwEl = $('#rgPw'), pw2El = $('#rgPw2'), msg = $('#msgRegister'), agreeErr = $('#agreeErr');
+      const name = nameEl.value.trim(), id = normId(idEl.value), pw = pwEl.value, pw2 = pw2El.value; let ok = true;
+      if (name.length < 2) { setError(nameEl, 'Vui lòng nhập họ và tên'); ok = false; } else setError(nameEl, '');
+      if (!id) { setError(idEl, 'Vui lòng nhập email hoặc số điện thoại'); ok = false; } else if (!validId(id)) { setError(idEl, 'Email hoặc số điện thoại không hợp lệ'); ok = false; } else setError(idEl, '');
+      if (pw.length < 6) { setError(pwEl, 'Mật khẩu tối thiểu 6 ký tự'); ok = false; } else setError(pwEl, '');
+      if (!pw2) { setError(pw2El, 'Vui lòng nhập lại mật khẩu'); ok = false; } else if (pw2 !== pw) { setError(pw2El, 'Mật khẩu nhập lại không khớp'); ok = false; } else setError(pw2El, '');
+      if (!$('#agree').checked) { agreeErr.textContent = 'Bạn cần đồng ý với điều khoản để tiếp tục'; agreeErr.classList.add('show'); ok = false; } else { agreeErr.textContent = ''; agreeErr.classList.remove('show'); }
+      if (!ok) return;
+      const users = getUsers();
+      if (users.some(u => u.id === id)) { showMsg(msg, 'error', 'Email hoặc số điện thoại này đã được đăng ký.'); return; }
+      users.push({ name, id, pw });
+      safeSet(USERS_KEY, users);
+      showMsg(msg, 'ok', 'Đăng ký thành công! Đang đăng nhập...');
+      setTimeout(() => finishLogin({ name, id }, true), 500);
+    });
+    $('#agree').addEventListener('change', () => { $('#agreeErr').classList.remove('show'); });
+    document.querySelectorAll('[data-info]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); toast(a.dataset.info + ' sẽ được cập nhật.'); }));
+    function doLogout() { safeSet(SESSION_KEY, null); showLogin(); toast('Bạn đã đăng xuất.'); }
+    /* Đăng xuất được gắn vào menu người dùng (xem phần cuối script) */
+    document.querySelectorAll('[data-action="show-login"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); showLogin(); }));
+    document.querySelectorAll('[data-action="top"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+    /* Không tự mở trang chủ khi tải lại: luôn bắt đầu ở login. */
+    $('#loginPage').hidden = false; $('#homePage').hidden = true;
+
+    /* ============ DỮ LIỆU SÂN ============ */
+    const TYPES = { bongda: { label: 'Bóng đá' }, bongchuyen: { label: 'Bóng chuyền' }, caulong: { label: 'Cầu lông' }, pickleball: { label: 'Pickleball' } };
+    const TYPE_ICON = { bongda: '⚽', bongchuyen: '🏐', caulong: '🏸', pickleball: '🏓' };
+    const LOCATIONS = {
+      'Hà Nội': ['Phường Mỹ Đình', 'Phường Cầu Giấy', 'Phường Hoàng Mai', 'Phường Hà Đông', 'Phường Thanh Xuân', 'Phường Long Biên'],
+      'TP. Hồ Chí Minh': ['Phường Tân Bình', 'Phường Thủ Đức', 'Phường Gò Vấp', 'Phường Tân Phú'],
+      'Đà Nẵng': ['Phường Hải Châu', 'Phường Thanh Khê', 'Phường Sơn Trà']
+    };
+    const SLOT_POOL = ['14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00'];
+    const RAW = [
+      ['Sân PICKLEBALL FLC', 'pickleball', 'FLC, Nam Từ Liêm, Hà Nội', 'Hà Nội', 'Phường Mỹ Đình', 4.8, 124, 6, 70000],
+      ['Sân cầu lông Panda', 'caulong', 'Panda, Cầu Giấy, Hà Nội', 'Hà Nội', 'Phường Cầu Giấy', 4.6, 98, 8, 60000],
+      ['Sân bóng đá Gamuda', 'bongda', 'Gamuda, Hoàng Mai, Hà Nội', 'Hà Nội', 'Phường Hoàng Mai', 4.7, 156, 5, 350000],
+      ['Sân PICKLEBALL FLC 2', 'pickleball', 'FLC, Nam Từ Liêm, Hà Nội', 'Hà Nội', 'Phường Mỹ Đình', 4.5, 87, 6, 70000],
+      ['Sân cầu lông FLC', 'caulong', 'FLC, Nam Từ Liêm, Hà Nội', 'Hà Nội', 'Phường Mỹ Đình', 4.6, 102, 10, 60000],
+      ['Sân bóng đá Mậu', 'bongda', 'Mậu Lương, Hà Đông, Hà Nội', 'Hà Nội', 'Phường Hà Đông', 4.4, 76, 7, 300000],
+      ['Sân PICKLEBALL FLC 3', 'pickleball', 'FLC, Nam Từ Liêm, Hà Nội', 'Hà Nội', 'Phường Mỹ Đình', 4.7, 93, 6, 70000],
+      ['Sân cầu lông Lin Sport', 'caulong', 'Linh Đàm, Hoàng Mai, Hà Nội', 'Hà Nội', 'Phường Hoàng Mai', 4.5, 68, 6, 60000],
+      ['Sân cầu lông Gamuda', 'caulong', 'Gamuda, Hoàng Mai, Hà Nội', 'Hà Nội', 'Phường Hoàng Mai', 4.6, 91, 8, 60000],
+      ['Sân bóng chuyền Thanh Xuân', 'bongchuyen', 'Nguyễn Trãi, Thanh Xuân, Hà Nội', 'Hà Nội', 'Phường Thanh Xuân', 4.3, 54, 4, 150000],
+      ['Sân bóng chuyền Long Biên', 'bongchuyen', 'Ngọc Lâm, Long Biên, Hà Nội', 'Hà Nội', 'Phường Long Biên', 3.8, 41, 3, 120000],
+      ['Sân bóng đá Hàng Đẫy', 'bongda', 'Đặng Tiến Đông, Hà Nội', 'Hà Nội', 'Phường Cầu Giấy', 4.2, 210, 2, 1500000],
+      ['Sân bóng đá Mỹ Đình Arena', 'bongda', 'Mỹ Đình, Nam Từ Liêm, Hà Nội', 'Hà Nội', 'Phường Mỹ Đình', 4.9, 320, 1, 2400000],
+      ['Sân bóng đá Thống Nhất', 'bongda', 'Thống Nhất, Hải Châu, Đà Nẵng', 'Đà Nẵng', 'Phường Hải Châu', 4.1, 133, 1, 3200000],
+      ['Sân PICKLEBALL Tân Bình', 'pickleball', 'Cộng Hòa, Tân Bình, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Tân Bình', 4.4, 72, 5, 90000],
+      ['Sân PICKLEBALL Thủ Đức', 'pickleball', 'Võ Văn Ngân, Thủ Đức, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Thủ Đức', 4.6, 65, 4, 95000],
+      ['Sân cầu lông Gò Vấp', 'caulong', 'Quang Trung, Gò Vấp, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Gò Vấp', 3.5, 59, 6, 70000],
+      ['Sân cầu lông Tân Phú', 'caulong', 'Tân Phú, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Tân Phú', 2.8, 33, 4, 55000],
+      ['Sân bóng đá Thủ Đức', 'bongda', 'Linh Trung, Thủ Đức, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Thủ Đức', 4.5, 188, 6, 400000],
+      ['Sân bóng chuyền Tân Bình', 'bongchuyen', 'Hoàng Văn Thụ, Tân Bình, TP.HCM', 'TP. Hồ Chí Minh', 'Phường Tân Bình', 4.0, 47, 3, 130000],
+      ['Sân bóng chuyền Sơn Trà', 'bongchuyen', 'Sơn Trà, Đà Nẵng', 'Đà Nẵng', 'Phường Sơn Trà', 4.6, 52, 4, 140000],
+      ['Sân PICKLEBALL Hải Châu', 'pickleball', 'Nguyễn Văn Linh, Hải Châu, Đà Nẵng', 'Đà Nẵng', 'Phường Hải Châu', 4.3, 38, 4, 80000],
+      ['Sân cầu lông Thanh Khê', 'caulong', 'Điện Biên Phủ, Thanh Khê, Đà Nẵng', 'Đà Nẵng', 'Phường Thanh Khê', 3.9, 44, 5, 55000],
+      ['Sân bóng đá Sơn Trà', 'bongda', 'Sơn Trà, Đà Nẵng', 'Đà Nẵng', 'Phường Sơn Trà', 3.6, 81, 4, 320000],
+      ['Sân bóng đá Cầu Giấy VIP', 'bongda', 'Trần Thái Tông, Cầu Giấy, Hà Nội', 'Hà Nội', 'Phường Cầu Giấy', 4.8, 265, 2, 2700000],
+      ['Sân bóng đá Hà Đông Arena', 'bongda', 'Quang Trung, Hà Đông, Hà Nội', 'Hà Nội', 'Phường Hà Đông', 4.6, 172, 1, 3500000],
+      ['Sân PICKLEBALL Thanh Xuân', 'pickleball', 'Khuất Duy Tiến, Thanh Xuân, Hà Nội', 'Hà Nội', 'Phường Thanh Xuân', 3.7, 29, 3, 75000]
+    ];
+    const COURTS = RAW.map((r, i) => ({ id: i, name: r[0], type: r[1], addr: r[2], province: r[3], ward: r[4], rating: r[5], reviews: r[6], count: r[7], price: r[8], slots: [0, 3, 6, 9].map(k => SLOT_POOL[(i * 2 + k) % SLOT_POOL.length]).sort() }));
+    const OPTIONS = {
+      type: [{ v: 'bongda', t: 'Sân bóng đá' }, { v: 'bongchuyen', t: 'Sân bóng chuyền' }, { v: 'caulong', t: 'Sân cầu lông' }, { v: 'pickleball', t: 'Sân pickleball' }],
+      rating: [{ v: '1-3', t: 'Từ 1 sao đến 3 sao' }, { v: '3-4', t: 'Từ 3 sao đến 4 sao' }, { v: '4-5', t: 'Từ 4 sao đến 5 sao' }],
+      price: [{ v: 'lt1', t: 'Dưới 1 triệu' }, { v: '1-2', t: 'Từ 1 đến 2 triệu' }, { v: '2-3', t: 'Từ 2 đến 3 triệu' }, { v: 'gt3', t: 'Trên 3 triệu' }]
+    };
+    const DEFAULT_LABEL = { type: 'Danh mục sân', rating: 'Đánh giá', price: 'Mức giá', area: 'Khu vực' };
+    const state = { type: '', rating: '', price: '', province: '', ward: '', q: '', page: 1 };
+    const PER_PAGE = 9;
+    const fmt = n => n.toLocaleString('vi-VN') + 'đ/giờ';
+    const fmtVnd = n => n.toLocaleString('vi-VN') + 'đ';
+    const noAccent = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').toLowerCase();
+    function matchRating(c) { switch (state.rating) { case '1-3': return c.rating >= 1 && c.rating < 3; case '3-4': return c.rating >= 3 && c.rating < 4; case '4-5': return c.rating >= 4; }return true; }
+    function matchPrice(c) { switch (state.price) { case 'lt1': return c.price < 1e6; case '1-2': return c.price >= 1e6 && c.price < 2e6; case '2-3': return c.price >= 2e6 && c.price <= 3e6; case 'gt3': return c.price > 3e6; }return true; }
+    function filtered() { const q = noAccent(state.q.trim()); return COURTS.filter(c => (!state.type || c.type === state.type) && (!state.province || c.province === state.province) && (!state.ward || c.ward === state.ward) && matchRating(c) && matchPrice(c) && (!q || noAccent(c.name + ' ' + c.addr + ' ' + TYPES[c.type].label).includes(q))); }
+    function art(type, id) {
+      const p = 'stroke="#fff" stroke-width="2" fill="none" opacity=".9"';
+      const sky = `<defs><linearGradient id="s${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ec7ee"/><stop offset="1" stop-color="#dbe9f6"/></linearGradient></defs>`;
+      if (type === 'bongda') return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice">${sky}<rect width="300" height="130" fill="url(#s${id})"/><g fill="#2f6b3a" opacity=".5"><rect x="20" y="30" width="14" height="30"/><rect x="40" y="22" width="12" height="38"/><rect x="230" y="26" width="16" height="34"/><rect x="255" y="34" width="12" height="26"/></g><rect y="55" width="300" height="75" fill="#3aa845"/><g fill="#339b3e"><rect y="62" width="300" height="9"/><rect y="80" width="300" height="9"/><rect y="98" width="300" height="9"/><rect y="116" width="300" height="9"/></g><rect x="20" y="64" width="260" height="60" ${p}/><line x1="150" y1="64" x2="150" y2="124" ${p}/><circle cx="150" cy="94" r="14" ${p}/><rect x="20" y="80" width="26" height="28" ${p}/><rect x="254" y="80" width="26" height="28" ${p}/></svg>`;
+      if (type === 'caulong') return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice"><rect width="300" height="130" fill="#d9e8e4"/><rect y="0" width="300" height="42" fill="#2a6b56"/><g stroke="#b9d6cb" stroke-width="2"><line x1="0" y1="14" x2="300" y2="14"/><line x1="0" y1="28" x2="300" y2="28"/></g><rect y="42" width="300" height="88" fill="#17a87c"/><polygon points="40,125 260,125 225,58 75,58" ${p}/><line x1="150" y1="58" x2="150" y2="125" ${p}/><line x1="58" y1="92" x2="242" y2="92" ${p}/><line x1="62" y1="62" x2="238" y2="62" stroke="#fff" stroke-width="3"/><g fill="#1d2b4f"><circle cx="110" cy="80" r="5"/><rect x="106" y="86" width="9" height="16" rx="3"/><circle cx="195" cy="104" r="5"/><rect x="191" y="110" width="9" height="16" rx="3"/></g></svg>`;
+      if (type === 'pickleball') return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice"><rect width="300" height="130" fill="#cfe0f3"/><g fill="#7da8c8" opacity=".6"><rect x="0" y="10" width="300" height="30"/></g><g fill="#2f6b3a" opacity=".5"><circle cx="40" cy="30" r="16"/><circle cx="260" cy="26" r="18"/></g><rect y="42" width="300" height="88" fill="#2a63d6"/><rect x="30" y="52" width="240" height="72" ${p}/><line x1="150" y1="52" x2="150" y2="124" stroke="#fff" stroke-width="3"/><line x1="90" y1="52" x2="90" y2="124" ${p}/><line x1="210" y1="52" x2="210" y2="124" ${p}/><line x1="90" y1="88" x2="210" y2="88" ${p}/><g fill="#1d2b4f"><circle cx="100" cy="82" r="5"/><rect x="96" y="88" width="9" height="16" rx="3"/><circle cx="205" cy="94" r="5"/><rect x="201" y="100" width="9" height="16" rx="3"/></g></svg>`;
+      return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice"><rect width="300" height="130" fill="#e8ecf4"/><rect width="300" height="40" fill="#6f7f9f"/><g stroke="#9aa8c4" stroke-width="2"><line x1="0" y1="13" x2="300" y2="13"/><line x1="0" y1="26" x2="300" y2="26"/></g><rect y="40" width="300" height="90" fill="#e8923a"/><rect x="35" y="55" width="230" height="68" ${p}/><line x1="150" y1="55" x2="150" y2="123" stroke="#fff" stroke-width="3"/><line x1="105" y1="55" x2="105" y2="123" ${p}/><line x1="195" y1="55" x2="195" y2="123" ${p}/><circle cx="150" cy="86" r="9" fill="#fff"/><path d="M142 86h16M150 78v16" stroke="#e8923a" stroke-width="1.5"/></svg>`;
+    }
+    function render() {
+      const list = filtered(), pages = Math.max(1, Math.ceil(list.length / PER_PAGE)); if (state.page > pages) state.page = pages;
+      const items = list.slice((state.page - 1) * PER_PAGE, state.page * PER_PAGE);
+      $('#info').innerHTML = `Tìm thấy <b>${list.length}</b> sân phù hợp`;
+      $('#grid').innerHTML = items.length ? items.map(c => `<article class="card" data-id="${c.id}" tabindex="0" aria-label="Xem chi tiết ${c.name}"><div class="thumb">${art(c.type, c.id)}<span class="tag">${TYPE_ICON[c.type]} ${TYPES[c.type].label}</span></div><div class="card-body"><h3>${c.name}</h3><div class="loc-row"><div class="addr">📍<span>${c.addr}</span></div><div class="rate"><i>★</i> ${c.rating.toFixed(1)} (${c.reviews})</div></div><div class="meta"><span>🗂️ ${c.count} sân</span><b>🕒 ${fmt(c.price)}</b></div><div class="slots">${c.slots.map(s => `<button class="slot" data-id="${c.id}" data-name="${c.name}" data-time="${s}">${s}</button>`).join('')}</div><button class="btn-main" data-id="${c.id}" data-name="${c.name}">Đặt ngay / Xem lịch ➜</button></div></article>`).join('') : `<div class="empty"><div class="big">🔍</div><b>Không tìm thấy sân phù hợp</b><p style="margin-top:6px">Hãy thử thay đổi hoặc xóa bớt bộ lọc.</p></div>`;
+      let pg = `<button class="pg" data-p="${state.page - 1}" ${state.page === 1 ? 'disabled' : ''}>‹</button>`; for (let i = 1; i <= pages; i++)pg += `<button class="pg ${i === state.page ? 'on' : ''}" data-p="${i}">${i}</button>`; pg += `<button class="pg" data-p="${state.page + 1}" ${state.page === pages ? 'disabled' : ''}>›</button>`; $('#pagination').innerHTML = list.length ? pg : '';
+    }
+    function closeAll() { document.querySelectorAll('.dd.open').forEach(d => d.classList.remove('open')); }
+    function buildDropdown(key) {
+      const dd = $('#dd-' + key), panel = dd.querySelector('.dd-panel');
+      panel.innerHTML = `<button class="opt" data-v="">Tất cả</button>` + OPTIONS[key].map(o => `<button class="opt" data-v="${o.v}">${o.t}</button>`).join('');
+      panel.addEventListener('click', e => { const b = e.target.closest('.opt'); if (!b) return; state[key] = b.dataset.v; state.page = 1; syncDropdown(key); closeAll(); render(); });
+    }
+    function syncDropdown(key) { const dd = $('#dd-' + key), cur = OPTIONS[key].find(o => o.v === state[key]); dd.querySelector('.lbl').textContent = cur ? cur.t : DEFAULT_LABEL[key]; dd.classList.toggle('active', !!cur); dd.querySelectorAll('.opt').forEach(o => o.classList.toggle('sel', o.dataset.v === state[key] && state[key] !== '')); }
+    document.querySelectorAll('.dd-btn').forEach(btn => btn.addEventListener('click', e => { e.stopPropagation(); const dd = btn.parentElement, was = dd.classList.contains('open'); closeAll(); if (!was) dd.classList.add('open'); }));
+    document.addEventListener('click', e => { if (!e.target.closest('.dd')) closeAll(); });
+    ['type', 'rating', 'price'].forEach(k => { buildDropdown(k); syncDropdown(k); });
+    const selP = $('#selProvince'), selW = $('#selWard');
+    Object.keys(LOCATIONS).forEach(p => selP.add(new Option(p, p)));
+    function syncArea() { const parts = [state.ward, state.province].filter(Boolean); $('#dd-area .lbl').textContent = parts.length ? parts.join(', ') : DEFAULT_LABEL.area; $('#dd-area').classList.toggle('active', parts.length > 0); }
+    selP.addEventListener('change', () => { state.province = selP.value; state.ward = ''; state.page = 1; selW.innerHTML = ''; if (state.province) { selW.disabled = false; selW.add(new Option('Tất cả xã/phường', '')); LOCATIONS[state.province].forEach(w => selW.add(new Option(w, w))); } else { selW.disabled = true; selW.add(new Option('Chọn tỉnh trước', '')); } syncArea(); render(); });
+    selW.addEventListener('change', () => { state.ward = selW.value; state.page = 1; syncArea(); render(); if (state.ward) closeAll(); });
+    $('#q').addEventListener('input', e => { state.q = e.target.value; state.page = 1; render(); });
+    $('#reset').addEventListener('click', () => { Object.assign(state, { type: '', rating: '', price: '', province: '', ward: '', q: '', page: 1 }); $('#q').value = ''; selP.value = ''; selP.dispatchEvent(new Event('change'));['type', 'rating', 'price'].forEach(syncDropdown); render(); });
+    document.querySelectorAll('.banner .cta').forEach(b => b.addEventListener('click', () => { state.type = b.dataset.cat; state.page = 1; syncDropdown('type'); render(); $('.page-title').scrollIntoView({ behavior: 'smooth' }); }));
+    $('#bookNow').addEventListener('click', () => $('.page-title').scrollIntoView({ behavior: 'smooth' }));
+    $('#pagination').addEventListener('click', e => { const b = e.target.closest('.pg'); if (!b || b.disabled) return; state.page = +b.dataset.p; render(); $('.page-title').scrollIntoView({ behavior: 'smooth' }); });
+    let cartCount = 0;
+    function setCart(n) { cartCount = n; document.querySelectorAll('.cart-count').forEach(el => el.textContent = n); }
+    $('#mapBtn').addEventListener('click', () => toast('Bản đồ hệ thống sân sẽ được cập nhật.'));
+    render();
+
+    /* ============ CHI TIẾT SÂN + LỊCH + ĐẶT SÂN ============ */
+    const BOOK_KEY = 'sc_bookings';
+    const HOURS = []; for (let h = 6; h < 22; h++) HOURS.push(h);
+    const DOW = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+    const pad = n => String(n).padStart(2, '0');
+    const isoDate = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    const slotKey = (cid, date, sub, h) => `${cid}|${date}|${sub}|${h}`;
+    const det = { court: null, days: [], day: 0, sel: new Set() };
+
+    function getBookings() { const b = safeGet(BOOK_KEY); return Array.isArray(b) ? b : []; }
+    function bookedKeys() { const s = new Set(); getBookings().forEach(b => (b.slots || []).forEach(k => s.add(k))); return s; }
+    /* Dữ liệu "đã đặt" mẫu: ổn định theo từng sân/ngày/giờ để lịch luôn có ô đỏ */
+    function seeded(key) { let h = 2166136261; for (let i = 0; i < key.length; i++) { h ^= key.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0) % 100; }
+    function isBooked(key, store) { return seeded(key) < 28 || store.has(key); }
+    function isPast(date, h) { const n = new Date(); return date === isoDate(n) && h <= n.getHours(); }
+    function make7Days() { const t = new Date(); t.setHours(0, 0, 0, 0); return Array.from({ length: 7 }, (_, i) => { const d = new Date(t); d.setDate(t.getDate() + i); return d; }); }
+    const fmtDM = d => `${pad(d.getDate())}/${pad(d.getMonth() + 1)}`;
+
+    function openDetail(id, preTime) {
+      const c = COURTS.find(x => x.id === +id); if (!c) return;
+      det.court = c; det.days = make7Days(); det.day = 0; det.sel = new Set();
+      $('#homePage').hidden = true; $('#myPage').hidden = true; $('#detailPage').hidden = false;
+      document.title = c.name + ' - SPORT.COURT';
+      $('#dtCrumbName').textContent = c.name;
+      $('#dtName').textContent = c.name;
+      $('#dtAddr').textContent = '📍 ' + c.addr;
+      $('#dtRate').textContent = `★ ${c.rating.toFixed(1)} (${c.reviews})`;
+      $('#dtCount').textContent = c.count + ' sân';
+      $('#dtPrice').textContent = fmt(c.price);
+      $('#dtHero').innerHTML = art(c.type, 'd' + c.id) + `<span class="tag">${TYPE_ICON[c.type]} ${TYPES[c.type].label}</span>`;
+      const ses = safeGet(SESSION_KEY);
+      $('#bkName').value = ses && ses.name ? ses.name : '';
+      const pf = ses ? getProfile(ses) : { phone: '', email: '' };
+      $('#bkPhone').value = pf.phone || '';
+      $('#bkEmail').value = pf.email || '';
+      $('#bkNote').value = '';
+      document.querySelectorAll('#formBook .field').forEach(f => { f.classList.remove('bad'); const e = f.querySelector('.err'); if (e) e.textContent = ''; });
+      $('#bkOk').classList.remove('show');
+      if (preTime) {
+        const h = parseInt(preTime, 10), date = isoDate(det.days[0]), store = bookedKeys();
+        if (!isPast(date, h)) {
+          for (let s = 1; s <= c.count; s++) { const k = slotKey(c.id, date, s, h); if (!isBooked(k, store)) { det.sel.add(k); break; } }
+        }
+        if (!det.sel.size) toast(`Khung giờ ${pad(h)}:00 hôm nay đã kín hoặc đã qua. Hãy chọn giờ khác.`);
+      }
+      renderDays(); renderSchedule(); renderPicked();
+      window.scrollTo(0, 0);
+    }
+    function closeDetail() {
+      $('#detailPage').hidden = true; $('#homePage').hidden = false;
+      document.title = 'SPORT.COURT - Đặt sân thể thao'; window.scrollTo(0, 0);
+    }
+    function renderDays() {
+      $('#dtDays').innerHTML = det.days.map((d, i) => `<button type="button" class="day ${i === det.day ? 'on' : ''}" data-d="${i}"><small>${i === 0 ? 'Hôm nay' : DOW[d.getDay()]}</small><b>${fmtDM(d)}</b></button>`).join('');
+    }
+    function renderSchedule() {
+      const c = det.court, date = isoDate(det.days[det.day]), store = bookedKeys();
+      let html = '<table class="sched"><thead><tr><th class="sc-h">Sân</th>' + HOURS.map(h => `<th>${pad(h)}:00</th>`).join('') + '</tr></thead><tbody>';
+      for (let s = 1; s <= c.count; s++) {
+        html += `<tr><th class="sc-h">Sân ${s}</th>`;
+        HOURS.forEach(h => {
+          const k = slotKey(c.id, date, s, h);
+          let cls = 'free', label = 'Còn trống';
+          if (isPast(date, h)) { cls = 'past'; label = 'Đã qua giờ'; }
+          else if (isBooked(k, store)) { cls = 'booked'; label = 'Đã đặt'; }
+          else if (det.sel.has(k)) { cls = 'sel'; label = 'Đang chọn'; }
+          html += `<td><div class="cell ${cls}" role="button" tabindex="0" data-k="${k}" aria-label="Sân ${s}, ${pad(h)}:00, ${label}">${cls === 'sel' ? '✓' : ''}</div></td>`;
+        });
+        html += '</tr>';
+      }
+      $('#dtSched').innerHTML = html + '</tbody></table>';
+    }
+    function describeKey(k) {
+      const [, date, sub, h] = k.split('|'); const [y, m, d] = date.split('-');
+      return { date, sub: +sub, h: +h, text: `Sân ${sub} · ${d}/${m} · ${pad(+h)}:00–${pad(+h + 1)}:00` };
+    }
+    function sortedSel() { return [...det.sel].sort((a, b) => { const x = describeKey(a), y = describeKey(b); return x.date.localeCompare(y.date) || x.sub - y.sub || x.h - y.h; }); }
+    function renderPicked() {
+      const keys = sortedSel(), box = $('#picked');
+      if (!keys.length) { box.innerHTML = '<span class="none">Chưa chọn khung giờ nào. Nhấn vào ô xanh trong lịch để chọn.</span>'; return; }
+      box.innerHTML = '<ul>' + keys.map(k => `<li><span>${describeKey(k).text}</span><button type="button" data-rm="${k}" aria-label="Bỏ chọn">✕</button></li>`).join('') + `</ul><div class="total"><span>${keys.length} giờ × ${fmt(det.court.price)}</span><b>${fmtVnd(keys.length * det.court.price)}</b></div>`;
+    }
+    function toggleCell(el) {
+      if (el.classList.contains('booked')) { toast('Khung giờ này đã được đặt, vui lòng chọn ô xanh.'); return; }
+      if (el.classList.contains('past')) { toast('Khung giờ này đã qua.'); return; }
+      const k = el.dataset.k;
+      if (det.sel.has(k)) det.sel.delete(k); else det.sel.add(k);
+      $('#bkOk').classList.remove('show');
+      renderSchedule(); renderPicked();
+    }
+    $('#dtSched').addEventListener('click', e => { const c = e.target.closest('.cell'); if (c) toggleCell(c); });
+    $('#dtSched').addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const c = e.target.closest('.cell'); if (c) { e.preventDefault(); const k = c.dataset.k; toggleCell(c); const n = document.querySelector(`.cell[data-k="${k}"]`); if (n) n.focus(); } });
+    $('#dtDays').addEventListener('click', e => { const b = e.target.closest('.day'); if (!b) return; det.day = +b.dataset.d; renderDays(); renderSchedule(); });
+    $('#picked').addEventListener('click', e => { const b = e.target.closest('[data-rm]'); if (!b) return; det.sel.delete(b.dataset.rm); renderSchedule(); renderPicked(); });
+    document.querySelectorAll('#formBook .input input').forEach(i => i.addEventListener('input', () => setError(i, '')));
+
+    $('#formBook').addEventListener('submit', e => {
+      e.preventDefault();
+      const nameEl = $('#bkName'), phoneEl = $('#bkPhone'), emailEl = $('#bkEmail');
+      const name = nameEl.value.trim(), phone = phoneEl.value.replace(/[\s.\-]/g, ''), email = emailEl.value.trim(), note = $('#bkNote').value.trim();
+      let ok = true;
+      if (name.length < 2) { setError(nameEl, 'Vui lòng nhập họ và tên'); ok = false; } else setError(nameEl, '');
+      if (!phone) { setError(phoneEl, 'Vui lòng nhập số điện thoại'); ok = false; } else if (!PHONE_RE.test(phone)) { setError(phoneEl, 'Số điện thoại không hợp lệ (VD: 0901234567)'); ok = false; } else setError(phoneEl, '');
+      if (!email) { setError(emailEl, 'Vui lòng nhập email'); ok = false; } else if (!EMAIL_RE.test(email)) { setError(emailEl, 'Email không hợp lệ'); ok = false; } else setError(emailEl, '');
+      if (!det.sel.size) { toast('Vui lòng chọn ít nhất 1 khung giờ (ô xanh) trong lịch.'); ok = false; }
+      if (!ok) return;
+      const store = bookedKeys(), keys = sortedSel();
+      if (keys.some(k => store.has(k))) { det.sel = new Set(keys.filter(k => !store.has(k))); renderSchedule(); renderPicked(); toast('Có khung giờ vừa được đặt bởi người khác. Vui lòng kiểm tra lại.'); return; }
+      /* Điền đủ thông tin -> chuyển sang bước thanh toán; chỉ lưu đơn sau khi thanh toán xong */
+      openPay({ name, phone, email, note, keys, code: 'SC' + Date.now().toString(36).toUpperCase().slice(-6) });
+    });
+
+    /* Mở chi tiết: nhấn vào thẻ sân, nút "Đặt ngay / Xem lịch" hoặc một khung giờ */
+    $('#grid').addEventListener('click', e => {
+      const s = e.target.closest('.slot'); if (s) { openDetail(s.dataset.id, s.dataset.time); return; }
+      const card = e.target.closest('.card'); if (card) openDetail(card.dataset.id);
+    });
+    $('#grid').addEventListener('keydown', e => { if (e.key !== 'Enter' || e.target.closest('button')) return; const card = e.target.closest('.card'); if (card) openDetail(card.dataset.id); });
+    $('#dtBack').addEventListener('click', closeDetail);
+    $('#dtCrumb').addEventListener('click', e => { e.preventDefault(); closeDetail(); });
+    $('#dtLogo').addEventListener('click', e => { e.preventDefault(); closeDetail(); });
+
+    /* ============ MENU NGƯỜI DÙNG: HỒ SƠ / MẬT KHẨU / ĐĂNG XUẤT ============ */
+    const PROFILE_KEY = 'sc_profiles';
+    function setUserName(n) { document.querySelectorAll('.uname').forEach(el => el.textContent = n); }
+    function getProfile(ses) {
+      const all = safeGet(PROFILE_KEY) || {}, p = all[ses.id] || {};
+      return {
+        phone: p.phone !== undefined ? p.phone : (PHONE_RE.test(ses.id) ? ses.id : ''),
+        email: p.email !== undefined ? p.email : (EMAIL_RE.test(ses.id) ? ses.id : ''),
+        gender: p.gender || '',
+        bank: p.bank || '', acc: p.acc || '',
+        sports: Array.isArray(p.sports) ? p.sports : []
+      };
+    }
+    document.querySelectorAll('[data-um-host]').forEach(m => {
+      m.innerHTML = `<button type="button" class="user-btn" aria-haspopup="true" aria-expanded="false"><span class="avatar">👤</span><span class="uname">Tài khoản</span><span class="arrow">▼</span></button>
+        <div class="user-panel" hidden role="menu">
+          <button type="button" data-um="profile" role="menuitem">👤 Hồ sơ cá nhân</button>
+          <button type="button" data-um="password" role="menuitem">🔒 Mật khẩu</button>
+          <hr>
+          <button type="button" data-um="logout" class="danger" role="menuitem">↪ Đăng xuất</button>
+        </div>`;
+    });
+    const ses0 = safeGet(SESSION_KEY); if (ses0 && ses0.name) setUserName(ses0.name);
+    function closeUserMenus() { document.querySelectorAll('.user-menu.open').forEach(m => { m.classList.remove('open'); m.querySelector('.user-panel').hidden = true; (m.querySelector('.user-btn, .cart-btn') || m).setAttribute('aria-expanded', 'false'); }); }
+    function closeModals() { document.querySelectorAll('.modal').forEach(m => m.hidden = true); }
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.user-btn, .cart-btn');
+      if (btn) {
+        const m = btn.closest('.user-menu'), was = m.classList.contains('open'); closeUserMenus();
+        if (!was) { m.classList.add('open'); m.querySelector('.user-panel').hidden = false; btn.setAttribute('aria-expanded', 'true'); }
+        return;
+      }
+      const it = e.target.closest('[data-um]');
+      if (it) {
+        closeUserMenus();
+        if (it.dataset.um === 'profile') openProfile();
+        else if (it.dataset.um === 'password') openPassword();
+        else if (it.dataset.um === 'history' || it.dataset.um === 'booked') showMy(it.dataset.um);
+        else { closeModals(); doLogout(); }
+        return;
+      }
+      if (!e.target.closest('.user-menu')) closeUserMenus();
+      if (e.target.classList.contains('modal') || e.target.closest('[data-close]')) closeModals();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeUserMenus(); closeModals(); } });
+
+    function openProfile() {
+      const ses = safeGet(SESSION_KEY); if (!ses) return;
+      const p = getProfile(ses);
+      $('#pfName').value = ses.name || '';
+      const phoneEl = $('#pfPhone'), emailEl = $('#pfEmail');
+      phoneEl.value = p.phone; emailEl.value = p.email;
+      $('#pfBank').value = p.bank; $('#pfAcc').value = p.acc;
+      /* Trường trùng với tài khoản đăng nhập thì chỉ đọc */
+      phoneEl.readOnly = PHONE_RE.test(ses.id); emailEl.readOnly = EMAIL_RE.test(ses.id);
+      document.querySelectorAll('input[name="pfGender"]').forEach(r => r.checked = r.value === p.gender);
+      document.querySelectorAll('input[name="pfSport"]').forEach(c => c.checked = p.sports.includes(c.value));
+      document.querySelectorAll('#formProfile .field').forEach(f => { f.classList.remove('bad'); const er = f.querySelector('.err'); if (er) er.textContent = ''; });
+      clearMsg($('#msgProfile'));
+      $('#mdProfile').hidden = false; $('#pfName').focus();
+    }
+    $('#formProfile').addEventListener('submit', e => {
+      e.preventDefault();
+      const ses = safeGet(SESSION_KEY); if (!ses) return;
+      const nameEl = $('#pfName'), phoneEl = $('#pfPhone'), emailEl = $('#pfEmail');
+      const name = nameEl.value.trim(), phone = phoneEl.value.replace(/[\s.\-]/g, ''), email = emailEl.value.trim();
+      let ok = true;
+      if (name.length < 2) { setError(nameEl, 'Vui lòng nhập họ và tên'); ok = false; } else setError(nameEl, '');
+      if (phone && !PHONE_RE.test(phone)) { setError(phoneEl, 'Số điện thoại không hợp lệ (VD: 0901234567)'); ok = false; } else setError(phoneEl, '');
+      if (email && !EMAIL_RE.test(email)) { setError(emailEl, 'Email không hợp lệ'); ok = false; } else setError(emailEl, '');
+      const bankEl = $('#pfBank'), accEl = $('#pfAcc'), bank = bankEl.value.trim(), acc = accEl.value.replace(/\s+/g, '');
+      let bErr = '', aErr = '';
+      if (acc && !/^\d{6,19}$/.test(acc)) aErr = 'Số tài khoản gồm 6–19 chữ số';
+      else if (bank && !acc) aErr = 'Vui lòng nhập số tài khoản';
+      if (acc && !bank) bErr = 'Vui lòng nhập tên ngân hàng';
+      setError(bankEl, bErr); setError(accEl, aErr);
+      if (bErr || aErr) ok = false;
+      if (!ok) return;
+      const g = document.querySelector('input[name="pfGender"]:checked');
+      const sports = [...document.querySelectorAll('input[name="pfSport"]:checked')].map(c => c.value);
+      const all = safeGet(PROFILE_KEY) || {};
+      all[ses.id] = { phone, email, gender: g ? g.value : '', sports, bank, acc };
+      safeSet(PROFILE_KEY, all);
+      const users = getUsers(), u = users.find(x => x.id === ses.id);
+      if (u) { u.name = name; safeSet(USERS_KEY, users); }
+      safeSet(SESSION_KEY, Object.assign({}, ses, { name }));
+      setUserName(name);
+      closeModals(); toast('Đã cập nhật hồ sơ cá nhân.');
+    });
+    document.querySelectorAll('#formProfile .input input').forEach(i => i.addEventListener('input', () => setError(i, '')));
+
+    function openPassword() {
+      $('#formPassword').reset();
+      document.querySelectorAll('#formPassword .field').forEach(f => { f.classList.remove('bad'); const er = f.querySelector('.err'); if (er) er.textContent = ''; });
+      document.querySelectorAll('#formPassword .input input').forEach(i => i.type = 'password');
+      clearMsg($('#msgPassword'));
+      $('#mdPassword').hidden = false; $('#pwOld').focus();
+    }
+    $('#formPassword').addEventListener('submit', e => {
+      e.preventDefault();
+      const ses = safeGet(SESSION_KEY); if (!ses) return;
+      const oldEl = $('#pwOld'), newEl = $('#pwNew'), new2El = $('#pwNew2'), msg = $('#msgPassword');
+      const oldPw = oldEl.value, newPw = newEl.value, new2 = new2El.value;
+      let ok = true;
+      if (!oldPw) { setError(oldEl, 'Vui lòng nhập mật khẩu hiện tại'); ok = false; } else setError(oldEl, '');
+      if (newPw.length < 6) { setError(newEl, 'Mật khẩu mới tối thiểu 6 ký tự'); ok = false; } else if (oldPw && newPw === oldPw) { setError(newEl, 'Mật khẩu mới phải khác mật khẩu hiện tại'); ok = false; } else setError(newEl, '');
+      if (!new2) { setError(new2El, 'Vui lòng nhập lại mật khẩu mới'); ok = false; } else if (new2 !== newPw) { setError(new2El, 'Mật khẩu nhập lại không khớp'); ok = false; } else setError(new2El, '');
+      if (!ok) return;
+      const users = getUsers(), u = users.find(x => x.id === ses.id);
+      if (!u || u.pw !== oldPw) { setError(oldEl, 'Mật khẩu hiện tại không chính xác'); return; }
+      u.pw = newPw; safeSet(USERS_KEY, users);
+      closeModals(); toast('Đổi mật khẩu thành công!');
+    });
+    document.querySelectorAll('#formPassword .input input').forEach(i => i.addEventListener('input', () => setError(i, '')));
+
+    /* ============ GIỎ ĐẶT SÂN: LỊCH SỬ + DANH SÁCH SÂN ĐÃ ĐẶT + ĐÁNH GIÁ ============ */
+    const REVIEW_KEY = 'sc_reviews';
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const fmtDateTime = iso => { const d = new Date(iso); return isNaN(d) ? '' : `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+    COURTS.forEach(c => { c.r0 = c.rating; c.n0 = c.reviews; });
+    function getReviews() { const r = safeGet(REVIEW_KEY); return r && typeof r === 'object' && !Array.isArray(r) ? r : {}; }
+    /* Điểm đánh giá hiển thị = điểm gốc + các đánh giá người dùng đã gửi */
+    function applyReviews() {
+      const sum = {}, cnt = {};
+      Object.keys(getReviews()).forEach(k => { const cid = k.split('|').pop(), r = getReviews()[k]; sum[cid] = (sum[cid] || 0) + r.stars; cnt[cid] = (cnt[cid] || 0) + 1; });
+      COURTS.forEach(c => { const n = cnt[c.id] || 0; c.reviews = c.n0 + n; c.rating = n ? (c.r0 * c.n0 + sum[c.id]) / (c.n0 + n) : c.r0; });
+      render();
+    }
+    function myBookings() { const ses = safeGet(SESSION_KEY); if (!ses) return []; return getBookings().filter(b => !b.user || b.user === ses.id); }
+    function refreshCart() { setCart(myBookings().filter(b => !isPastBk(b)).reduce((n, b) => n + (b.slots || []).length, 0)); }
+
+    document.querySelectorAll('[data-cart-host]').forEach(m => {
+      m.innerHTML = `<button type="button" class="cart cart-btn" aria-haspopup="true" aria-expanded="false" title="Đặt sân của tôi">🛒<b class="cart-count">0</b></button>
+        <div class="user-panel" hidden role="menu">
+          <button type="button" data-um="history" role="menuitem">📜 Lịch sử đặt sân</button>
+          <button type="button" data-um="booked" role="menuitem">📋 Danh sách sân đã đặt</button>
+        </div>`;
+    });
+
+    /* Thời gian bắt đầu/kết thúc của một lượt đặt (từ các khung giờ đã chọn) */
+    function bkSpan(b) {
+      let s = null, e = null;
+      (b.slots || []).forEach(k => {
+        const d = describeKey(k), st = new Date(`${d.date}T${pad(d.h)}:00:00`), en = new Date(`${d.date}T${pad(d.h + 1)}:00:00`);
+        if (!s || st < s) s = st; if (!e || en > e) e = en;
+      });
+      return { start: s || new Date(0), end: e || new Date(0) };
+    }
+    function isPastBk(b) { return bkSpan(b).end <= new Date(); }
+    /* Bộ đếm ngược: còn bao nhiêu ngày - giờ - phút đến giờ đặt sân */
+    function cdText(start, end) {
+      const now = new Date();
+      if (now >= start) return `<span class="live">🔴 Đang diễn ra · kết thúc lúc ${pad(end.getHours())}:${pad(end.getMinutes())}</span>`;
+      const ms = start - now, d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), m = Math.floor(ms % 36e5 / 6e4);
+      return `⏳ Còn lại: <span class="u"><b>${d}</b>ngày</span><span class="u"><b>${pad(h)}</b>giờ</span><span class="u"><b>${pad(m)}</b>phút</span>`;
+    }
+    setInterval(() => {
+      if ($('#myPage').hidden || myMode !== 'booked') return;
+      let redo = false;
+      document.querySelectorAll('.cd').forEach(el => {
+        const s = new Date(el.dataset.start), e = new Date(el.dataset.end), now = new Date();
+        if (now >= e || (now >= s) !== (el.dataset.live === '1')) { redo = true; return; }
+        el.innerHTML = cdText(s, e);
+      });
+      if (redo) { renderMy(); refreshCart(); }  
+    }, 1000);
+
+    let myMode = 'history';
+    function showMy(mode) {
+      myMode = mode; closeUserMenus();
+      $('#homePage').hidden = true; $('#detailPage').hidden = true; $('#myPage').hidden = false;
+      renderMy(); window.scrollTo(0, 0);
+    }
+    function goHome() { $('#myPage').hidden = true; $('#homePage').hidden = false; document.title = 'SPORT.COURT - Đặt sân thể thao'; window.scrollTo(0, 0); }
+    $('#myBack').addEventListener('click', goHome);
+    $('#myLogo').addEventListener('click', e => { e.preventDefault(); goHome(); });
+
+    /* ----- Đơn đã hủy: lưu riêng để hiển thị trong Lịch sử đặt sân ----- */
+    const CANCEL_KEY = 'sc_cancelled';
+    function getCancelled() { const c = safeGet(CANCEL_KEY); return Array.isArray(c) ? c : []; }
+    function myCancelled() {
+      const ses = safeGet(SESSION_KEY); if (!ses) return [];
+      return getCancelled()
+        .filter(b => !b.user || b.user === ses.id)
+        .sort((a, b) => (b.cancelledAt || '').localeCompare(a.cancelledAt || ''));
+    }
+    function cancelledHtml(list) {
+      return `<h2 class="sec-title">Lượt đặt đã hủy <small>(${list.length})</small></h2><div class="bk-list">` + list.map(b => {
+        const c = COURTS.find(x => x.id === b.courtId); if (!c) return '';
+        const keys = (b.slots || []).slice().sort((x, y) => { const p = describeKey(x), q = describeKey(y); return p.date.localeCompare(q.date) || p.sub - q.sub || p.h - q.h; });
+        return `<article class="bk-item cancelled"><div class="thumb">${art(c.type, 'x' + b.code)}<span class="tag">${TYPE_ICON[c.type]} ${TYPES[c.type].label}</span></div><div class="bk-body"><div class="bk-top"><div><h3>${c.name}</h3><div class="bk-code">Mã đặt sân: <b>${esc(b.code)}</b> · 📍 ${c.addr}</div></div><span class="badge cancel">Đã hủy</span></div><ul class="bk-slots">${keys.map(k => `<li>${describeKey(k).text}</li>`).join('')}</ul><div class="bk-foot"><span>👤 ${esc(b.name)} · 📞 ${esc(b.phone)}<br>Hủy lúc ${fmtDateTime(b.cancelledAt)}<br><span class="pay-refund">↩ Hoàn ${fmtVnd(b.refund || 0)} (50%) về ${esc(b.refundBank || '')} - ${esc(b.refundAcc || '')}</span></span><span>Tổng tiền: <b>${fmtVnd(b.total || 0)}</b></span></div><div class="bk-actions"><button type="button" class="btn-main" data-rebook="${c.id}">📅 Đặt lại sân</button></div></div></article>`;
+      }).join('') + '</div>';
+    }
+
+    function renderMy() {
+      const list = myBookings(), ses = safeGet(SESSION_KEY) || {}, rv = getReviews(), box = $('#myList');
+      const emptyHtml = myMode === 'history'
+        ? `<div class="empty"><div class="big">📜</div><b>Chưa có lượt đặt nào đã hoàn thành</b><p style="margin-top:6px">Các sân bạn đã chơi xong sẽ xuất hiện tại đây để đánh giá hoặc đặt lại.</p></div>`
+        : `<div class="empty"><div class="big">📋</div><b>Bạn chưa có sân nào sắp tới</b><p style="margin-top:6px">Hãy chọn một sân và đặt khung giờ để theo dõi tại đây.</p></div>`;
+      if (myMode === 'history') {
+        document.title = 'Lịch sử đặt sân - SPORT.COURT';
+        $('#myTitle').textContent = 'LỊCH SỬ ĐẶT SÂN';
+        $('#mySub').textContent = 'Các sân đã chơi xong và các lượt đặt đã hủy';
+        const groups = {};
+        list.filter(isPastBk).forEach(b => { const g = groups[b.courtId] || (groups[b.courtId] = { n: 0, hours: 0, last: '' }); g.n++; g.hours += (b.slots || []).length; if (b.createdAt > g.last) g.last = b.createdAt; });
+        const ids = Object.keys(groups).sort((a, b) => groups[b].last.localeCompare(groups[a].last));
+        $('#myInfo').innerHTML = ids.length ? `Bạn đã chơi <b>${ids.length}</b> sân khác nhau` : '';
+        box.innerHTML = ids.length ? '<div class="grid">' + ids.map(id => {
+          const c = COURTS.find(x => x.id === +id), g = groups[id], mine = rv[ses.id + '|' + id];
+          if (!c) return '';
+          return `<article class="card static"><div class="thumb">${art(c.type, 'h' + c.id)}<span class="tag">${TYPE_ICON[c.type]} ${TYPES[c.type].label}</span></div><div class="card-body"><h3>${c.name}</h3><div class="loc-row"><div class="addr">📍<span>${c.addr}</span></div><div class="rate"><i>★</i> ${c.rating.toFixed(1)} (${c.reviews})</div></div><div class="hist-meta">🗓️ Đã đặt <b>${g.n}</b> lượt · ${g.hours} giờ<br>🕒 Lần gần nhất: ${fmtDateTime(g.last)}${mine ? `<br><span class="my-rating">Đánh giá của bạn: ${'★'.repeat(mine.stars)}${'☆'.repeat(5 - mine.stars)}</span>` : ''}</div><div class="card-actions"><button type="button" class="btn-rate" data-rate="${c.id}">⭐ ${mine ? 'Sửa đánh giá' : 'Đánh giá'}</button><button type="button" class="btn-main" data-rebook="${c.id}">📅 Đặt sân</button></div></div></article>`;
+        }).join('') + '</div>' : emptyHtml;
+        /* Thêm các lượt đặt đã hủy vào lịch sử */
+        const cl = myCancelled();
+        if (cl.length) {
+          if (!ids.length) box.innerHTML = '';   // bỏ thông báo "chưa có lượt đặt nào"
+          box.innerHTML += cancelledHtml(cl);
+          $('#myInfo').innerHTML = (ids.length ? `Bạn đã chơi <b>${ids.length}</b> sân khác nhau · ` : '') + `<b>${cl.length}</b> lượt đặt đã hủy`;
+        }
+      } else {
+        document.title = 'Danh sách sân đã đặt - SPORT.COURT';
+        $('#myTitle').textContent = 'DANH SÁCH SÂN ĐÃ ĐẶT';
+        $('#mySub').textContent = 'Các lượt đặt sắp tới — đừng quên đến đúng giờ';
+        const items = list.filter(b => !isPastBk(b)).sort((a, b) => bkSpan(a).start - bkSpan(b).start);
+        $('#myInfo').innerHTML = items.length ? `Bạn có <b>${items.length}</b> lượt đặt sân sắp tới` : '';
+        const now = new Date();
+        box.innerHTML = items.length ? '<div class="bk-list">' + items.map(b => {
+          const c = COURTS.find(x => x.id === b.courtId); if (!c) return '';
+          const keys = (b.slots || []).slice().sort((x, y) => { const p = describeKey(x), q = describeKey(y); return p.date.localeCompare(q.date) || p.sub - q.sub || p.h - q.h; });
+          const lastEnd = keys.reduce((mx, k) => { const d = describeKey(k), t = new Date(`${d.date}T${pad(d.h + 1)}:00:00`); return t > mx ? t : mx; }, new Date(0));
+          const sp = bkSpan(b), live = sp.start <= now;
+          return `<article class="bk-item"><div class="thumb">${art(c.type, 'b' + b.code)}<span class="tag">${TYPE_ICON[c.type]} ${TYPES[c.type].label}</span></div><div class="bk-body"><div class="bk-top"><div><h3>${c.name}</h3><div class="bk-code">Mã đặt sân: <b>${esc(b.code)}</b> · 📍 ${c.addr}</div></div>${live ? '<span class="badge up">Đang diễn ra</span>' : `<button type="button" class="btn-cancel" data-cancel="${esc(b.code)}">✕ Hủy đặt sân</button>`}</div><ul class="bk-slots">${keys.map(k => `<li>${describeKey(k).text}</li>`).join('')}</ul><div class="cd" data-start="${sp.start.toISOString()}" data-end="${sp.end.toISOString()}" data-live="${live ? 1 : 0}">${cdText(sp.start, sp.end)}</div><div class="bk-foot"><span>👤 ${esc(b.name)} · 📞 ${esc(b.phone)}${b.note ? ' · 📝 ' + esc(b.note) : ''}<br>Đặt lúc ${fmtDateTime(b.createdAt)}${b.paid ? '<br>✅ Đã thanh toán · Chủ sân: ' + esc(b.owner || '') : ''}</span><span>Tổng tiền: <b>${fmtVnd(b.total || 0)}</b></span></div></div></article>`;
+        }).join('') + '</div>' : emptyHtml;
+      }
+    }
+    $('#myList').addEventListener('click', e => {
+      const x = e.target.closest('[data-cancel]'); if (x) { askCancel(x.dataset.cancel); return; }
+      const r = e.target.closest('[data-rate]'); if (r) { openReview(r.dataset.rate); return; }
+      const b = e.target.closest('[data-rebook]'); if (b) openDetail(b.dataset.rebook);
+    });
+
+    /* Đánh giá sân */
+    const rvState = { courtId: null, stars: 0 };
+    function paintStars() { document.querySelectorAll('#rvStars .star').forEach(s => s.classList.toggle('on', +s.dataset.s <= rvState.stars)); }
+    function openReview(id) {
+      const c = COURTS.find(x => x.id === +id), ses = safeGet(SESSION_KEY); if (!c || !ses) return;
+      const r = getReviews()[ses.id + '|' + c.id];
+      rvState.courtId = c.id; rvState.stars = r ? r.stars : 0;
+      $('#rvName').textContent = c.name; $('#rvComment').value = r ? r.comment : '';
+      clearMsg($('#msgReview')); paintStars(); $('#mdReview').hidden = false;
+    }
+    $('#rvStars').addEventListener('click', e => { const s = e.target.closest('.star'); if (!s) return; rvState.stars = +s.dataset.s; clearMsg($('#msgReview')); paintStars(); });
+    $('#formReview').addEventListener('submit', e => {
+      e.preventDefault();
+      const ses = safeGet(SESSION_KEY); if (!ses || rvState.courtId === null) return;
+      if (!rvState.stars) { showMsg($('#msgReview'), 'error', 'Vui lòng chọn số sao để đánh giá.'); return; }
+      const all = getReviews();
+      all[ses.id + '|' + rvState.courtId] = { stars: rvState.stars, comment: $('#rvComment').value.trim(), at: new Date().toISOString() };
+      safeSet(REVIEW_KEY, all);
+      applyReviews(); closeModals(); renderMy();
+      toast('Cảm ơn bạn đã đánh giá!');
+    });
+
+    /* ----- Thanh toán: thông tin chủ sân (dữ liệu mẫu, thay bằng dữ liệu thật của bạn) ----- */
+    const OWNERS = [
+      { name: 'Nguyễn Minh Tuấn', phone: '0912 345 678', bank: 'MB Bank', code: 'MB', acc: '0123456789' },
+      { name: 'Trần Thu Hà', phone: '0987 654 321', bank: 'Vietcombank', code: 'VCB', acc: '1012345678' },
+      { name: 'Lê Quốc Bảo', phone: '0905 111 222', bank: 'Techcombank', code: 'TCB', acc: '1903123456' },
+      { name: 'Phạm Thanh Mai', phone: '0933 222 111', bank: 'ACB', code: 'ACB', acc: '2345678901' }
+    ];
+    function ownerOf(cid) { return OWNERS[cid % OWNERS.length]; }
+    const initials = n => n.trim().split(/\s+/).slice(-2).map(w => w[0]).join('').toUpperCase();
+    let pay = null;
+    function openPay(p) {
+      const c = det.court, o = ownerOf(c.id), total = p.keys.length * c.price, note = 'SPORTCOURT ' + p.code;
+      pay = Object.assign({}, p, { total, owner: o });
+      $('#payAvt').textContent = initials(o.name);
+      $('#payOwner').textContent = o.name; $('#payPhone').textContent = o.phone;
+      $('#payCourt').textContent = c.name; $('#payBank').textContent = o.bank;
+      $('#payAcc').textContent = o.acc; $('#payAccName').textContent = o.name.toUpperCase(); $('#payNote').textContent = note;
+      $('#payAmount').textContent = fmtVnd(total);
+      const img = $('#payQr'), fail = $('#payQrFail');
+      fail.hidden = true; img.hidden = false;
+      img.onerror = () => { img.hidden = true; fail.hidden = false; };
+      img.src = `https://img.vietqr.io/image/${o.code}-${o.acc}-compact2.png?amount=${total}&addInfo=${encodeURIComponent(note)}&accountName=${encodeURIComponent(o.name)}`;
+      $('#mdPay').hidden = false;
+    }
+    document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => {
+      const txt = document.getElementById(b.dataset.copy).textContent;
+      try { navigator.clipboard.writeText(txt).then(() => toast('Đã sao chép: ' + txt), () => toast('Không sao chép được, hãy chọn và sao chép thủ công.')); } catch (e) { toast('Không sao chép được, hãy chọn và sao chép thủ công.'); }
+    }));
+    $('#payDone').addEventListener('click', () => {
+      if (!pay) return;
+      const store = bookedKeys();
+      if (pay.keys.some(k => store.has(k))) {
+        closeModals(); det.sel = new Set(pay.keys.filter(k => !store.has(k))); renderSchedule(); renderPicked();
+        toast('Có khung giờ vừa được đặt bởi người khác. Vui lòng kiểm tra lại.'); return;
+      }
+      const c = det.court, all = getBookings(), nowIso = new Date().toISOString();
+      all.push({ code: pay.code, courtId: c.id, courtName: c.name, name: pay.name, phone: pay.phone, email: pay.email, note: pay.note, slots: pay.keys, total: pay.total, paid: true, owner: pay.owner.name, paidAt: nowIso, user: (safeGet(SESSION_KEY) || {}).id, createdAt: nowIso });
+      safeSet(BOOK_KEY, all);
+      det.sel = new Set(); renderSchedule(); renderPicked(); $('#bkNote').value = '';
+      pay = null; closeModals(); refreshCart();
+      toast('Thanh toán thành công! Đơn đã chuyển vào Danh sách sân đã đặt.');
+      showMy('booked');
+    });
+
+    /* Hủy đặt sân (trong Danh sách sân đã đặt) */
+    let cancelCode = null;
+    function askCancel(code) {
+      const b = getBookings().find(x => x.code === code); if (!b) return;
+      cancelCode = code;
+      const pf = getProfile(safeGet(SESSION_KEY) || {}), total = b.total || 0;
+      $('#cancelTxt').textContent = `${b.courtName} · ${b.slots.length} giờ · mã ${b.code}. Các khung giờ sẽ được trả lại lịch.`;
+      $('#cancelBank').textContent = pf.bank || 'Chưa cập nhật';
+      $('#cancelAcc').textContent = pf.acc || 'Chưa cập nhật';
+      $('#cancelTotal').textContent = fmtVnd(total);
+      $('#cancelRefund').textContent = fmtVnd(Math.round(total * 0.5));
+      $('#cancelNoBank').hidden = !!(pf.bank && pf.acc);
+      $('#mdCancel').hidden = false;
+    }
+    $('#cancelYes').addEventListener('click', () => {
+      if (!cancelCode) return;
+      const pf = getProfile(safeGet(SESSION_KEY) || {}), b = getBookings().find(x => x.code === cancelCode);
+      if (!b) { cancelCode = null; closeModals(); return; }
+      if (!pf.bank || !pf.acc) { $('#cancelNoBank').hidden = false; return; }
+      const refund = Math.round((b.total || 0) * 0.5);
+      /* Lưu đơn đã hủy để hiển thị trong Lịch sử đặt sân */
+      const cancelled = getCancelled();
+      cancelled.push(Object.assign({}, b, { cancelled: true, cancelledAt: new Date().toISOString(), refund, refundBank: pf.bank, refundAcc: pf.acc }));
+      safeSet(CANCEL_KEY, cancelled);
+      /* Xóa khỏi danh sách đã đặt -> các khung giờ được trả lại lịch */
+      safeSet(BOOK_KEY, getBookings().filter(x => x.code !== cancelCode));
+      cancelCode = null; closeModals(); refreshCart(); renderMy();
+      toast(`Đã hủy đặt sân. Hoàn ${fmtVnd(refund)} (50%) về ${pf.bank} - ${pf.acc}. Xem tại Lịch sử đặt sân.`);
+    });
+    $('#cancelToProfile').addEventListener('click', e => { e.preventDefault(); closeModals(); openProfile(); });
+
+    /* Dữ liệu mẫu cho tài khoản demo (chỉ nạp một lần): xóa localStorage nếu muốn nạp lại */
+    function seedSamples() {
+      if (safeGet('sc_seeded')) return;
+      const DEMO = 'demo@sportcourt.vn', base = new Date(); base.setHours(0, 0, 0, 0);
+      const day = n => { const d = new Date(base); d.setDate(d.getDate() + n); return isoDate(d); };
+      const mk = (code, cid, off, sub, hours, createdOff, hh, mm) => {
+        const c = COURTS.find(x => x.id === cid), created = new Date(base);
+        created.setDate(created.getDate() + createdOff); created.setHours(hh, mm, 0, 0);
+        return { code, courtId: cid, courtName: c.name, name: 'Nguyễn Văn A', phone: '0901234567', email: DEMO, note: '', slots: hours.map(h => slotKey(cid, day(off), sub, h)), total: c.price * hours.length, paid: true, owner: ownerOf(cid).name, user: DEMO, createdAt: created.toISOString() };
+      };
+      safeSet(BOOK_KEY, getBookings().concat([
+        mk('SC4K9Z2A', 0, 1, 2, [18, 19], 0, 13, 20),
+        mk('SC7M1Q8B', 2, -2, 1, [17, 18], -3, 9, 5),
+        mk('SC2P5D6C', 0, -4, 1, [19, 20], -6, 10, 30),
+        mk('SC9T3H1D', 0, -6, 1, [20], -8, 8, 45)
+      ]));
+      const rv = getReviews();
+      if (!rv[DEMO + '|0']) { rv[DEMO + '|0'] = { stars: 4, comment: 'Sân đẹp, ánh sáng tốt.', at: new Date().toISOString() }; safeSet(REVIEW_KEY, rv); }
+      safeSet('sc_seeded', true);
+    }
+    seedSamples();
+    applyReviews(); refreshCart();
+  </script>
+</body>
+
+</html>
