@@ -219,9 +219,8 @@ table.tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid #
 .oc .r{display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#55637f;padding:2.5px 0}
 .oc .r b{color:var(--text);font-weight:600;font-size:9.5px}
 .oc .r .pill{font-size:8.5px;padding:1px 7px}
-.oc .foot{display:flex;justify-content:space-between;align-items:center;margin-top:4px;font-size:9px;color:#55637f}
+.oc .foot{display:flex;justify-content:flex-end;align-items:center;margin-top:4px;font-size:9px;color:#55637f}
 .oc .foot .av{width:18px;height:18px;border-radius:50%;color:#fff;font-size:8px;font-weight:600;display:grid;place-items:center}
-.warn{color:#e08a00}
 .hist{padding:14px 14px 10px}
 .hist h4{font-size:12px;margin-bottom:10px}
 .hist table{width:100%;border-collapse:collapse;font-size:9px}
@@ -474,13 +473,14 @@ table.tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid #
       <section class="view" id="view-owners">
         <h1 class="title" style="font-size:18px;margin-bottom:14px">Danh sách chủ sân</h1>
         <div class="filters">
-          <button class="chip">Tất cả trạng thái <svg style="width:10px;height:10px"><use href="#i-chev"/></svg></button>
-          <button class="chip">Gói dịch vụ <svg style="width:10px;height:10px"><use href="#i-chev"/></svg></button>
-          <button class="chip">30 ngày qua <svg style="width:10px;height:10px"><use href="#i-chev"/></svg></button>
+          <select class="sel" id="ownerStatus" aria-label="Lọc theo trạng thái" style="min-width:150px">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="on">Đang hoạt động</option>
+            <option value="off">Ngừng hoạt động</option>
+          </select>
           <span class="grow"></span>
           <span class="count">312 chủ sân</span>
-          <button class="btn" style="font-size:10px" onclick="toast('Đang xuất Excel…')"><svg><use href="#i-dl"/></svg>Xuất Excel</button>
-          <button class="btn primary" style="font-size:10px" onclick="toast('Thêm chủ sân (demo)')">+ Thêm chủ sân</button>
+          <button class="btn" style="font-size:10px" onclick="exportExcel()"><svg><use href="#i-dl"/></svg>Xuất Excel</button>
         </div>
         <div class="cards" id="ownerCards"></div>
         <div class="card hist">
@@ -806,6 +806,7 @@ table.tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid #
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 /* ---------- Data ---------- */
 /* Doanh thu theo năm (đơn vị: triệu đồng). Thay bằng dữ liệu từ API khi có. */
@@ -835,12 +836,12 @@ const courts=[
  {n:"Sân Cầu Lông Parabol",o:"Nguyễn Văn E",s:"on",a:"41 Phương Liệt, Thanh Xuân, Hà Nội"}
 ];
 const owners=[
- {id:"CS001248",n:"Nguyễn Văn An",sn:18,pk:"Gói Pro",ph:"0903 123 456",cs:"Sân bóng đá An Phát",ex:"12/12/2026",pay:"Đã thanh toán",pc:"green",left:"Còn 42 ngày",lc:"",btn:"Xem hóa đơn",bc:"blue",tag:"Chủ sân VIP",av:"A",avc:"#102a5c",on:true,cls:"ok"},
- {id:"CS001135",n:"Trần Thị Bích",sn:24,pk:"Gói Pro",ph:"0909 876 543",cs:"Sân tennis Bích Thư",ex:"28/12/2026",pay:"Đã thanh toán",pc:"green",left:"Còn 56 ngày",lc:"",btn:"Xem hóa đơn",bc:"blue",tag:"Chủ sân VIP",av:"B",avc:"#7c3aed",on:true,cls:"ok g"},
- {id:"CS000987",n:"Lê Quốc Hùng",sn:7,pk:"Gói Starter",ph:"0905 676 901",cs:"Sân bóng đá Hùng Phát",ex:"05/10/2026",pay:"Chưa thanh toán",pc:"red",left:"Quá hạn 26 ngày",lc:"t-red",btn:"Nhắc gia hạn",bc:"blue",tag:"Chủ sân thường",av:"H",avc:"#e11d48",on:false,cls:"bad"},
- {id:"CS001302",n:"Phạm Minh Tuấn",sn:31,pk:"Gói Pro",ph:"0901 234 567",cs:"Sân cầu lông Tuấn Phát",ex:"16/01/2027",pay:"Đã thanh toán",pc:"green",left:"Còn 79 ngày",lc:"",btn:"Xem hóa đơn",bc:"blue",tag:"★ Top chủ sân",tw:true,av:"T",avc:"#1f6feb",on:true,cls:"ok"},
- {id:"CS001089",n:"Hoàng Thị Lan",sn:12,pk:"Gói Starter",ph:"0907 654 321",cs:"Sân Pickleball Lan Anh",ex:"22/11/2026",pay:"Chờ thanh toán",pc:"amber",left:"Còn 22 ngày",lc:"",btn:"Nhắc gia hạn",bc:"blue",tag:"Chủ sân thường",av:"L",avc:"#14b8a6",on:true,cls:"ok t",detail:true},
- {id:"CS000758",n:"Vũ Đức Thành",sn:3,pk:"Gói Starter",ph:"0908 765 432",cs:"Sân tennis Thành Long",ex:"01/10/2026",pay:"Chưa thanh toán",pc:"red",left:"Quá hạn 30 ngày",lc:"t-red",btn:"Nhắc gia hạn",bc:"blue",tag:"Chủ sân thường",av:"T",avc:"#6b7280",on:false,cls:"bad"}
+ {id:"CS001248",n:"Nguyễn Văn An",sn:18,pk:"Gói Pro",ph:"0903 123 456",cs:"Sân bóng đá An Phát",ex:"12/12/2026",pay:"Đã thanh toán",pc:"green",left:"Còn 42 ngày",lc:"",btn:"Xem hóa đơn",bc:"blue",av:"A",avc:"#102a5c",on:true,cls:"ok"},
+ {id:"CS001135",n:"Trần Thị Bích",sn:24,pk:"Gói Pro",ph:"0909 876 543",cs:"Sân tennis Bích Thư",ex:"28/12/2026",pay:"Đã thanh toán",pc:"green",left:"Còn 56 ngày",lc:"",btn:"Xem hóa đơn",bc:"blue",av:"B",avc:"#7c3aed",on:true,cls:"ok g"},
+ {id:"CS000987",n:"Lê Quốc Hùng",sn:7,pk:"Gói Starter",ph:"0905 676 901",cs:"Sân bóng đá Hùng Phát",ex:"05/10/2026",pay:"Chưa thanh toán",pc:"red",left:"Quá hạn 26 ngày",lc:"t-red",btn:"Nhắc gia hạn",bc:"blue",av:"H",avc:"#e11d48",on:false,cls:"bad"},
+ {id:"CS001302",n:"Phạm Minh Tuấn",sn:31,pk:"Gói Pro",ph:"0901 234 567",cs:"Sân cầu lông Tuấn Phát",ex:"16/01/2027",pay:"Đã thanh toán",pc:"green",left:"Còn 79 ngày",lc:"",btn:"Xem hóa đơn",bc:"blue",av:"T",avc:"#1f6feb",on:true,cls:"ok"},
+ {id:"CS001089",n:"Hoàng Thị Lan",sn:12,pk:"Gói Starter",ph:"0907 654 321",cs:"Sân Pickleball Lan Anh",ex:"22/11/2026",pay:"Chờ thanh toán",pc:"amber",left:"Còn 22 ngày",lc:"",btn:"Nhắc gia hạn",bc:"blue",av:"L",avc:"#14b8a6",on:true,cls:"ok t",detail:true},
+ {id:"CS000758",n:"Vũ Đức Thành",sn:3,pk:"Gói Starter",ph:"0908 765 432",cs:"Sân tennis Thành Long",ex:"01/10/2026",pay:"Chưa thanh toán",pc:"red",left:"Quá hạn 30 ngày",lc:"t-red",btn:"Nhắc gia hạn",bc:"blue",av:"T",avc:"#6b7280",on:false,cls:"bad"}
 ];
 const history=[
  ["12/09/2026","Nguyễn Văn An","Pro - 3 tháng","13/09/2026 – 12/12/2026","1.497.000 ₫","Đã thanh toán","green"],
@@ -918,7 +919,9 @@ function renderCourts(){
 
 /* ---------- Owners ---------- */
 function renderOwners(){
-  $('#ownerCards').innerHTML=owners.map((o,i)=>`
+  const st=$('#ownerStatus').value;
+  const shown=owners.filter(o=>st==='all'||(st==='on')===o.on);
+  $('#ownerCards').innerHTML=shown.map((o,i)=>`
    <div class="oc ${o.cls}" data-i="${i}">
      <div class="top"><span># ${o.id}</span><span class="pill ${o.on?'green':'red'}" style="font-size:9px">${o.on?'Đang hoạt động':'Ngừng hoạt động'}</span></div>
      <h4>${o.n}</h4>
@@ -928,7 +931,7 @@ function renderOwners(){
      <div class="r"><span>Hết hạn</span><b>${o.ex}</b></div>
      <div class="r"><span>Thanh toán</span><span class="pill ${o.pc}">${o.pay}</span></div>
      <div class="r"><span class="${o.lc}">${o.left}</span><span class="pill ${o.bc}">${o.btn}</span></div>
-     <div class="foot"><span class="${o.tw?'warn':''}">${o.tag}</span><span class="av" style="background:${o.avc}">${o.av}</span></div>
+     <div class="foot"><span class="av" style="background:${o.avc}">${o.av}</span></div>
    </div>`).join('');
   $$('#ownerCards .oc').forEach(el=>el.onclick=()=>{location.hash='#detail'});
   $('#histBody').innerHTML=history.map(h=>`<tr><td>${h[0]}</td><td>${h[1]}</td><td>${h[2]}</td><td>${h[3]}</td><td>${h[4]}</td><td class="p t-${h[6]}" style="color:${{green:'#1a8f3c',red:'#d92d20',amber:'#b7791f'}[h[6]]}">${h[5]}</td></tr>`).join('');
@@ -1153,6 +1156,31 @@ $('#delOk').addEventListener('click',()=>{
   toast('Đã xóa sân "'+n+'"');
 });
 
+/* ---------- Xuất Excel ---------- */
+function exportExcel(){
+  const head=['Họ tên chủ sân','Số điện thoại','Email','Tên sân','Địa chỉ','Giá sân (đ/giờ)'];
+  const rows=courts.map(c=>[c.o||'',c.phone||'',c.email||'',c.n||'',c.a||'',c.price||0]);
+  const fname='danh-sach-san-'+new Date().toISOString().slice(0,10);
+  if(window.XLSX){
+    const ws=XLSX.utils.aoa_to_sheet([head,...rows]);
+    ws['!cols']=[{wch:22},{wch:16},{wch:28},{wch:30},{wch:50},{wch:16}];
+    rows.forEach((r,i)=>{ /* số điện thoại giữ dạng chữ, giá sân định dạng số */
+      const p=ws[XLSX.utils.encode_cell({r:i+1,c:1})]; if(p){p.t='s';p.v=String(r[1])}
+      const g=ws[XLSX.utils.encode_cell({r:i+1,c:5})]; if(g) g.z='#,##0';
+    });
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,'Danh sách sân');
+    XLSX.writeFile(wb,fname+'.xlsx');
+  }else{ /* dự phòng: CSV mở được bằng Excel */
+    const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+    const csv='\ufeff'+[head,...rows].map(r=>r.map(q).join(',')).join('\r\n');
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+    a.download=fname+'.csv';a.click();URL.revokeObjectURL(a.href);
+  }
+  toast('Đã xuất '+rows.length+' dòng ra file Excel');
+}
+
 /* ---------- Router ---------- */
 const navMap={'court-new':'courts',withdraw:'home',home:'home',courts:'courts',owners:'owners',detail:'owners',settings:'settings'};
 function route(){
@@ -1163,6 +1191,7 @@ function route(){
 }
 window.addEventListener('hashchange',route);
 $('#courtSearch').addEventListener('input',renderCourts);
+$('#ownerStatus').addEventListener('change',renderOwners);
 
 initYearSelect();renderChart(CUR_Y);renderCourts();renderOwners();route();
 </script>
